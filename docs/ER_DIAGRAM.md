@@ -130,3 +130,22 @@ erDiagram
    - Ticket Priority: `'LOW'`, `'MEDIUM'`, `'HIGH'`, `'CRITICAL'`
    - Ticket Status: `'OPEN'`, `'IN_PROGRESS'`, `'RESOLVED'`, `'CLOSED'`
    - Asset Status: `'OPERATIONAL'`, `'DEGRADED'`, `'OUTAGE'`, `'MAINTENANCE'`
+
+---
+
+## 4. Graphical Relational Schema Diagram
+
+In accordance with DBMS Level 3 Section 4 ("convert ER diagram into a relational schema"), the graphical relational schema diagram depicts each relation with underlined primary keys and directed foreign-key referential arrows pointing to parent primary keys:
+
+- **Vector Graphic:** [`docs/diagrams/relational_schema.svg`](file:///d:/Semester-5/DBMS-Lab/mini-project/docs/diagrams/relational_schema.svg)
+- **Interactive In-App Viewer:** [http://localhost:3000/diagrams](http://localhost:3000/diagrams) (Select *Relational Schema* tab)
+
+### Formal 3NF Relational Representation:
+- $\text{DEPARTMENTS}(\underline{\text{dept\_id}}, \text{dept\_name}, \text{manager\_name}, \text{building\_location}, \text{created\_at})$
+- $\text{USERS}(\underline{\text{user\_id}}, \text{full\_name}, \text{email}, \text{password\_hash}, \text{role}, \text{dept\_id}^*, \text{phone}, \text{is\_active}, \text{created\_at})$
+- $\text{SLA\_POLICIES}(\underline{\text{sla\_id}}, \text{priority\_level}, \text{response\_time\_hrs}, \text{resolution\_time\_hrs}, \text{escalation\_threshold\_hrs})$
+- $\text{ASSETS}(\underline{\text{asset\_id}}, \text{asset\_tag}, \text{asset\_name}, \text{asset\_type}, \text{status}, \text{ip\_address}, \text{location}, \text{owner\_id}^*, \text{criticality}, \text{purchase\_date}, \text{created\_at})$
+- $\text{TICKETS}(\underline{\text{ticket\_id}}, \text{ticket\_code}, \text{title}, \text{description}, \text{category}, \text{priority}, \text{status}, \text{asset\_id}^*, \text{created\_by}^*, \text{assigned\_to}^*, \text{due\_date}, \text{resolved\_at}, \text{sla\_breached}, \text{resolution\_summary}, \text{created\_at}, \text{updated\_at})$
+- $\text{TICKET\_AUDIT\_LOG}(\underline{\text{log\_id}}, \text{ticket\_id}^*, \text{action\_type}, \text{old\_status}, \text{new\_status}, \text{comment}, \text{changed\_by}^*, \text{logged\_at})$
+- $\text{KNOWLEDGE\_BASE}(\underline{\text{kb\_id}}, \text{title}, \text{category}, \text{keywords}, \text{problem\_summary}, \text{resolution\_steps}, \text{applicable\_asset\_type}, \text{view\_count}, \text{helpful\_votes}, \text{created\_at}, \text{updated\_at})$
+

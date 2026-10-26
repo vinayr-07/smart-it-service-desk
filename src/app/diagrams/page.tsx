@@ -15,15 +15,21 @@ import {
 } from 'lucide-react';
 
 export default function DiagramsPage() {
-  const [activeTab, setActiveTab] = useState<'er' | 'arch' | 'cmdb'>('er');
+  const [activeTab, setActiveTab] = useState<'er' | 'rel' | 'arch' | 'cmdb'>('er');
   const [zoomLevel, setZoomLevel] = useState<number>(100);
 
   const diagrams = {
     er: {
       title: 'Entity-Relationship (ER) Diagram',
-      subtitle: 'Crow\'s Foot Notation • 3NF Relational Database Design • MySQL 8.0',
+      subtitle: 'Crow\'s Foot Notation • Conceptual Database Design',
       file: '/diagrams/er_diagram.svg',
       desc: 'Illustrates the 7 normalized relational entities (DEPARTMENTS, USERS, SLA_POLICIES, ASSETS, TICKETS, TICKET_AUDIT_LOG, KNOWLEDGE_BASE) with primary keys, foreign keys, cardinality ratios, and trigger automation points.'
+    },
+    rel: {
+      title: 'Relational Schema Diagram (3NF Normalization)',
+      subtitle: 'Table Schema Mapping • Underlined Primary Keys • Foreign Key Arrows',
+      file: '/diagrams/relational_schema.svg',
+      desc: 'Illustrates the formal relational schema mapping after ER-to-relational conversion. Depicts each table with underlined Primary Keys, foreign key referential arrows pointing directly to parent primary keys, data types, and referential integrity constraints (CASCADE, RESTRICT, SET NULL).'
     },
     arch: {
       title: '3-Tier System Architecture Diagram',
@@ -82,6 +88,12 @@ export default function DiagramsPage() {
             onClick={() => { setActiveTab('er'); setZoomLevel(100); }}
           >
             <GitBranch size={14} /> ER Diagram
+          </button>
+          <button
+            className={`btn btn-sm ${activeTab === 'rel' ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={() => { setActiveTab('rel'); setZoomLevel(100); }}
+          >
+            <FileText size={14} /> Relational Schema
           </button>
           <button
             className={`btn btn-sm ${activeTab === 'arch' ? 'btn-primary' : 'btn-secondary'}`}

@@ -181,6 +181,12 @@ The schema is rigorously normalized to **Third Normal Form (3NF)**:
 - $\text{TICKET\_AUDIT\_LOG}(\underline{\text{log\_id}}, \text{ticket\_id}^*, \text{action\_type}, \text{old\_status}, \text{new\_status}, \text{comment}, \text{changed\_by}^*, \text{logged\_at})$
 - $\text{KNOWLEDGE\_BASE}(\underline{\text{kb\_id}}, \text{title}, \text{category}, \text{keywords}, \text{problem\_summary}, \text{resolution\_steps}, \text{applicable\_asset\_type}, \text{view\_count}, \text{helpful\_votes}, \text{created\_at}, \text{updated\_at})$
 
+> [!NOTE]
+> **Graphical Relational Schema Diagram Artifact:**  
+> The visual table schema diagram with underlined primary keys and directed foreign-key referential lines is generated in:
+> - **SVG Vector:** [`docs/diagrams/relational_schema.svg`](file:///d:/Semester-5/DBMS-Lab/mini-project/docs/diagrams/relational_schema.svg)
+> - **Web Interactive Viewer:** [http://localhost:3000/diagrams](http://localhost:3000/diagrams) (Tab: *Relational Schema*)
+
 ---
 
 ## 6. Data Dictionary

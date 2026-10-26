@@ -1,379 +1,371 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1650 1200" width="100%" height="100%" style="background-color: #070B14; font-family: 'Segoe UI', Inter, -apple-system, sans-serif;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1650 1180" width="100%" height="100%" style="background-color: #060913; font-family: 'Segoe UI', Inter, -apple-system, sans-serif;">
   <defs>
     <!-- Table Header Gradients -->
     <linearGradient id="hdrDept" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3730A3" />
+      <stop offset="0%" stop-color="#4338CA" />
       <stop offset="100%" stop-color="#1E1B4B" />
     </linearGradient>
     <linearGradient id="hdrUser" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0369A1" />
+      <stop offset="0%" stop-color="#0284C7" />
       <stop offset="100%" stop-color="#082F49" />
     </linearGradient>
     <linearGradient id="hdrSla" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#B45309" />
+      <stop offset="0%" stop-color="#D97706" />
       <stop offset="100%" stop-color="#451A03" />
     </linearGradient>
     <linearGradient id="hdrAsset" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#047857" />
+      <stop offset="0%" stop-color="#059669" />
       <stop offset="100%" stop-color="#064E3B" />
     </linearGradient>
     <linearGradient id="hdrTicket" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#BE123C" />
+      <stop offset="0%" stop-color="#E11D48" />
       <stop offset="100%" stop-color="#4C0519" />
     </linearGradient>
     <linearGradient id="hdrAudit" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6D28D9" />
+      <stop offset="0%" stop-color="#7C3AED" />
       <stop offset="100%" stop-color="#2E1065" />
     </linearGradient>
     <linearGradient id="hdrKb" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0F766E" />
+      <stop offset="0%" stop-color="#0D9488" />
       <stop offset="100%" stop-color="#042F2E" />
     </linearGradient>
 
     <!-- Drop Shadow Filter -->
     <filter id="tableShadow" x="-10%" y="-10%" width="125%" height="125%">
-      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.8" />
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.8" />
     </filter>
 
-    <!-- FK Arrowheads -->
-    <marker id="fkArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <!-- FK Arrowheads with precise alignment -->
+    <marker id="fkArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 1 L 9 5 L 0 9 z" fill="#38BDF8" />
     </marker>
-    <marker id="fkArrowRose" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <marker id="fkArrowRose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 1 L 9 5 L 0 9 z" fill="#FB7185" />
     </marker>
-    <marker id="fkArrowEmerald" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <marker id="fkArrowEmerald" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 1 L 9 5 L 0 9 z" fill="#34D399" />
     </marker>
-    <marker id="fkArrowPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <marker id="fkArrowPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 1 L 9 5 L 0 9 z" fill="#C084FC" />
     </marker>
   </defs>
 
   <!-- Title -->
-  <text x="825" y="48" text-anchor="middle" fill="#F8FAFC" font-size="26" font-weight="800" letter-spacing="-0.5">
+  <text x="825" y="48" text-anchor="middle" fill="#F8FAFC" font-size="27" font-weight="800" letter-spacing="-0.5">
     RELATIONAL SCHEMA DIAGRAM (3NF NORMALIZATION)
   </text>
-  <text x="825" y="76" text-anchor="middle" fill="#94A3B8" font-size="14" font-weight="500">
-    Relational Mapping with Underlined Primary Keys (PK) &amp; Foreign Key Referential Arrows
+  <text x="825" y="78" text-anchor="middle" fill="#94A3B8" font-size="14" font-weight="500">
+    Table Schema Mappings with Underlined Primary Keys (PK) &amp; Foreign Key Referential Arrows
   </text>
 
   <!-- ========================================================================= -->
-  <!-- FOREIGN KEY REFERENTIAL ARROWS (Curved Paths) -->
+  <!-- FOREIGN KEY REFERENTIAL ARROWS (Curved & Directed) -->
   <!-- ========================================================================= -->
 
   <!-- FK 1: USERS.dept_id -> DEPARTMENTS.dept_id -->
-  <!-- From (350, 465) to (350, 205) -->
-  <path d="M 370, 470 C 420, 470 420, 205 370, 205" fill="none" stroke="#818CF8" stroke-width="2" marker-end="url(#fkArrow)" />
-  <rect x="395" y="325" width="135" height="20" rx="4" fill="#1E1B4B" stroke="#4F46E5" stroke-width="1" />
-  <text x="462" y="339" text-anchor="middle" fill="#C7D2FE" font-size="9.5" font-weight="600">ON DELETE RESTRICT</text>
+  <path d="M 370, 522 C 440, 522 440, 188 370, 188" fill="none" stroke="#38BDF8" stroke-width="2.2" marker-end="url(#fkArrow)" />
+  <rect x="385" y="345" width="135" height="20" rx="4" fill="#0C4A6E" stroke="#0284C7" stroke-width="1" />
+  <text x="452" y="359" text-anchor="middle" fill="#BAE6FD" font-size="9.5" font-weight="700">ON DELETE RESTRICT</text>
 
   <!-- FK 2: ASSETS.owner_id -> USERS.user_id -->
-  <!-- From (370, 930) to (370, 395) -->
-  <path d="M 370, 930 C 470, 930 470, 395 370, 395" fill="none" stroke="#34D399" stroke-width="2" marker-end="url(#fkArrowEmerald)" />
-  <rect x="440" y="650" width="135" height="20" rx="4" fill="#064E3B" stroke="#059669" stroke-width="1" />
-  <text x="507" y="664" text-anchor="middle" fill="#A7F3D0" font-size="9.5" font-weight="600">ON DELETE SET NULL</text>
+  <path d="M 370, 938 C 470, 938 470, 408 370, 408" fill="none" stroke="#34D399" stroke-width="2.2" marker-end="url(#fkArrowEmerald)" />
+  <rect x="420" y="665" width="135" height="20" rx="4" fill="#064E3B" stroke="#059669" stroke-width="1" />
+  <text x="487" y="679" text-anchor="middle" fill="#A7F3D0" font-size="9.5" font-weight="700">ON DELETE SET NULL</text>
 
   <!-- FK 3: TICKETS.created_by -> USERS.user_id -->
-  <!-- From (630, 565) to (370, 395) -->
-  <path d="M 630, 565 C 510, 565 510, 395 370, 395" fill="none" stroke="#38BDF8" stroke-width="2" marker-end="url(#fkArrow)" />
-  <rect x="470" y="470" width="135" height="20" rx="4" fill="#0C4A6E" stroke="#0284C7" stroke-width="1" />
-  <text x="537" y="484" text-anchor="middle" fill="#BAE6FD" font-size="9.5" font-weight="600">ON DELETE RESTRICT</text>
+  <path d="M 630, 590 C 510, 590 510, 408 370, 408" fill="none" stroke="#38BDF8" stroke-width="2.2" marker-end="url(#fkArrow)" />
+  <rect x="475" y="490" width="135" height="20" rx="4" fill="#0C4A6E" stroke="#0284C7" stroke-width="1" />
+  <text x="542" y="504" text-anchor="middle" fill="#BAE6FD" font-size="9.5" font-weight="700">ON DELETE RESTRICT</text>
 
   <!-- FK 4: TICKETS.assigned_to -> USERS.user_id -->
-  <!-- From (630, 595) to (370, 395) -->
-  <path d="M 630, 595 C 490, 595 490, 395 370, 395" fill="none" stroke="#38BDF8" stroke-width="1.8" stroke-dasharray="4,3" marker-end="url(#fkArrow)" />
-  <rect x="470" y="525" width="135" height="20" rx="4" fill="#0C4A6E" stroke="#0284C7" stroke-width="1" />
-  <text x="537" y="539" text-anchor="middle" fill="#BAE6FD" font-size="9.5" font-weight="600">ON DELETE SET NULL</text>
+  <path d="M 630, 612 C 480, 612 480, 418 370, 418" fill="none" stroke="#38BDF8" stroke-width="1.8" stroke-dasharray="4,3" marker-end="url(#fkArrow)" />
+  <rect x="475" y="540" width="135" height="20" rx="4" fill="#0C4A6E" stroke="#0284C7" stroke-width="1" />
+  <text x="542" y="554" text-anchor="middle" fill="#BAE6FD" font-size="9.5" font-weight="700">ON DELETE SET NULL</text>
 
   <!-- FK 5: TICKETS.asset_id -> ASSETS.asset_id -->
-  <!-- From (630, 535) to (370, 785) -->
-  <path d="M 630, 535 C 530, 535 530, 785 370, 785" fill="none" stroke="#34D399" stroke-width="2" marker-end="url(#fkArrowEmerald)" />
-  <rect x="470" y="730" width="135" height="20" rx="4" fill="#064E3B" stroke="#059669" stroke-width="1" />
-  <text x="507" y="744" text-anchor="middle" fill="#A7F3D0" font-size="9.5" font-weight="600">ON DELETE SET NULL</text>
+  <path d="M 630, 568 C 500, 568 500, 778 370, 778" fill="none" stroke="#34D399" stroke-width="2.2" marker-end="url(#fkArrowEmerald)" />
+  <rect x="465" y="700" width="135" height="20" rx="4" fill="#064E3B" stroke="#059669" stroke-width="1" />
+  <text x="532" y="714" text-anchor="middle" fill="#A7F3D0" font-size="9.5" font-weight="700">ON DELETE SET NULL</text>
 
   <!-- FK 6: TICKET_AUDIT_LOG.ticket_id -> TICKETS.ticket_id -->
-  <!-- From (1170, 480) to (990, 355) -->
-  <path d="M 1170, 480 C 1070, 480 1070, 355 990, 355" fill="none" stroke="#FB7185" stroke-width="2.2" marker-end="url(#fkArrowRose)" />
-  <rect x="1035" y="405" width="135" height="20" rx="4" fill="#881337" stroke="#F43F5E" stroke-width="1" />
-  <text x="1102" y="419" text-anchor="middle" fill="#FDA4AF" font-size="9.5" font-weight="600">ON DELETE CASCADE</text>
+  <path d="M 1180, 432 C 1080, 432 1080, 408 990, 408" fill="none" stroke="#FB7185" stroke-width="2.2" marker-end="url(#fkArrowRose)" />
+  <rect x="1035" y="410" width="135" height="20" rx="4" fill="#881337" stroke="#F43F5E" stroke-width="1" />
+  <text x="1102" y="424" text-anchor="middle" fill="#FDA4AF" font-size="9.5" font-weight="700">ON DELETE CASCADE</text>
 
   <!-- FK 7: TICKET_AUDIT_LOG.changed_by -> USERS.user_id -->
-  <!-- From (1170, 600) to (370, 395) via bottom route -->
-  <path d="M 1170, 600 C 1050, 600 1050, 280 630, 280 L 450, 280 C 410, 280 410, 395 370, 395" fill="none" stroke="#C084FC" stroke-width="1.8" stroke-dasharray="5,4" marker-end="url(#fkArrowPurple)" />
-  <rect x="740" y="270" width="135" height="20" rx="4" fill="#3B0764" stroke="#7C3AED" stroke-width="1" />
-  <text x="807" y="284" text-anchor="middle" fill="#E9D5FF" font-size="9.5" font-weight="600">ON DELETE SET NULL</text>
-
+  <!-- Clean route through horizontal channel at Y=770 -->
+  <path d="M 1180, 546 L 1080, 546 C 1030, 546 1030, 770 990, 770 L 610, 770 C 440, 770 440, 428 370, 428" fill="none" stroke="#C084FC" stroke-width="1.8" stroke-dasharray="5,4" marker-end="url(#fkArrowPurple)" />
+  <rect x="740" y="760" width="135" height="20" rx="4" fill="#3B0764" stroke="#7C3AED" stroke-width="1" />
+  <text x="807" y="774" text-anchor="middle" fill="#E9D5FF" font-size="9.5" font-weight="700">ON DELETE SET NULL</text>
 
   <!-- ========================================================================= -->
   <!-- TABLE 1: DEPARTMENTS -->
   <!-- ========================================================================= -->
-  <g id="rel-departments" transform="translate(60, 130)" filter="url(#tableShadow)">
-    <rect width="310" height="150" rx="8" fill="#0D1322" stroke="#312E81" stroke-width="1.5" />
-    <path d="M 0,8 Q 0,0 8,0 L 302,0 Q 310,0 310,8 L 310,34 L 0,34 Z" fill="url(#hdrDept)" />
-    <text x="155" y="22" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700" letter-spacing="0.5">DEPARTMENTS</text>
+  <g transform="translate(60, 130)" filter="url(#tableShadow)">
+    <rect width="310" height="160" rx="8" fill="#0D1322" stroke="#4338CA" stroke-width="1.8" />
+    <path d="M 0,8 Q 0,0 8,0 L 302,0 Q 310,0 310,8 L 310,36 L 0,36 Z" fill="url(#hdrDept)" />
+    <text x="155" y="23" text-anchor="middle" fill="#FFFFFF" font-size="13.5" font-weight="700" letter-spacing="0.5">DEPARTMENTS</text>
     
-    <!-- Attributes -->
-    <text x="16" y="56" fill="#FBBF24" font-size="11.5" font-family="monospace" text-decoration="underline" font-weight="700">PK dept_id</text>
-    <text x="180" y="56" fill="#94A3B8" font-size="11" font-family="monospace">INT AUTO_INC</text>
-    <line x1="12" y1="64" x2="298" y2="64" stroke="#1E293B" stroke-width="1" />
+    <text x="16" y="58" fill="#FBBF24" font-size="12" font-family="monospace" text-decoration="underline" font-weight="800">PK dept_id</text>
+    <text x="180" y="58" fill="#94A3B8" font-size="11.5" font-family="monospace">INT AUTO_INC</text>
+    <line x1="12" y1="68" x2="298" y2="68" stroke="#1E293B" stroke-width="1" />
 
-    <text x="16" y="80" fill="#E2E8F0" font-size="11.5" font-family="monospace">dept_name</text>
-    <text x="180" y="80" fill="#38BDF8" font-size="11" font-family="monospace">VARCHAR(100) UK</text>
+    <text x="16" y="86" fill="#E2E8F0" font-size="12" font-family="monospace">dept_name</text>
+    <text x="180" y="86" fill="#38BDF8" font-size="11.5" font-family="monospace">VARCHAR(100) UK</text>
 
-    <text x="16" y="102" fill="#E2E8F0" font-size="11.5" font-family="monospace">manager_name</text>
-    <text x="180" y="102" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(100)</text>
+    <text x="16" y="110" fill="#E2E8F0" font-size="12" font-family="monospace">manager_name</text>
+    <text x="180" y="110" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(100)</text>
 
-    <text x="16" y="124" fill="#E2E8F0" font-size="11.5" font-family="monospace">building_location</text>
-    <text x="180" y="124" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(100)</text>
+    <text x="16" y="134" fill="#E2E8F0" font-size="12" font-family="monospace">building_location</text>
+    <text x="180" y="134" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(100)</text>
 
-    <text x="16" y="144" fill="#94A3B8" font-size="11" font-family="monospace">created_at</text>
-    <text x="180" y="144" fill="#64748B" font-size="11" font-family="monospace">TIMESTAMP</text>
+    <text x="16" y="154" fill="#94A3B8" font-size="11" font-family="monospace">created_at</text>
+    <text x="180" y="154" fill="#64748B" font-size="11" font-family="monospace">TIMESTAMP</text>
   </g>
 
   <!-- ========================================================================= -->
   <!-- TABLE 2: USERS -->
   <!-- ========================================================================= -->
-  <g id="rel-users" transform="translate(60, 320)" filter="url(#tableShadow)">
-    <rect width="310" height="230" rx="8" fill="#0D1322" stroke="#075985" stroke-width="1.5" />
-    <path d="M 0,8 Q 0,0 8,0 L 302,0 Q 310,0 310,8 L 310,34 L 0,34 Z" fill="url(#hdrUser)" />
-    <text x="155" y="22" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700" letter-spacing="0.5">USERS</text>
+  <g transform="translate(60, 350)" filter="url(#tableShadow)">
+    <rect width="310" height="250" rx="8" fill="#0D1322" stroke="#0284C7" stroke-width="1.8" />
+    <path d="M 0,8 Q 0,0 8,0 L 302,0 Q 310,0 310,8 L 310,36 L 0,36 Z" fill="url(#hdrUser)" />
+    <text x="155" y="23" text-anchor="middle" fill="#FFFFFF" font-size="13.5" font-weight="700" letter-spacing="0.5">USERS</text>
     
-    <!-- Attributes -->
-    <text x="16" y="56" fill="#FBBF24" font-size="11.5" font-family="monospace" text-decoration="underline" font-weight="700">PK user_id</text>
-    <text x="180" y="56" fill="#94A3B8" font-size="11" font-family="monospace">INT AUTO_INC</text>
-    <line x1="12" y1="64" x2="298" y2="64" stroke="#1E293B" stroke-width="1" />
+    <text x="16" y="58" fill="#FBBF24" font-size="12" font-family="monospace" text-decoration="underline" font-weight="800">PK user_id</text>
+    <text x="180" y="58" fill="#94A3B8" font-size="11.5" font-family="monospace">INT AUTO_INC</text>
+    <line x1="12" y1="68" x2="298" y2="68" stroke="#1E293B" stroke-width="1" />
 
-    <text x="16" y="80" fill="#E2E8F0" font-size="11.5" font-family="monospace">full_name</text>
-    <text x="180" y="80" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(100)</text>
+    <text x="16" y="86" fill="#E2E8F0" font-size="12" font-family="monospace">full_name</text>
+    <text x="180" y="86" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(100)</text>
 
-    <text x="16" y="102" fill="#E2E8F0" font-size="11.5" font-family="monospace">email</text>
-    <text x="180" y="102" fill="#38BDF8" font-size="11" font-family="monospace">VARCHAR(120) UK</text>
+    <text x="16" y="110" fill="#E2E8F0" font-size="12" font-family="monospace">email</text>
+    <text x="180" y="110" fill="#38BDF8" font-size="11.5" font-family="monospace">VARCHAR(120) UK</text>
 
-    <text x="16" y="124" fill="#E2E8F0" font-size="11.5" font-family="monospace">password_hash</text>
-    <text x="180" y="124" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(255)</text>
+    <text x="16" y="134" fill="#E2E8F0" font-size="12" font-family="monospace">password_hash</text>
+    <text x="180" y="134" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(255)</text>
 
-    <text x="16" y="146" fill="#F43F5E" font-size="11.5" font-family="monospace" font-weight="600">role</text>
-    <text x="180" y="146" fill="#F43F5E" font-size="11" font-family="monospace">ENUM(3 Roles)</text>
+    <text x="16" y="156" fill="#F43F5E" font-size="12" font-family="monospace" font-weight="700">role</text>
+    <text x="180" y="156" fill="#F43F5E" font-size="11.5" font-family="monospace">ENUM(3 Roles)</text>
 
-    <text x="16" y="168" fill="#818CF8" font-size="11.5" font-family="monospace" font-weight="700">FK dept_id</text>
-    <text x="180" y="168" fill="#818CF8" font-size="11" font-family="monospace">INT (RESTRICT)</text>
+    <text x="16" y="178" fill="#38BDF8" font-size="12" font-family="monospace" font-weight="700">FK dept_id</text>
+    <text x="180" y="178" fill="#38BDF8" font-size="11.5" font-family="monospace">INT (RESTRICT)</text>
 
-    <text x="16" y="190" fill="#E2E8F0" font-size="11.5" font-family="monospace">phone</text>
-    <text x="180" y="190" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(20)</text>
+    <text x="16" y="200" fill="#E2E8F0" font-size="12" font-family="monospace">phone</text>
+    <text x="180" y="200" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(20)</text>
 
-    <text x="16" y="212" fill="#E2E8F0" font-size="11.5" font-family="monospace">is_active</text>
-    <text x="180" y="212" fill="#94A3B8" font-size="11" font-family="monospace">BOOLEAN</text>
+    <text x="16" y="222" fill="#E2E8F0" font-size="12" font-family="monospace">is_active</text>
+    <text x="180" y="222" fill="#34D399" font-size="11.5" font-family="monospace">BOOLEAN</text>
+
+    <text x="16" y="242" fill="#94A3B8" font-size="11" font-family="monospace">created_at</text>
+    <text x="180" y="242" fill="#64748B" font-size="11" font-family="monospace">TIMESTAMP</text>
   </g>
 
   <!-- ========================================================================= -->
   <!-- TABLE 3: ASSETS -->
   <!-- ========================================================================= -->
-  <g id="rel-assets" transform="translate(60, 680)" filter="url(#tableShadow)">
-    <rect width="310" height="250" rx="8" fill="#0D1322" stroke="#065F46" stroke-width="1.5" />
-    <path d="M 0,8 Q 0,0 8,0 L 302,0 Q 310,0 310,8 L 310,34 L 0,34 Z" fill="url(#hdrAsset)" />
-    <text x="155" y="22" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700" letter-spacing="0.5">ASSETS</text>
+  <g transform="translate(60, 720)" filter="url(#tableShadow)">
+    <rect width="310" height="270" rx="8" fill="#0D1322" stroke="#059669" stroke-width="1.8" />
+    <path d="M 0,8 Q 0,0 8,0 L 302,0 Q 310,0 310,8 L 310,36 L 0,36 Z" fill="url(#hdrAsset)" />
+    <text x="155" y="23" text-anchor="middle" fill="#FFFFFF" font-size="13.5" font-weight="700" letter-spacing="0.5">ASSETS</text>
     
-    <!-- Attributes -->
-    <text x="16" y="56" fill="#FBBF24" font-size="11.5" font-family="monospace" text-decoration="underline" font-weight="700">PK asset_id</text>
-    <text x="180" y="56" fill="#94A3B8" font-size="11" font-family="monospace">INT AUTO_INC</text>
-    <line x1="12" y1="64" x2="298" y2="64" stroke="#1E293B" stroke-width="1" />
+    <text x="16" y="58" fill="#FBBF24" font-size="12" font-family="monospace" text-decoration="underline" font-weight="800">PK asset_id</text>
+    <text x="180" y="58" fill="#94A3B8" font-size="11.5" font-family="monospace">INT AUTO_INC</text>
+    <line x1="12" y1="68" x2="298" y2="68" stroke="#1E293B" stroke-width="1" />
 
-    <text x="16" y="80" fill="#E2E8F0" font-size="11.5" font-family="monospace">asset_tag</text>
-    <text x="180" y="80" fill="#38BDF8" font-size="11" font-family="monospace">VARCHAR(50) UK</text>
+    <text x="16" y="86" fill="#E2E8F0" font-size="12" font-family="monospace">asset_tag</text>
+    <text x="180" y="86" fill="#38BDF8" font-size="11.5" font-family="monospace">VARCHAR(50) UK</text>
 
-    <text x="16" y="102" fill="#E2E8F0" font-size="11.5" font-family="monospace">asset_name</text>
-    <text x="180" y="102" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(150)</text>
+    <text x="16" y="110" fill="#E2E8F0" font-size="12" font-family="monospace">asset_name</text>
+    <text x="180" y="110" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(150)</text>
 
-    <text x="16" y="124" fill="#E2E8F0" font-size="11.5" font-family="monospace">asset_type</text>
-    <text x="180" y="124" fill="#94A3B8" font-size="11" font-family="monospace">ENUM(6 Types)</text>
+    <text x="16" y="132" fill="#E2E8F0" font-size="12" font-family="monospace">asset_type</text>
+    <text x="180" y="132" fill="#94A3B8" font-size="11.5" font-family="monospace">ENUM(6 Types)</text>
 
-    <text x="16" y="146" fill="#34D399" font-size="11.5" font-family="monospace">status</text>
-    <text x="180" y="146" fill="#34D399" font-size="11" font-family="monospace">ENUM(4 States)</text>
+    <text x="16" y="154" fill="#34D399" font-size="12" font-family="monospace">status</text>
+    <text x="180" y="154" fill="#34D399" font-size="11.5" font-family="monospace">ENUM(4 States)</text>
 
-    <text x="16" y="168" fill="#E2E8F0" font-size="11.5" font-family="monospace">ip_address</text>
-    <text x="180" y="168" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(45)</text>
+    <text x="16" y="176" fill="#E2E8F0" font-size="12" font-family="monospace">ip_address</text>
+    <text x="180" y="176" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(45)</text>
 
-    <text x="16" y="190" fill="#E2E8F0" font-size="11.5" font-family="monospace">location</text>
-    <text x="180" y="190" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(100)</text>
+    <text x="16" y="198" fill="#E2E8F0" font-size="12" font-family="monospace">location</text>
+    <text x="180" y="198" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(100)</text>
 
-    <text x="16" y="212" fill="#34D399" font-size="11.5" font-family="monospace" font-weight="700">FK owner_id</text>
-    <text x="180" y="212" fill="#34D399" font-size="11" font-family="monospace">INT (SET NULL)</text>
+    <text x="16" y="220" fill="#34D399" font-size="12" font-family="monospace" font-weight="700">FK owner_id</text>
+    <text x="180" y="220" fill="#34D399" font-size="11.5" font-family="monospace">INT (SET NULL)</text>
 
-    <text x="16" y="234" fill="#F59E0B" font-size="11.5" font-family="monospace">criticality</text>
-    <text x="180" y="234" fill="#F59E0B" font-size="11" font-family="monospace">ENUM(4 Levels)</text>
+    <text x="16" y="242" fill="#F59E0B" font-size="12" font-family="monospace">criticality</text>
+    <text x="180" y="242" fill="#F59E0B" font-size="11.5" font-family="monospace">ENUM(4 Levels)</text>
+
+    <text x="16" y="262" fill="#94A3B8" font-size="11" font-family="monospace">purchase_date</text>
+    <text x="180" y="262" fill="#64748B" font-size="11" font-family="monospace">DATE</text>
   </g>
 
   <!-- ========================================================================= -->
   <!-- TABLE 4: SLA_POLICIES -->
   <!-- ========================================================================= -->
-  <g id="rel-sla" transform="translate(630, 130)" filter="url(#tableShadow)">
-    <rect width="360" height="150" rx="8" fill="#0D1322" stroke="#78350F" stroke-width="1.5" />
-    <path d="M 0,8 Q 0,0 8,0 L 352,0 Q 360,0 360,8 L 360,34 L 0,34 Z" fill="url(#hdrSla)" />
-    <text x="180" y="22" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700" letter-spacing="0.5">SLA_POLICIES</text>
+  <g transform="translate(630, 130)" filter="url(#tableShadow)">
+    <rect width="360" height="160" rx="8" fill="#0D1322" stroke="#D97706" stroke-width="1.8" />
+    <path d="M 0,8 Q 0,0 8,0 L 352,0 Q 360,0 360,8 L 360,36 L 0,36 Z" fill="url(#hdrSla)" />
+    <text x="180" y="23" text-anchor="middle" fill="#FFFFFF" font-size="13.5" font-weight="700" letter-spacing="0.5">SLA_POLICIES</text>
     
-    <!-- Attributes -->
-    <text x="16" y="56" fill="#FBBF24" font-size="11.5" font-family="monospace" text-decoration="underline" font-weight="700">PK sla_id</text>
-    <text x="220" y="56" fill="#94A3B8" font-size="11" font-family="monospace">INT AUTO_INC</text>
-    <line x1="12" y1="64" x2="348" y2="64" stroke="#1E293B" stroke-width="1" />
+    <text x="16" y="58" fill="#FBBF24" font-size="12" font-family="monospace" text-decoration="underline" font-weight="800">PK sla_id</text>
+    <text x="220" y="58" fill="#94A3B8" font-size="11.5" font-family="monospace">INT AUTO_INC</text>
+    <line x1="12" y1="68" x2="348" y2="68" stroke="#1E293B" stroke-width="1" />
 
-    <text x="16" y="80" fill="#E2E8F0" font-size="11.5" font-family="monospace">priority_level</text>
-    <text x="220" y="80" fill="#38BDF8" font-size="11" font-family="monospace">ENUM UK</text>
+    <text x="16" y="86" fill="#E2E8F0" font-size="12" font-family="monospace">priority_level</text>
+    <text x="220" y="86" fill="#38BDF8" font-size="11.5" font-family="monospace">ENUM UK</text>
 
-    <text x="16" y="102" fill="#E2E8F0" font-size="11.5" font-family="monospace">response_time_hrs</text>
-    <text x="220" y="102" fill="#94A3B8" font-size="11" font-family="monospace">DECIMAL(5,2)</text>
+    <text x="16" y="110" fill="#E2E8F0" font-size="12" font-family="monospace">response_time_hrs</text>
+    <text x="220" y="110" fill="#94A3B8" font-size="11.5" font-family="monospace">DECIMAL(5,2)</text>
 
-    <text x="16" y="124" fill="#38BDF8" font-size="11.5" font-family="monospace" font-weight="600">resolution_time_hrs</text>
-    <text x="220" y="124" fill="#38BDF8" font-size="11" font-family="monospace">DECIMAL(5,2)</text>
+    <text x="16" y="132" fill="#FCD34D" font-size="12" font-family="monospace" font-weight="700">resolution_time_hrs</text>
+    <text x="220" y="132" fill="#FCD34D" font-size="11.5" font-family="monospace">DECIMAL(5,2)</text>
 
-    <text x="16" y="144" fill="#94A3B8" font-size="11" font-family="monospace">escalation_threshold</text>
-    <text x="220" y="144" fill="#94A3B8" font-size="11" font-family="monospace">DECIMAL(5,2)</text>
+    <text x="16" y="152" fill="#94A3B8" font-size="11" font-family="monospace">escalation_threshold</text>
+    <text x="220" y="152" fill="#94A3B8" font-size="11" font-family="monospace">DECIMAL(5,2)</text>
   </g>
 
   <!-- ========================================================================= -->
   <!-- TABLE 5: TICKETS (Central Relation) -->
   <!-- ========================================================================= -->
-  <g id="rel-tickets" transform="translate(630, 320)" filter="url(#tableShadow)">
-    <rect width="360" height="380" rx="8" fill="#0D1322" stroke="#881337" stroke-width="2" />
-    <path d="M 0,8 Q 0,0 8,0 L 352,0 Q 360,0 360,8 L 360,34 L 0,34 Z" fill="url(#hdrTicket)" />
-    <text x="180" y="22" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700" letter-spacing="0.5">TICKETS</text>
+  <g transform="translate(630, 350)" filter="url(#tableShadow)">
+    <rect width="360" height="400" rx="8" fill="#0D1322" stroke="#E11D48" stroke-width="2.2" />
+    <path d="M 0,8 Q 0,0 8,0 L 352,0 Q 360,0 360,8 L 360,36 L 0,36 Z" fill="url(#hdrTicket)" />
+    <text x="180" y="23" text-anchor="middle" fill="#FFFFFF" font-size="13.5" font-weight="800" letter-spacing="0.5">TICKETS</text>
     
-    <!-- Attributes -->
-    <text x="16" y="56" fill="#FBBF24" font-size="11.5" font-family="monospace" text-decoration="underline" font-weight="700">PK ticket_id</text>
-    <text x="220" y="56" fill="#94A3B8" font-size="11" font-family="monospace">INT AUTO_INC</text>
-    <line x1="12" y1="64" x2="348" y2="64" stroke="#1E293B" stroke-width="1" />
+    <text x="16" y="58" fill="#FBBF24" font-size="12" font-family="monospace" text-decoration="underline" font-weight="800">PK ticket_id</text>
+    <text x="220" y="58" fill="#94A3B8" font-size="11.5" font-family="monospace">INT AUTO_INC</text>
+    <line x1="12" y1="68" x2="348" y2="68" stroke="#1E293B" stroke-width="1" />
 
-    <text x="16" y="80" fill="#E2E8F0" font-size="11.5" font-family="monospace">ticket_code</text>
-    <text x="220" y="80" fill="#38BDF8" font-size="11" font-family="monospace">VARCHAR(30) UK</text>
+    <text x="16" y="86" fill="#E2E8F0" font-size="12" font-family="monospace">ticket_code</text>
+    <text x="220" y="86" fill="#38BDF8" font-size="11.5" font-family="monospace">VARCHAR(30) UK</text>
 
-    <text x="16" y="102" fill="#E2E8F0" font-size="11.5" font-family="monospace">title</text>
-    <text x="220" y="102" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(200)</text>
+    <text x="16" y="108" fill="#E2E8F0" font-size="12" font-family="monospace">title</text>
+    <text x="220" y="108" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(200)</text>
 
-    <text x="16" y="124" fill="#E2E8F0" font-size="11.5" font-family="monospace">description</text>
-    <text x="220" y="124" fill="#94A3B8" font-size="11" font-family="monospace">TEXT</text>
+    <text x="16" y="130" fill="#E2E8F0" font-size="12" font-family="monospace">description</text>
+    <text x="220" y="130" fill="#94A3B8" font-size="11.5" font-family="monospace">TEXT</text>
 
-    <text x="16" y="146" fill="#E2E8F0" font-size="11.5" font-family="monospace">category</text>
-    <text x="220" y="146" fill="#94A3B8" font-size="11" font-family="monospace">ENUM(5 Values)</text>
+    <text x="16" y="152" fill="#E2E8F0" font-size="12" font-family="monospace">category</text>
+    <text x="220" y="152" fill="#94A3B8" font-size="11.5" font-family="monospace">ENUM(5 Values)</text>
 
-    <text x="16" y="168" fill="#FB7185" font-size="11.5" font-family="monospace">priority</text>
-    <text x="220" y="168" fill="#FB7185" font-size="11" font-family="monospace">ENUM(4 Levels)</text>
+    <text x="16" y="174" fill="#FB7185" font-size="12" font-family="monospace" font-weight="700">priority</text>
+    <text x="220" y="174" fill="#FB7185" font-size="11.5" font-family="monospace">ENUM(4 Levels)</text>
 
-    <text x="16" y="190" fill="#FCD34D" font-size="11.5" font-family="monospace">status</text>
-    <text x="220" y="190" fill="#FCD34D" font-size="11" font-family="monospace">ENUM(4 States)</text>
+    <text x="16" y="196" fill="#FCD34D" font-size="12" font-family="monospace">status</text>
+    <text x="220" y="196" fill="#FCD34D" font-size="11.5" font-family="monospace">ENUM(4 States)</text>
 
-    <text x="16" y="212" fill="#34D399" font-size="11.5" font-family="monospace" font-weight="700">FK asset_id</text>
-    <text x="220" y="212" fill="#34D399" font-size="11" font-family="monospace">INT (SET NULL)</text>
+    <text x="16" y="218" fill="#34D399" font-size="12" font-family="monospace" font-weight="700">FK asset_id</text>
+    <text x="220" y="218" fill="#34D399" font-size="11.5" font-family="monospace">INT (SET NULL)</text>
 
-    <text x="16" y="234" fill="#38BDF8" font-size="11.5" font-family="monospace" font-weight="700">FK created_by</text>
-    <text x="220" y="234" fill="#38BDF8" font-size="11" font-family="monospace">INT (RESTRICT)</text>
+    <text x="16" y="240" fill="#38BDF8" font-size="12" font-family="monospace" font-weight="700">FK created_by</text>
+    <text x="220" y="240" fill="#38BDF8" font-size="11.5" font-family="monospace">INT (RESTRICT)</text>
 
-    <text x="16" y="256" fill="#38BDF8" font-size="11.5" font-family="monospace" font-weight="700">FK assigned_to</text>
-    <text x="220" y="256" fill="#38BDF8" font-size="11" font-family="monospace">INT (SET NULL)</text>
+    <text x="16" y="262" fill="#38BDF8" font-size="12" font-family="monospace" font-weight="700">FK assigned_to</text>
+    <text x="220" y="262" fill="#38BDF8" font-size="11.5" font-family="monospace">INT (SET NULL)</text>
 
-    <text x="16" y="278" fill="#38BDF8" font-size="11.5" font-family="monospace">due_date</text>
-    <text x="220" y="278" fill="#64748B" font-size="11" font-family="monospace">TIMESTAMP [Trg]</text>
+    <text x="16" y="284" fill="#38BDF8" font-size="12" font-family="monospace">due_date</text>
+    <text x="220" y="284" fill="#64748B" font-size="11.5" font-family="monospace">TIMESTAMP [Trg]</text>
 
-    <text x="16" y="300" fill="#E2E8F0" font-size="11.5" font-family="monospace">resolved_at</text>
-    <text x="220" y="300" fill="#64748B" font-size="11" font-family="monospace">TIMESTAMP</text>
+    <text x="16" y="306" fill="#E2E8F0" font-size="12" font-family="monospace">resolved_at</text>
+    <text x="220" y="306" fill="#64748B" font-size="11.5" font-family="monospace">TIMESTAMP</text>
 
-    <text x="16" y="322" fill="#F43F5E" font-size="11.5" font-family="monospace">sla_breached</text>
-    <text x="220" y="322" fill="#F43F5E" font-size="11" font-family="monospace">BOOLEAN</text>
+    <text x="16" y="328" fill="#F43F5E" font-size="12" font-family="monospace" font-weight="700">sla_breached</text>
+    <text x="220" y="328" fill="#F43F5E" font-size="11.5" font-family="monospace">BOOLEAN</text>
 
-    <text x="16" y="344" fill="#E2E8F0" font-size="11.5" font-family="monospace">resolution_summary</text>
-    <text x="220" y="344" fill="#94A3B8" font-size="11" font-family="monospace">TEXT</text>
+    <text x="16" y="350" fill="#E2E8F0" font-size="12" font-family="monospace">resolution_summary</text>
+    <text x="220" y="350" fill="#94A3B8" font-size="11.5" font-family="monospace">TEXT</text>
 
-    <text x="16" y="366" fill="#94A3B8" font-size="11" font-family="monospace">created_at / updated</text>
-    <text x="220" y="366" fill="#64748B" font-size="11" font-family="monospace">TIMESTAMPS</text>
+    <text x="16" y="372" fill="#94A3B8" font-size="11" font-family="monospace">created_at / updated</text>
+    <text x="220" y="372" fill="#64748B" font-size="11" font-family="monospace">TIMESTAMPS</text>
   </g>
 
   <!-- ========================================================================= -->
   <!-- TABLE 6: TICKET_AUDIT_LOG -->
   <!-- ========================================================================= -->
-  <g id="rel-audit" transform="translate(1170, 370)" filter="url(#tableShadow)">
-    <rect width="360" height="230" rx="8" fill="#0D1322" stroke="#4C1D95" stroke-width="1.5" />
-    <path d="M 0,8 Q 0,0 8,0 L 352,0 Q 360,0 360,8 L 360,34 L 0,34 Z" fill="url(#hdrAudit)" />
-    <text x="180" y="22" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700" letter-spacing="0.5">TICKET_AUDIT_LOG</text>
+  <g transform="translate(1180, 350)" filter="url(#tableShadow)">
+    <rect width="360" height="240" rx="8" fill="#0D1322" stroke="#7C3AED" stroke-width="1.8" />
+    <path d="M 0,8 Q 0,0 8,0 L 352,0 Q 360,0 360,8 L 360,36 L 0,36 Z" fill="url(#hdrAudit)" />
+    <text x="180" y="23" text-anchor="middle" fill="#FFFFFF" font-size="13.5" font-weight="700" letter-spacing="0.5">TICKET_AUDIT_LOG</text>
     
-    <!-- Attributes -->
-    <text x="16" y="56" fill="#FBBF24" font-size="11.5" font-family="monospace" text-decoration="underline" font-weight="700">PK log_id</text>
-    <text x="220" y="56" fill="#94A3B8" font-size="11" font-family="monospace">INT AUTO_INC</text>
-    <line x1="12" y1="64" x2="348" y2="64" stroke="#1E293B" stroke-width="1" />
+    <text x="16" y="58" fill="#FBBF24" font-size="12" font-family="monospace" text-decoration="underline" font-weight="800">PK log_id</text>
+    <text x="220" y="58" fill="#94A3B8" font-size="11.5" font-family="monospace">INT AUTO_INC</text>
+    <line x1="12" y1="68" x2="348" y2="68" stroke="#1E293B" stroke-width="1" />
 
-    <text x="16" y="80" fill="#FB7185" font-size="11.5" font-family="monospace" font-weight="700">FK ticket_id</text>
-    <text x="220" y="80" fill="#FB7185" font-size="11" font-family="monospace">INT (CASCADE)</text>
+    <text x="16" y="84" fill="#FB7185" font-size="12" font-family="monospace" font-weight="700">FK ticket_id</text>
+    <text x="220" y="84" fill="#FB7185" font-size="11.5" font-family="monospace">INT (CASCADE)</text>
 
-    <text x="16" y="102" fill="#C084FC" font-size="11.5" font-family="monospace">action_type</text>
-    <text x="220" y="102" fill="#C084FC" font-size="11" font-family="monospace">VARCHAR(50)</text>
+    <text x="16" y="108" fill="#C084FC" font-size="12" font-family="monospace">action_type</text>
+    <text x="220" y="108" fill="#C084FC" font-size="11.5" font-family="monospace">VARCHAR(50)</text>
 
-    <text x="16" y="124" fill="#E2E8F0" font-size="11.5" font-family="monospace">old_status</text>
-    <text x="220" y="124" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(20)</text>
+    <text x="16" y="130" fill="#E2E8F0" font-size="12" font-family="monospace">old_status</text>
+    <text x="220" y="130" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(20)</text>
 
-    <text x="16" y="146" fill="#E2E8F0" font-size="11.5" font-family="monospace">new_status</text>
-    <text x="220" y="146" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(20)</text>
+    <text x="16" y="152" fill="#E2E8F0" font-size="12" font-family="monospace">new_status</text>
+    <text x="220" y="152" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(20)</text>
 
-    <text x="16" y="168" fill="#E2E8F0" font-size="11.5" font-family="monospace">comment</text>
-    <text x="220" y="168" fill="#94A3B8" font-size="11" font-family="monospace">TEXT</text>
+    <text x="16" y="174" fill="#E2E8F0" font-size="12" font-family="monospace">comment</text>
+    <text x="220" y="174" fill="#94A3B8" font-size="11.5" font-family="monospace">TEXT</text>
 
-    <text x="16" y="190" fill="#C084FC" font-size="11.5" font-family="monospace" font-weight="700">FK changed_by</text>
-    <text x="220" y="190" fill="#C084FC" font-size="11" font-family="monospace">INT (SET NULL)</text>
+    <text x="16" y="196" fill="#C084FC" font-size="12" font-family="monospace" font-weight="700">FK changed_by</text>
+    <text x="220" y="196" fill="#C084FC" font-size="11.5" font-family="monospace">INT (SET NULL)</text>
 
-    <text x="16" y="212" fill="#94A3B8" font-size="11" font-family="monospace">logged_at</text>
-    <text x="220" y="212" fill="#64748B" font-size="11" font-family="monospace">TIMESTAMP</text>
+    <text x="16" y="218" fill="#94A3B8" font-size="11" font-family="monospace">logged_at</text>
+    <text x="220" y="218" fill="#64748B" font-size="11" font-family="monospace">TIMESTAMP</text>
   </g>
 
   <!-- ========================================================================= -->
   <!-- TABLE 7: KNOWLEDGE_BASE -->
   <!-- ========================================================================= -->
-  <g id="rel-kb" transform="translate(1170, 680)" filter="url(#tableShadow)">
-    <rect width="360" height="250" rx="8" fill="#0D1322" stroke="#134E4A" stroke-width="1.5" />
-    <path d="M 0,8 Q 0,0 8,0 L 352,0 Q 360,0 360,8 L 360,34 L 0,34 Z" fill="url(#hdrKb)" />
-    <text x="180" y="22" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700" letter-spacing="0.5">KNOWLEDGE_BASE</text>
+  <g transform="translate(1180, 680)" filter="url(#tableShadow)">
+    <rect width="360" height="260" rx="8" fill="#0D1322" stroke="#0D9488" stroke-width="1.8" />
+    <path d="M 0,8 Q 0,0 8,0 L 352,0 Q 360,0 360,8 L 360,36 L 0,36 Z" fill="url(#hdrKb)" />
+    <text x="180" y="23" text-anchor="middle" fill="#FFFFFF" font-size="13.5" font-weight="700" letter-spacing="0.5">KNOWLEDGE_BASE</text>
     
-    <!-- Attributes -->
-    <text x="16" y="56" fill="#FBBF24" font-size="11.5" font-family="monospace" text-decoration="underline" font-weight="700">PK kb_id</text>
-    <text x="220" y="56" fill="#94A3B8" font-size="11" font-family="monospace">INT AUTO_INC</text>
-    <line x1="12" y1="64" x2="348" y2="64" stroke="#1E293B" stroke-width="1" />
+    <text x="16" y="58" fill="#FBBF24" font-size="12" font-family="monospace" text-decoration="underline" font-weight="800">PK kb_id</text>
+    <text x="220" y="58" fill="#94A3B8" font-size="11.5" font-family="monospace">INT AUTO_INC</text>
+    <line x1="12" y1="68" x2="348" y2="68" stroke="#1E293B" stroke-width="1" />
 
-    <text x="16" y="80" fill="#E2E8F0" font-size="11.5" font-family="monospace">title</text>
-    <text x="220" y="80" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(200)</text>
+    <text x="16" y="86" fill="#E2E8F0" font-size="12" font-family="monospace">title</text>
+    <text x="220" y="86" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(200)</text>
 
-    <text x="16" y="102" fill="#2DD4BF" font-size="11.5" font-family="monospace">category</text>
-    <text x="220" y="102" fill="#2DD4BF" font-size="11" font-family="monospace">VARCHAR(50)</text>
+    <text x="16" y="110" fill="#2DD4BF" font-size="12" font-family="monospace">category</text>
+    <text x="220" y="110" fill="#2DD4BF" font-size="11.5" font-family="monospace">VARCHAR(50)</text>
 
-    <text x="16" y="124" fill="#E2E8F0" font-size="11.5" font-family="monospace">keywords</text>
-    <text x="220" y="124" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(255)</text>
+    <text x="16" y="132" fill="#E2E8F0" font-size="12" font-family="monospace">keywords</text>
+    <text x="220" y="132" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(255)</text>
 
-    <text x="16" y="146" fill="#E2E8F0" font-size="11.5" font-family="monospace">problem_summary</text>
-    <text x="220" y="146" fill="#94A3B8" font-size="11" font-family="monospace">TEXT</text>
+    <text x="16" y="154" fill="#E2E8F0" font-size="12" font-family="monospace">problem_summary</text>
+    <text x="220" y="154" fill="#94A3B8" font-size="11.5" font-family="monospace">TEXT</text>
 
-    <text x="16" y="168" fill="#E2E8F0" font-size="11.5" font-family="monospace">resolution_steps</text>
-    <text x="220" y="168" fill="#94A3B8" font-size="11" font-family="monospace">TEXT</text>
+    <text x="16" y="176" fill="#E2E8F0" font-size="12" font-family="monospace">resolution_steps</text>
+    <text x="220" y="176" fill="#94A3B8" font-size="11.5" font-family="monospace">TEXT</text>
 
-    <text x="16" y="190" fill="#E2E8F0" font-size="11.5" font-family="monospace">applicable_asset</text>
-    <text x="220" y="190" fill="#94A3B8" font-size="11" font-family="monospace">VARCHAR(50)</text>
+    <text x="16" y="198" fill="#E2E8F0" font-size="12" font-family="monospace">applicable_asset</text>
+    <text x="220" y="198" fill="#94A3B8" font-size="11.5" font-family="monospace">VARCHAR(50)</text>
 
-    <text x="16" y="212" fill="#E2E8F0" font-size="11.5" font-family="monospace">view / helpful</text>
-    <text x="220" y="212" fill="#94A3B8" font-size="11" font-family="monospace">INT</text>
+    <text x="16" y="220" fill="#E2E8F0" font-size="12" font-family="monospace">view / helpful</text>
+    <text x="220" y="220" fill="#94A3B8" font-size="11.5" font-family="monospace">INT</text>
 
-    <text x="16" y="234" fill="#A7F3D0" font-size="11.5" font-family="monospace">vector_sample</text>
-    <text x="220" y="234" fill="#A7F3D0" font-size="11" font-family="monospace">FLOAT[384]</text>
+    <text x="16" y="242" fill="#A7F3D0" font-size="12" font-family="monospace" font-weight="700">vector_sample</text>
+    <text x="220" y="242" fill="#A7F3D0" font-size="11.5" font-family="monospace">FLOAT[384]</text>
   </g>
 
-  <!-- Schema Annotations & Formal Representation Box -->
-  <g id="formal-schema" transform="translate(630, 750)" filter="url(#tableShadow)">
-    <rect width="480" height="270" rx="10" fill="#0F172A" stroke="#1E293B" stroke-width="1.5" />
-    <text x="240" y="26" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="700" letter-spacing="1">FORMAL RELATIONAL NOTATION (3NF)</text>
+  <!-- Formal Relational Schema Box -->
+  <g transform="translate(630, 800)" filter="url(#tableShadow)">
+    <rect width="480" height="260" rx="10" fill="#0B132B" stroke="#1E293B" stroke-width="1.5" />
+    <text x="240" y="26" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="700" letter-spacing="1">FORMAL 3NF RELATIONAL SCHEMA NOTATION</text>
     
-    <text x="16" y="55" fill="#C7D2FE" font-size="11" font-family="monospace">DEPARTMENTS(<tspan text-decoration="underline" font-weight="700">dept_id</tspan>, dept_name, manager, location)</text>
-    <text x="16" y="80" fill="#BAE6FD" font-size="11" font-family="monospace">USERS(<tspan text-decoration="underline" font-weight="700">user_id</tspan>, full_name, email, role, <tspan fill="#818CF8">dept_id*</tspan>, phone)</text>
-    <text x="16" y="105" fill="#FDE68A" font-size="11" font-family="monospace">SLA_POLICIES(<tspan text-decoration="underline" font-weight="700">sla_id</tspan>, priority_level, resp_hrs, resol_hrs)</text>
-    <text x="16" y="130" fill="#A7F3D0" font-size="11" font-family="monospace">ASSETS(<tspan text-decoration="underline" font-weight="700">asset_id</tspan>, asset_tag, type, status, ip, <tspan fill="#34D399">owner_id*</tspan>)</text>
-    <text x="16" y="155" fill="#FDA4AF" font-size="11" font-family="monospace">TICKETS(<tspan text-decoration="underline" font-weight="700">ticket_id</tspan>, code, title, <tspan fill="#34D399">asset_id*</tspan>, <tspan fill="#38BDF8">created_by*</tspan>, <tspan fill="#38BDF8">assigned_to*</tspan>)</text>
-    <text x="16" y="180" fill="#E9D5FF" font-size="11" font-family="monospace">TICKET_AUDIT_LOG(<tspan text-decoration="underline" font-weight="700">log_id</tspan>, <tspan fill="#FB7185">ticket_id*</tspan>, action, old, new, <tspan fill="#C084FC">changed_by*</tspan>)</text>
-    <text x="16" y="205" fill="#CCFBF1" font-size="11" font-family="monospace">KNOWLEDGE_BASE(<tspan text-decoration="underline" font-weight="700">kb_id</tspan>, title, category, keywords, vector)</text>
+    <text x="16" y="54" fill="#C7D2FE" font-size="11" font-family="monospace">DEPARTMENTS(<tspan text-decoration="underline" font-weight="800">dept_id</tspan>, dept_name, manager, location)</text>
+    <text x="16" y="78" fill="#BAE6FD" font-size="11" font-family="monospace">USERS(<tspan text-decoration="underline" font-weight="800">user_id</tspan>, full_name, email, role, <tspan fill="#38BDF8">dept_id*</tspan>, phone)</text>
+    <text x="16" y="102" fill="#FDE68A" font-size="11" font-family="monospace">SLA_POLICIES(<tspan text-decoration="underline" font-weight="800">sla_id</tspan>, priority_level, resp_hrs, resol_hrs)</text>
+    <text x="16" y="126" fill="#A7F3D0" font-size="11" font-family="monospace">ASSETS(<tspan text-decoration="underline" font-weight="800">asset_id</tspan>, asset_tag, type, status, ip, <tspan fill="#34D399">owner_id*</tspan>)</text>
+    <text x="16" y="150" fill="#FDA4AF" font-size="11" font-family="monospace">TICKETS(<tspan text-decoration="underline" font-weight="800">ticket_id</tspan>, code, title, <tspan fill="#34D399">asset_id*</tspan>, <tspan fill="#38BDF8">created_by*</tspan>, <tspan fill="#38BDF8">assigned_to*</tspan>)</text>
+    <text x="16" y="174" fill="#E9D5FF" font-size="11" font-family="monospace">TICKET_AUDIT_LOG(<tspan text-decoration="underline" font-weight="800">log_id</tspan>, <tspan fill="#FB7185">ticket_id*</tspan>, action, old, new, <tspan fill="#C084FC">changed_by*</tspan>)</text>
+    <text x="16" y="198" fill="#CCFBF1" font-size="11" font-family="monospace">KNOWLEDGE_BASE(<tspan text-decoration="underline" font-weight="800">kb_id</tspan>, title, category, keywords, vector)</text>
 
-    <line x1="16" y1="222" x2="464" y2="222" stroke="#334155" stroke-width="1" />
-    <text x="16" y="242" fill="#6EE7B7" font-size="10.5">✓ Underlined attributes denote Primary Keys (PK).</text>
-    <text x="16" y="258" fill="#67E8F9" font-size="10.5">✓ Asterisks (*) and arrows denote Foreign Keys (FK) referencing parent PKs.</text>
+    <line x1="16" y1="216" x2="464" y2="216" stroke="#334155" stroke-width="1" />
+    <text x="16" y="234" fill="#6EE7B7" font-size="10.5">✓ Underlined attributes denote Primary Keys (PK).</text>
+    <text x="16" y="250" fill="#67E8F9" font-size="10.5">✓ Asterisks (*) and arrows denote Foreign Keys (FK) referencing parent PKs.</text>
   </g>
 </svg>

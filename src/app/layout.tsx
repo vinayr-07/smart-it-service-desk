@@ -37,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     { href: '/tickets', label: 'Incident Desk', icon: TicketCheck },
     { href: '/assets', label: 'CMDB & Topology', icon: Network },
     { href: '/knowledge', label: 'AI Knowledge Search', icon: Sparkles },
+    { href: '/diagrams', label: 'ERD & Architecture', icon: Layers },
     { href: '/db-demo', label: 'DBMS 3.0 Showcase', icon: Terminal },
   ];
 
@@ -111,6 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {pathname === '/tickets' && 'Service Incident & Ticket Management'}
                 {pathname === '/assets' && 'IT Configuration Items & Blast Radius Graph'}
                 {pathname === '/knowledge' && 'AI-Powered Semantic Knowledge Base'}
+                {pathname === '/diagrams' && 'System Architecture & ER Diagram Design'}
                 {pathname === '/db-demo' && 'DBMS Level 3 Evaluation Console'}
               </div>
 

@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 950" width="100%" height="100%" style="background-color: #080c16; font-family: 'Segoe UI', Inter, system-ui, sans-serif;">
+  <defs>
+    <!-- Card Gradients -->
+    <linearGradient id="gradClient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.1" />
+    </linearGradient>
+    <linearGradient id="gradApi" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.1" />
+    </linearGradient>
+    <linearGradient id="gradData" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#10B981" stop-opacity="0.1" />
+    </linearGradient>
+
+    <filter id="glowShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.7" />
+    </filter>
+
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#38BDF8" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="800" y="55" text-anchor="middle" fill="#F8FAFC" font-size="28" font-weight="800">
+    SYSTEM ARCHITECTURE &amp; MULTI-PARADIGM DATA TIER
+  </text>
+  <text x="800" y="85" text-anchor="middle" fill="#94A3B8" font-size="15">
+    3-Tier Enterprise Architecture: Next.js Frontend + API Gateway + SQL + NoSQL Graph + Vector Search
+  </text>
+
+  <!-- ========================================================================= -->
+  <!-- TIER 1: CLIENT PRESENTATION TIER -->
+  <!-- ========================================================================= -->
+  <g id="tier-client" transform="translate(100, 120)">
+    <rect width="1400" height="190" rx="16" fill="url(#gradClient)" stroke="#6366F1" stroke-width="1.8" filter="url(#glowShadow)" />
+    <rect x="24" y="16" width="300" height="30" rx="6" fill="#4F46E5" />
+    <text x="36" y="36" fill="#FFFFFF" font-size="13" font-weight="700">TIER 1: CLIENT PRESENTATION (Next.js 14)</text>
+
+    <!-- Sub-modules -->
+    <g transform="translate(40, 65)">
+      <rect width="240" height="100" rx="10" fill="#111827" stroke="#3730A3" stroke-width="1.2" />
+      <text x="120" y="32" text-anchor="middle" fill="#C7D2FE" font-size="14" font-weight="700">Command Center</text>
+      <text x="120" y="54" text-anchor="middle" fill="#94A3B8" font-size="11">Operations Dashboard</text>
+      <text x="120" y="74" text-anchor="middle" fill="#94A3B8" font-size="11">Live SLA Watchlist Views</text>
+    </g>
+
+    <g transform="translate(310, 65)">
+      <rect width="240" height="100" rx="10" fill="#111827" stroke="#3730A3" stroke-width="1.2" />
+      <text x="120" y="32" text-anchor="middle" fill="#C7D2FE" font-size="14" font-weight="700">Incident Desk</text>
+      <text x="120" y="54" text-anchor="middle" fill="#94A3B8" font-size="11">Ticket Lifecycles &amp; Queues</text>
+      <text x="120" y="74" text-anchor="middle" fill="#94A3B8" font-size="11">Auto-Assign &amp; Atomic Resolve</text>
+    </g>
+
+    <g transform="translate(580, 65)">
+      <rect width="240" height="100" rx="10" fill="#111827" stroke="#3730A3" stroke-width="1.2" />
+      <text x="120" y="32" text-anchor="middle" fill="#C7D2FE" font-size="14" font-weight="700">CMDB Topology</text>
+      <text x="120" y="54" text-anchor="middle" fill="#94A3B8" font-size="11">Interactive Graph Canvas</text>
+      <text x="120" y="74" text-anchor="middle" fill="#94A3B8" font-size="11">Blast Radius Failure Engine</text>
+    </g>
+
+    <g transform="translate(850, 65)">
+      <rect width="240" height="100" rx="10" fill="#111827" stroke="#3730A3" stroke-width="1.2" />
+      <text x="120" y="32" text-anchor="middle" fill="#C7D2FE" font-size="14" font-weight="700">AI Knowledge Search</text>
+      <text x="120" y="54" text-anchor="middle" fill="#94A3B8" font-size="11">Natural Language Query</text>
+      <text x="120" y="74" text-anchor="middle" fill="#94A3B8" font-size="11">Cosine Similarity Scoring</text>
+    </g>
+
+    <g transform="translate(1120, 65)">
+      <rect width="240" height="100" rx="10" fill="#111827" stroke="#3730A3" stroke-width="1.2" />
+      <text x="120" y="32" text-anchor="middle" fill="#C7D2FE" font-size="14" font-weight="700">DBMS 3.0 Evaluator</text>
+      <text x="120" y="54" text-anchor="middle" fill="#94A3B8" font-size="11">Live Procedure Runner</text>
+      <text x="120" y="74" text-anchor="middle" fill="#94A3B8" font-size="11">Trigger &amp; View Inspector</text>
+    </g>
+  </g>
+
+  <!-- Connectors Client -> API -->
+  <line x1="800" y1="310" x2="800" y2="380" stroke="#38BDF8" stroke-width="2.5" marker-end="url(#arrowhead)" />
+  <rect x="740" y="335" width="120" height="22" rx="4" fill="#0C4A6E" stroke="#0284C7" stroke-width="1" />
+  <text x="800" y="350" text-anchor="middle" fill="#BAE6FD" font-size="11" font-weight="600">HTTPS / REST</text>
+
+  <!-- ========================================================================= -->
+  <!-- TIER 2: APPLICATION & API LAYER -->
+  <!-- ========================================================================= -->
+  <g id="tier-api" transform="translate(100, 380)">
+    <rect width="1400" height="190" rx="16" fill="url(#gradApi)" stroke="#0284C7" stroke-width="1.8" filter="url(#glowShadow)" />
+    <rect x="24" y="16" width="340" height="30" rx="6" fill="#0369A1" />
+    <text x="36" y="36" fill="#FFFFFF" font-size="13" font-weight="700">TIER 2: BACKEND ROUTE HANDLERS &amp; SERVICES</text>
+
+    <!-- Sub-modules -->
+    <g transform="translate(80, 65)">
+      <rect width="280" height="100" rx="10" fill="#111827" stroke="#0C4A6E" stroke-width="1.2" />
+      <text x="140" y="32" text-anchor="middle" fill="#BAE6FD" font-size="14" font-weight="700">Incident Route Handlers</text>
+      <text x="140" y="54" text-anchor="middle" fill="#94A3B8" font-size="11">/api/tickets (CRUD &amp; Filter)</text>
+      <text x="140" y="74" text-anchor="middle" fill="#94A3B8" font-size="11">Auto-Assign &amp; ACID Resolve</text>
+    </g>
+
+    <g transform="translate(400, 65)">
+      <rect width="280" height="100" rx="10" fill="#111827" stroke="#0C4A6E" stroke-width="1.2" />
+      <text x="140" y="32" text-anchor="middle" fill="#BAE6FD" font-size="14" font-weight="700">CMDB &amp; Graph Controller</text>
+      <text x="140" y="54" text-anchor="middle" fill="#94A3B8" font-size="11">/api/assets (Topology)</text>
+      <text x="140" y="74" text-anchor="middle" fill="#94A3B8" font-size="11">Blast Radius Traversal API</text>
+    </g>
+
+    <g transform="translate(720, 65)">
+      <rect width="280" height="100" rx="10" fill="#111827" stroke="#0C4A6E" stroke-width="1.2" />
+      <text x="140" y="32" text-anchor="middle" fill="#BAE6FD" font-size="14" font-weight="700">Vector Search Engine</text>
+      <text x="140" y="54" text-anchor="middle" fill="#94A3B8" font-size="11">/api/knowledge (Semantic)</text>
+      <text x="140" y="74" text-anchor="middle" fill="#94A3B8" font-size="11">TF-IDF Vector Embeddings</text>
+    </g>
+
+    <g transform="translate(1040, 65)">
+      <rect width="280" height="100" rx="10" fill="#111827" stroke="#0C4A6E" stroke-width="1.2" />
+      <text x="140" y="32" text-anchor="middle" fill="#BAE6FD" font-size="14" font-weight="700">Role-Based Auth (RBAC)</text>
+      <text x="140" y="54" text-anchor="middle" fill="#94A3B8" font-size="11">Admin | Agent | Employee</text>
+      <text x="140" y="74" text-anchor="middle" fill="#94A3B8" font-size="11">Audit Trails &amp; Security</text>
+    </g>
+  </g>
+
+  <!-- Connectors API -> Databases -->
+  <line x1="320" y1="570" x2="320" y2="640" stroke="#10B981" stroke-width="2.5" marker-end="url(#arrowhead)" />
+  <line x1="800" y1="570" x2="800" y2="640" stroke="#06B6D4" stroke-width="2.5" marker-end="url(#arrowhead)" />
+  <line x1="1280" y1="570" x2="1280" y2="640" stroke="#F59E0B" stroke-width="2.5" marker-end="url(#arrowhead)" />
+
+  <!-- ========================================================================= -->
+  <!-- TIER 3: MULTI-MODEL DATABASE TIER -->
+  <!-- ========================================================================= -->
+  <g id="tier-database" transform="translate(100, 640)">
+    <rect width="1400" height="260" rx="16" fill="url(#gradData)" stroke="#059669" stroke-width="1.8" filter="url(#glowShadow)" />
+    <rect x="24" y="16" width="370" height="30" rx="6" fill="#047857" />
+    <text x="36" y="36" fill="#FFFFFF" font-size="13" font-weight="700">TIER 3: MULTI-PARADIGM DATABASE STORAGE TIER</text>
+
+    <!-- Paradigm 1: Relational SQL -->
+    <g transform="translate(50, 65)">
+      <rect width="400" height="170" rx="12" fill="#064E3B" stroke="#10B981" stroke-width="1.5" />
+      <text x="200" y="32" text-anchor="middle" fill="#A7F3D0" font-size="16" font-weight="700">PARADIGM 1: RELATIONAL SQL</text>
+      <text x="200" y="52" text-anchor="middle" fill="#6EE7B7" font-size="12" font-weight="600">MySQL 8.0 InnoDB / PostgreSQL</text>
+      <line x1="20" y1="62" x2="380" y2="62" stroke="#047857" stroke-width="1" />
+      <text x="30" y="86" fill="#D1FAE5" font-size="12">• 7 Normalized Tables in 3NF with PK/FK Constraints</text>
+      <text x="30" y="108" fill="#D1FAE5" font-size="12">• Automated Triggers: SLA Deadlines &amp; Audit Logs</text>
+      <text x="30" y="130" fill="#D1FAE5" font-size="12">• Stored Routines: sp_auto_assign_ticket, fn_is_sla_breached</text>
+      <text x="30" y="152" fill="#D1FAE5" font-size="12">• ACID Transactions: Atomic Resolution &amp; Asset Sync</text>
+    </g>
+
+    <!-- Paradigm 2: NoSQL Graph -->
+    <g transform="translate(500, 65)">
+      <rect width="400" height="170" rx="12" fill="#083344" stroke="#06B6D4" stroke-width="1.5" />
+      <text x="200" y="32" text-anchor="middle" fill="#CFFAFE" font-size="16" font-weight="700">PARADIGM 2: NoSQL GRAPH (CMDB)</text>
+      <text x="200" y="52" text-anchor="middle" fill="#67E8F9" font-size="12" font-weight="600">Neo4j Cypher Query Engine</text>
+      <line x1="20" y1="62" x2="380" y2="62" stroke="#0E7490" stroke-width="1" />
+      <text x="30" y="86" fill="#E0F2FE" font-size="12">• Configuration Item Nodes (Apps, Servers, DBs, Switches)</text>
+      <text x="30" y="108" fill="#E0F2FE" font-size="12">• Relationships: [:DEPENDS_ON], [:HOSTED_ON], [:CONNECTED_TO]</text>
+      <text x="30" y="130" fill="#E0F2FE" font-size="12">• Recursive Blast Radius Traversal: MATCH path = (n)-[*1..4]->(f)</text>
+      <text x="30" y="152" fill="#E0F2FE" font-size="12">• Root Cause Analysis &amp; Single Point of Failure (SPOF)</text>
+    </g>
+
+    <!-- Paradigm 3: Vector Database -->
+    <g transform="translate(950, 65)">
+      <rect width="400" height="170" rx="12" fill="#451A03" stroke="#F59E0B" stroke-width="1.5" />
+      <text x="200" y="32" text-anchor="middle" fill="#FEF3C7" font-size="16" font-weight="700">PARADIGM 3: VECTOR DATABASE</text>
+      <text x="200" y="52" text-anchor="middle" fill="#FCD34D" font-size="12" font-weight="600">Embedding Vectors + Cosine Similarity</text>
+      <line x1="20" y1="62" x2="380" y2="62" stroke="#B45309" stroke-width="1" />
+      <text x="30" y="86" fill="#FEF3C7" font-size="12">• Vectorized IT Runbooks &amp; Past Incident Solutions</text>
+      <text x="30" y="108" fill="#FEF3C7" font-size="12">• Semantic Matching: Translates Symptoms to Root Causes</text>
+      <text x="30" y="130" fill="#FEF3C7" font-size="12">• Metric: Cosine Distance sim(q, d) = (q · d) / (||q|| ||d||)</text>
+      <text x="30" y="152" fill="#FEF3C7" font-size="12">• Instant Sub-millisecond Diagnostic Retrieval</text>
+    </g>
+  </g>
+</svg>

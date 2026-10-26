@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" width="100%" height="100%" style="background-color: #0b1120; font-family: 'Segoe UI', Inter, system-ui, sans-serif;">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="headerGradDept" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#3730A3" />
+    </linearGradient>
+    <linearGradient id="headerGradUser" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#0369A1" />
+    </linearGradient>
+    <linearGradient id="headerGradTicket" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E11D48" />
+      <stop offset="100%" stop-color="#BE123C" />
+    </linearGradient>
+    <linearGradient id="headerGradAsset" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="headerGradSLA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+    <linearGradient id="headerGradAudit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7C3AED" />
+      <stop offset="100%" stop-color="#6D28D9" />
+    </linearGradient>
+    <linearGradient id="headerGradKB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D9488" />
+      <stop offset="100%" stop-color="#0F766E" />
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+
+    <!-- Markers for Crow's Foot & Relationships -->
+    <marker id="circleEnd" markerWidth="8" markerHeight="8" refX="4" refY="4">
+      <circle cx="4" cy="4" r="3" fill="#0b1120" stroke="#38BDF8" stroke-width="2" />
+    </marker>
+    <marker id="crowsFoot" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+      <path d="M 1,1 L 12,7 L 1,13 M 12,1 L 12,13" fill="none" stroke="#38BDF8" stroke-width="2" />
+    </marker>
+    <marker id="crowsFootRose" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+      <path d="M 1,1 L 12,7 L 1,13 M 12,1 L 12,13" fill="none" stroke="#FB7185" stroke-width="2" />
+    </marker>
+    <marker id="crowsFootEmerald" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+      <path d="M 1,1 L 12,7 L 1,13 M 12,1 L 12,13" fill="none" stroke="#34D399" stroke-width="2" />
+    </marker>
+  </defs>
+
+  <!-- Canvas Header -->
+  <g id="diagram-title">
+    <text x="800" y="55" text-anchor="middle" fill="#F8FAFC" font-size="28" font-weight="800" letter-spacing="-0.5">
+      ENTITY-RELATIONSHIP (ER) DIAGRAM
+    </text>
+    <text x="800" y="85" text-anchor="middle" fill="#94A3B8" font-size="15" font-weight="500">
+      Smart IT Service Desk with Asset Management &amp; AI Knowledge Search • 3NF Normalized Relational Schema
+    </text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- RELATIONSHIP CONNECTING LINES (Rendered behind cards) -->
+  <!-- ========================================================================= -->
+
+  <!-- DEPARTMENTS (1) -> USERS (N) -->
+  <path d="M 230, 240 L 230, 370" fill="none" stroke="#818CF8" stroke-width="2.2" marker-start="url(#circleEnd)" marker-end="url(#crowsFoot)" />
+  <rect x="180" y="295" width="100" height="22" rx="4" fill="#1E1B4B" stroke="#4F46E5" stroke-width="1" />
+  <text x="230" y="310" text-anchor="middle" fill="#C7D2FE" font-size="11" font-weight="600">1 : N Employs</text>
+
+  <!-- USERS (1) -> TICKETS (N) [Requester / created_by] -->
+  <path d="M 370, 480 L 630, 480" fill="none" stroke="#38BDF8" stroke-width="2.2" marker-start="url(#circleEnd)" marker-end="url(#crowsFoot)" />
+  <rect x="460" y="468" width="80" height="22" rx="4" fill="#0C4A6E" stroke="#0284C7" stroke-width="1" />
+  <text x="500" y="483" text-anchor="middle" fill="#BAE6FD" font-size="11" font-weight="600">1 : N Creates</text>
+
+  <!-- USERS (1) -> TICKETS (N) [Assigned Agent / assigned_to] -->
+  <path d="M 370, 520 L 500, 520 L 500, 540 L 630, 540" fill="none" stroke="#38BDF8" stroke-width="2.2" stroke-dasharray="5,4" marker-start="url(#circleEnd)" marker-end="url(#crowsFoot)" />
+  <rect x="445" y="528" width="110" height="22" rx="4" fill="#0C4A6E" stroke="#0284C7" stroke-width="1" />
+  <text x="500" y="543" text-anchor="middle" fill="#BAE6FD" font-size="10" font-weight="600">1 : N Assigned_To</text>
+
+  <!-- USERS (1) -> ASSETS (N) [Owner] -->
+  <path d="M 230, 680 L 230, 770" fill="none" stroke="#34D399" stroke-width="2.2" marker-start="url(#circleEnd)" marker-end="url(#crowsFootEmerald)" />
+  <rect x="180" y="715" width="100" height="22" rx="4" fill="#064E3B" stroke="#059669" stroke-width="1" />
+  <text x="230" y="730" text-anchor="middle" fill="#A7F3D0" font-size="11" font-weight="600">1 : N Manages</text>
+
+  <!-- ASSETS (1) -> TICKETS (N) [Affected CI] -->
+  <path d="M 370, 850 L 780, 850 L 780, 690" fill="none" stroke="#34D399" stroke-width="2.2" marker-start="url(#circleEnd)" marker-end="url(#crowsFootEmerald)" />
+  <rect x="520" y="838" width="110" height="22" rx="4" fill="#064E3B" stroke="#059669" stroke-width="1" />
+  <text x="575" y="853" text-anchor="middle" fill="#A7F3D0" font-size="11" font-weight="600">1 : N Affected_In</text>
+
+  <!-- SLA_POLICIES (1) -> TICKETS (N) [Governs SLA] -->
+  <path d="M 780, 240 L 780, 360" fill="none" stroke="#FBBF24" stroke-width="2.2" marker-start="url(#circleEnd)" marker-end="url(#crowsFoot)" />
+  <rect x="730" y="290" width="100" height="22" rx="4" fill="#451A03" stroke="#D97706" stroke-width="1" />
+  <text x="780" y="305" text-anchor="middle" fill="#FDE68A" font-size="11" font-weight="600">1 : N Governs</text>
+
+  <!-- TICKETS (1) -> TICKET_AUDIT_LOG (N) -->
+  <path d="M 940, 520 L 1180, 520" fill="none" stroke="#C084FC" stroke-width="2.2" marker-start="url(#circleEnd)" marker-end="url(#crowsFoot)" />
+  <rect x="1030" y="508" width="100" height="22" rx="4" fill="#3B0764" stroke="#7C3AED" stroke-width="1" />
+  <text x="1080" y="523" text-anchor="middle" fill="#E9D5FF" font-size="11" font-weight="600">1 : N Logs</text>
+
+  <!-- ========================================================================= -->
+  <!-- ENTITY 1: DEPARTMENTS -->
+  <!-- ========================================================================= -->
+  <g id="entity-departments" transform="translate(90, 110)" filter="url(#cardShadow)">
+    <rect width="280" height="130" rx="10" fill="#111827" stroke="#312E81" stroke-width="1.5" />
+    <path d="M 0,10 Q 0,0 10,0 L 270,0 Q 280,0 280,10 L 280,36 L 0,36 Z" fill="url(#headerGradDept)" />
+    <text x="140" y="24" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">DEPARTMENTS</text>
+    
+    <text x="16" y="58" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#FBBF24" font-weight="700">PK </tspan>dept_id : INT</text>
+    <text x="16" y="78" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#38BDF8" font-weight="700">UK </tspan>dept_name : VARCHAR(100)</text>
+    <text x="16" y="98" fill="#94A3B8" font-size="12" font-family="monospace">   manager_name : VARCHAR(100)</text>
+    <text x="16" y="118" fill="#94A3B8" font-size="12" font-family="monospace">   building_location : VARCHAR</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ENTITY 2: USERS -->
+  <!-- ========================================================================= -->
+  <g id="entity-users" transform="translate(90, 370)" filter="url(#cardShadow)">
+    <rect width="280" height="210" rx="10" fill="#111827" stroke="#075985" stroke-width="1.5" />
+    <path d="M 0,10 Q 0,0 10,0 L 270,0 Q 280,0 280,10 L 280,36 L 0,36 Z" fill="url(#headerGradUser)" />
+    <text x="140" y="24" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">USERS (RBAC)</text>
+    
+    <text x="16" y="58" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#FBBF24" font-weight="700">PK </tspan>user_id : INT</text>
+    <text x="16" y="78" fill="#F8FAFC" font-size="12" font-family="monospace">   full_name : VARCHAR(100)</text>
+    <text x="16" y="98" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#38BDF8" font-weight="700">UK </tspan>email : VARCHAR(120)</text>
+    <text x="16" y="118" fill="#94A3B8" font-size="12" font-family="monospace">   password_hash : VARCHAR</text>
+    <text x="16" y="138" fill="#F43F5E" font-size="12" font-family="monospace">   role : Admin|Agent|Emp</text>
+    <text x="16" y="158" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#818CF8" font-weight="700">FK </tspan>dept_id : INT</text>
+    <text x="16" y="178" fill="#94A3B8" font-size="12" font-family="monospace">   phone : VARCHAR(20)</text>
+    <text x="16" y="198" fill="#94A3B8" font-size="12" font-family="monospace">   is_active : BOOLEAN</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ENTITY 3: ASSETS (Configuration Items) -->
+  <!-- ========================================================================= -->
+  <g id="entity-assets" transform="translate(90, 770)" filter="url(#cardShadow)">
+    <rect width="280" height="230" rx="10" fill="#111827" stroke="#065F46" stroke-width="1.5" />
+    <path d="M 0,10 Q 0,0 10,0 L 270,0 Q 280,0 280,10 L 280,36 L 0,36 Z" fill="url(#headerGradAsset)" />
+    <text x="140" y="24" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">ASSETS (CMDB)</text>
+    
+    <text x="16" y="58" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#FBBF24" font-weight="700">PK </tspan>asset_id : INT</text>
+    <text x="16" y="78" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#38BDF8" font-weight="700">UK </tspan>asset_tag : VARCHAR(50)</text>
+    <text x="16" y="98" fill="#F8FAFC" font-size="12" font-family="monospace">   asset_name : VARCHAR(150)</text>
+    <text x="16" y="118" fill="#94A3B8" font-size="12" font-family="monospace">   asset_type : Server|DB|SW</text>
+    <text x="16" y="138" fill="#34D399" font-size="12" font-family="monospace">   status : OP|DEG|OUTAGE</text>
+    <text x="16" y="158" fill="#94A3B8" font-size="12" font-family="monospace">   ip_address : VARCHAR(45)</text>
+    <text x="16" y="178" fill="#94A3B8" font-size="12" font-family="monospace">   location : VARCHAR(100)</text>
+    <text x="16" y="198" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#818CF8" font-weight="700">FK </tspan>owner_id : INT</text>
+    <text x="16" y="218" fill="#F59E0B" font-size="12" font-family="monospace">   criticality : LOW|MED|CRIT</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ENTITY 4: SLA_POLICIES -->
+  <!-- ========================================================================= -->
+  <g id="entity-sla" transform="translate(630, 110)" filter="url(#cardShadow)">
+    <rect width="300" height="130" rx="10" fill="#111827" stroke="#78350F" stroke-width="1.5" />
+    <path d="M 0,10 Q 0,0 10,0 L 290,0 Q 300,0 300,10 L 300,36 L 0,36 Z" fill="url(#headerGradSLA)" />
+    <text x="150" y="24" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">SLA_POLICIES</text>
+    
+    <text x="16" y="58" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#FBBF24" font-weight="700">PK </tspan>sla_id : INT</text>
+    <text x="16" y="78" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#38BDF8" font-weight="700">UK </tspan>priority_level : ENUM</text>
+    <text x="16" y="98" fill="#94A3B8" font-size="12" font-family="monospace">   response_time_hrs : DEC</text>
+    <text x="16" y="118" fill="#38BDF8" font-size="12" font-family="monospace">   resolution_time_hrs : DEC</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ENTITY 5: TICKETS (Central Entity) -->
+  <!-- ========================================================================= -->
+  <g id="entity-tickets" transform="translate(630, 360)" filter="url(#cardShadow)">
+    <rect width="310" height="330" rx="10" fill="#111827" stroke="#881337" stroke-width="2" />
+    <path d="M 0,10 Q 0,0 10,0 L 300,0 Q 310,0 310,10 L 310,36 L 0,36 Z" fill="url(#headerGradTicket)" />
+    <text x="155" y="24" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">TICKETS (Core Incident Desk)</text>
+    
+    <text x="16" y="58" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#FBBF24" font-weight="700">PK </tspan>ticket_id : INT</text>
+    <text x="16" y="78" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#38BDF8" font-weight="700">UK </tspan>ticket_code : VARCHAR(30)</text>
+    <text x="16" y="98" fill="#F8FAFC" font-size="12" font-family="monospace">   title : VARCHAR(200)</text>
+    <text x="16" y="118" fill="#94A3B8" font-size="12" font-family="monospace">   description : TEXT</text>
+    <text x="16" y="138" fill="#94A3B8" font-size="12" font-family="monospace">   category : Net|HW|SW|Sec</text>
+    <text x="16" y="158" fill="#FB7185" font-size="12" font-family="monospace">   priority : LOW|MED|HIGH|CRIT</text>
+    <text x="16" y="178" fill="#FCD34D" font-size="12" font-family="monospace">   status : OPEN|IN_PROG|RES</text>
+    <text x="16" y="198" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#34D399" font-weight="700">FK </tspan>asset_id : INT (NULLABLE)</text>
+    <text x="16" y="218" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#38BDF8" font-weight="700">FK </tspan>created_by : INT (NOT NULL)</text>
+    <text x="16" y="238" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#38BDF8" font-weight="700">FK </tspan>assigned_to : INT (NULL)</text>
+    <text x="16" y="258" fill="#38BDF8" font-size="12" font-family="monospace">   due_date : TIMESTAMP [Trg]</text>
+    <text x="16" y="278" fill="#94A3B8" font-size="12" font-family="monospace">   resolved_at : TIMESTAMP</text>
+    <text x="16" y="298" fill="#F43F5E" font-size="12" font-family="monospace">   sla_breached : BOOLEAN</text>
+    <text x="16" y="318" fill="#94A3B8" font-size="12" font-family="monospace">   resolution_summary : TEXT</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ENTITY 6: TICKET_AUDIT_LOG -->
+  <!-- ========================================================================= -->
+  <g id="entity-audit" transform="translate(1180, 420)" filter="url(#cardShadow)">
+    <rect width="320" height="190" rx="10" fill="#111827" stroke="#4C1D95" stroke-width="1.5" />
+    <path d="M 0,10 Q 0,0 10,0 L 310,0 Q 320,0 320,10 L 320,36 L 0,36 Z" fill="url(#headerGradAudit)" />
+    <text x="160" y="24" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">TICKET_AUDIT_LOG (Triggers)</text>
+    
+    <text x="16" y="58" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#FBBF24" font-weight="700">PK </tspan>log_id : INT</text>
+    <text x="16" y="78" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#FB7185" font-weight="700">FK </tspan>ticket_id : INT (CASCADE)</text>
+    <text x="16" y="98" fill="#C084FC" font-size="12" font-family="monospace">   action_type : VARCHAR(50)</text>
+    <text x="16" y="118" fill="#94A3B8" font-size="12" font-family="monospace">   old_status : VARCHAR(20)</text>
+    <text x="16" y="138" fill="#94A3B8" font-size="12" font-family="monospace">   new_status : VARCHAR(20)</text>
+    <text x="16" y="158" fill="#94A3B8" font-size="12" font-family="monospace">   comment : TEXT</text>
+    <text x="16" y="178" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#38BDF8" font-weight="700">FK </tspan>changed_by : INT</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ENTITY 7: KNOWLEDGE_BASE (Vector / AI Component) -->
+  <!-- ========================================================================= -->
+  <g id="entity-kb" transform="translate(1180, 720)" filter="url(#cardShadow)">
+    <rect width="320" height="220" rx="10" fill="#111827" stroke="#134E4A" stroke-width="1.5" />
+    <path d="M 0,10 Q 0,0 10,0 L 310,0 Q 320,0 320,10 L 320,36 L 0,36 Z" fill="url(#headerGradKB)" />
+    <text x="160" y="24" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">KNOWLEDGE_BASE (Vector Embeddings)</text>
+    
+    <text x="16" y="58" fill="#F8FAFC" font-size="12" font-family="monospace"><tspan fill="#FBBF24" font-weight="700">PK </tspan>kb_id : INT</text>
+    <text x="16" y="78" fill="#F8FAFC" font-size="12" font-family="monospace">   title : VARCHAR(200)</text>
+    <text x="16" y="98" fill="#2DD4BF" font-size="12" font-family="monospace">   category : VARCHAR(50)</text>
+    <text x="16" y="118" fill="#94A3B8" font-size="12" font-family="monospace">   keywords : VARCHAR(255)</text>
+    <text x="16" y="138" fill="#94A3B8" font-size="12" font-family="monospace">   problem_summary : TEXT</text>
+    <text x="16" y="158" fill="#94A3B8" font-size="12" font-family="monospace">   resolution_steps : TEXT</text>
+    <text x="16" y="178" fill="#94A3B8" font-size="12" font-family="monospace">   applicable_asset_type : VARCHAR</text>
+    <text x="16" y="198" fill="#A7F3D0" font-size="12" font-family="monospace">   vector_embedding : FLOAT[384]</text>
+  </g>
+
+  <!-- Legend -->
+  <g id="diagram-legend" transform="translate(630, 780)" filter="url(#cardShadow)">
+    <rect width="480" height="180" rx="10" fill="#0F172A" stroke="#1E293B" stroke-width="1.5" />
+    <text x="240" y="28" text-anchor="middle" fill="#94A3B8" font-size="13" font-weight="700" letter-spacing="1">SCHEMA CONVENTIONS &amp; INTEGRITY RULES</text>
+    
+    <circle cx="30" cy="58" r="6" fill="#FBBF24" />
+    <text x="46" y="62" fill="#F1F5F9" font-size="12"><tspan font-weight="700">Primary Key (PK):</tspan> Auto-incrementing unique surrogate key.</text>
+    
+    <circle cx="30" cy="88" r="6" fill="#38BDF8" />
+    <text x="46" y="92" fill="#F1F5F9" font-size="12"><tspan font-weight="700">Foreign Key (FK):</tspan> Enforced with CASCADE or RESTRICT integrity actions.</text>
+    
+    <circle cx="30" cy="118" r="6" fill="#FB7185" />
+    <text x="46" y="122" fill="#F1F5F9" font-size="12"><tspan font-weight="700">Trigger Automations:</tspan> SLA calculations and audit logging executed in-engine.</text>
+    
+    <circle cx="30" cy="148" r="6" fill="#2DD4BF" />
+    <text x="46" y="152" fill="#F1F5F9" font-size="12"><tspan font-weight="700">Multi-Model Link:</tspan> Relational incidents bridge to Graph CMDB &amp; Vector Runbooks.</text>
+  </g>
+</svg>

@@ -21,9 +21,9 @@ export default function DiagramsPage() {
   const diagrams = {
     er: {
       title: 'Entity-Relationship (ER) Diagram',
-      subtitle: 'Crow\'s Foot Notation • Conceptual Database Design',
+      subtitle: 'Strict Peter Chen DBMS Notation • Experiential Learning Rulebook Compliant',
       file: '/diagrams/er_diagram.svg',
-      desc: 'Illustrates the 7 normalized relational entities (DEPARTMENTS, USERS, SLA_POLICIES, ASSETS, TICKETS, TICKET_AUDIT_LOG, KNOWLEDGE_BASE) with primary keys, foreign keys, cardinality ratios, and trigger automation points.'
+      desc: 'Formally models the conceptual design adhering strictly to DBMS rulebook specifications: Rectangles (Strong Entities), Double Rectangles (Weak Entities), Diamonds (Relationships), Double Diamonds (Identifying Relationships), Double Lines (Total Participation), Underlined Ovals (Primary Keys), Dashed Underlines (Discriminators), Branching Ovals (Composite Attributes), Double Ovals (Multivalued Attributes), and Dashed Ovals (Derived Attributes).'
     },
     rel: {
       title: 'Relational Schema Diagram (3NF Normalization)',

@@ -159,13 +159,13 @@ export default function DiagramsPage() {
           border: '1px solid var(--border-color)',
           borderRadius: 'var(--radius-md)',
           overflow: 'auto',
-          maxHeight: '750px',
+          maxHeight: '780px',
           padding: '24px',
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'flex-start'
         }}>
-          <div style={{ width: `${zoomLevel}%`, minWidth: '900px', transition: 'width 0.2s ease-out' }}>
+          <div style={{ width: `${zoomLevel}%`, minWidth: '900px', transition: 'width 0.2s ease-out', margin: '0 auto' }}>
             <img 
               src={current.file} 
               alt={current.title} 

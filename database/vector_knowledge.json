@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "title": "Resolving MySQL 'Too Many Connections' Error (Error 1040)",
+    "category": "Database",
+    "keywords": ["mysql", "connection", "pool", "max_connections", "timeout", "1040", "database", "exhausted", "sleep"],
+    "summary": "Applications fail with MySQL Error 1040: Too many connections when sudden traffic spikes or leaked unclosed connections occur.",
+    "resolution": "1. Connect via administrative socket: mysql -u root -p\n2. Inspect active threads: SHOW PROCESSLIST;\n3. Identify stuck Sleep queries and terminate if necessary.\n4. Temporarily increase dynamic limit: SET GLOBAL max_connections = 500;\n5. Make persistent in /etc/mysql/my.cnf: max_connections = 500 and wait_timeout = 300.\n6. Restart connection pooler in backend application.",
+    "applicable_asset": "AST-DB-01",
+    "tags": ["sql", "performance", "high-priority"],
+    "vector_sample": [0.082, 0.412, -0.198, 0.354, -0.012, 0.187, 0.551, -0.219, 0.043, 0.312]
+  },
+  {
+    "id": 2,
+    "title": "Diagnosing Network Switch Port Flapping & CRC Errors",
+    "category": "Network",
+    "keywords": ["switch", "port", "flap", "packet", "drop", "crc", "cable", "cisco", "duplex", "mismatch", "vlan", "lan", "wifi", "disconnect"],
+    "summary": "Network interface continuously cycles up and down, causing packet loss and latency spikes across subnet.",
+    "resolution": "1. SSH into switch: ssh admin@192.168.1.1\n2. View interface error counters: show interfaces gigabitEthernet 0/1\n3. Check for duplex or speed mismatch between host and port.\n4. Inspect physical patch cable or SFP optical module transceiver.\n5. Enable storm control and errdisable recovery if broadcast storm detected.\n6. Replace patch cable or re-seat SFP module.",
+    "applicable_asset": "AST-SW-02",
+    "tags": ["cisco", "hardware", "switch"],
+    "vector_sample": [-0.215, 0.054, 0.621, -0.114, 0.389, -0.081, 0.125, 0.481, -0.291, 0.076]
+  },
+  {
+    "id": 3,
+    "title": "Azure Active Directory SSO Infinite Redirect / Loop Resolution",
+    "category": "Security",
+    "keywords": ["azure", "ad", "sso", "single", "sign", "on", "loop", "redirect", "302", "oauth", "saml", "token", "login", "auth"],
+    "summary": "Users authenticate with Microsoft 365 / Azure AD but get bounced in a loop back to login prompt.",
+    "resolution": "1. Verify Azure Portal App Registrations -> Authentication -> Redirect URIs.\n2. Ensure protocol matches (https vs http) and exact trailing slash is present.\n3. Check system clock synchronization (NTP) on web server; token skew > 5 mins fails validation.\n4. Clear browser session cookies and test in Incognito mode.\n5. Verify ID Token and Access Token checkboxes are enabled in Implicit Grant if using SPA.",
+    "applicable_asset": "AST-CLD-02",
+    "tags": ["cloud", "identity", "authentication"],
+    "vector_sample": [0.341, -0.281, 0.104, 0.512, 0.095, -0.321, 0.418, -0.051, 0.229, -0.147]
+  },
+  {
+    "id": 4,
+    "title": "Server CPU Throttling and Node.js High Event Loop Lag",
+    "category": "Server",
+    "keywords": ["cpu", "load", "99%", "event", "loop", "nodejs", "garbage", "collection", "memory", "leak", "spike", "slow", "server", "lag"],
+    "summary": "Server response time degrades severely with CPU pegged at 95-100% on API gateway nodes.",
+    "resolution": "1. Run top or htop to identify process PID consuming resources.\n2. Capture CPU profile: node --cpu-prof app.js or inspect with clinic.js.\n3. Verify whether intensive sync operations (JSON parsing, regex catastrophic backtracking) are blocking event loop.\n4. Scale horizontally across CPU cores using PM2 cluster mode: pm2 start app.js -i max.\n5. Optimize database queries causing long sync waits.",
+    "applicable_asset": "AST-SRV-01",
+    "tags": ["nodejs", "performance", "backend"],
+    "vector_sample": [0.128, 0.395, -0.085, 0.219, -0.412, 0.334, -0.102, 0.177, 0.501, 0.203]
+  },
+  {
+    "id": 5,
+    "title": "Laptop Battery Swelling & Thermal Emergency Response Protocol",
+    "category": "Hardware",
+    "keywords": ["battery", "swollen", "bulge", "dell", "macbook", "trackpad", "overheating", "fire", "hazard", "safety", "chassis", "laptop"],
+    "summary": "Chassis warping, trackpad becoming unresponsive or raised, device running abnormally hot.",
+    "resolution": "1. IMMEDIATELY disconnect charger and power off device.\n2. Do NOT puncture or exert pressure on chassis or battery pack.\n3. Place device in fire-resistant battery containment box or cool ventilated room.\n4. Create high-priority hardware replacement ticket.\n5. IT technician will back up NVMe drive and dispatch laptop to certified battery recycling facility.",
+    "applicable_asset": "AST-DEV-02",
+    "tags": ["hardware", "emergency", "safety"],
+    "vector_sample": [-0.412, -0.155, 0.281, -0.344, 0.521, 0.198, -0.229, 0.312, 0.085, -0.187]
+  },
+  {
+    "id": 6,
+    "title": "SAN Storage Volume Expansion and LVM Online Resizing",
+    "category": "Storage",
+    "keywords": ["storage", "san", "lun", "disk", "full", "lvm", "extend", "resize2fs", "xfs_growfs", "capacity", "partition", "harddrive"],
+    "summary": "Storage volume /dev/mapper/data reaches 95% warning threshold on critical file server.",
+    "resolution": "1. Provision additional storage block from SAN management console.\n2. Rescan SCSI bus: echo 1 > /sys/class/block/sda/device/rescan\n3. Expand physical volume: pvresize /dev/sda\n4. Extend logical volume: lvextend -l +100%FREE /dev/vg01/lv_data\n5. Grow filesystem without unmounting: resize2fs /dev/vg01/lv_data (for ext4) or xfs_growfs /mountpoint (for XFS).\n6. Verify df -h reflects new capacity.",
+    "applicable_asset": "AST-STG-01",
+    "tags": ["storage", "linux", "infrastructure"],
+    "vector_sample": [0.218, 0.091, -0.312, 0.405, 0.219, -0.182, 0.395, 0.114, -0.401, 0.231]
+  },
+  {
+    "id": 7,
+    "title": "Neo4j Graph Database JVM Heap Tuning & Cypher Query Optimization",
+    "category": "Database",
+    "keywords": ["neo4j", "graph", "memory", "heap", "oom", "out", "of", "memory", "cypher", "cartesian", "index", "traversal"],
+    "summary": "Graph database server runs out of heap memory during multi-hop path traversal or community detection.",
+    "resolution": "1. Check neo4j.conf settings: dbms.memory.heap.initial_size and dbms.memory.heap.max_size.\n2. Set heap max to 50% of total RAM (e.g. 8G on a 16GB server) and pagecache to 30%.\n3. In Cypher queries, use PROFILE to check for Eager operators and cartesian products.\n4. Always index label properties used in MATCH predicates: CREATE INDEX FOR (c:CI) ON (c.id);\n5. Use periodic commit / CALL { ... } IN TRANSACTIONS for bulk batch writes.",
+    "applicable_asset": "AST-DB-02",
+    "tags": ["neo4j", "nosql", "optimization"],
+    "vector_sample": [0.155, 0.492, 0.210, -0.052, -0.221, 0.318, 0.402, -0.187, 0.129, 0.384]
+  },
+  {
+    "id": 8,
+    "title": "Renewing Wildcard SSL/TLS Certificates with Let's Encrypt & Nginx",
+    "category": "Security",
+    "keywords": ["ssl", "tls", "certbot", "certificate", "expire", "https", "nginx", "cert", "wildcard", "letsencrypt", "security", "encryption"],
+    "summary": "Web servers showing SSL certificate expiration warnings or SEC_ERROR_EXPIRED_CERTIFICATE in browsers.",
+    "resolution": "1. Verify domain DNS TXT record or run certbot: certbot certonly --manual --preferred-challenges dns -d '*.pes.edu'\n2. Confirm DNS challenge propagation using dig TXT _acme-challenge.pes.edu\n3. Copy generated fullchain.pem and privkey.pem to /etc/ssl/certs/\n4. Test Nginx syntax: nginx -t\n5. Reload Nginx configuration smoothly without downtime: nginx -s reload\n6. Verify certificate validity in browser or with openssl s_client -connect pes.edu:443.",
+    "applicable_asset": "AST-SRV-01",
+    "tags": ["security", "ssl", "web"],
+    "vector_sample": [0.412, -0.320, 0.185, 0.298, -0.054, 0.210, 0.389, -0.142, 0.320, -0.088]
+  }
+]

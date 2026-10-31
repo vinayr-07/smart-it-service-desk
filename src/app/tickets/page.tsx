@@ -194,6 +194,42 @@ export default function TicketsPage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       
+      {/* RBAC Active Session Banner */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '12px',
+        background: currentRole === 'Admin' 
+          ? 'linear-gradient(90deg, rgba(99, 102, 241, 0.16) 0%, rgba(99, 102, 241, 0.04) 100%)' 
+          : currentRole === 'Agent' 
+          ? 'linear-gradient(90deg, rgba(16, 185, 129, 0.16) 0%, rgba(16, 185, 129, 0.04) 100%)' 
+          : 'linear-gradient(90deg, rgba(6, 182, 212, 0.16) 0%, rgba(6, 182, 212, 0.04) 100%)',
+        border: `1px solid ${currentRole === 'Admin' ? 'rgba(99, 102, 241, 0.35)' : currentRole === 'Agent' ? 'rgba(16, 185, 129, 0.35)' : 'rgba(6, 182, 212, 0.35)'}`,
+        padding: '12px 20px',
+        borderRadius: 'var(--radius-md)',
+        boxShadow: 'var(--shadow-sm)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {currentRole === 'Admin' && <ShieldAlert size={18} color="#818CF8" />}
+          {currentRole === 'Agent' && <UserCheck size={18} color="#34D399" />}
+          {currentRole === 'Employee' && <Clock size={18} color="#22D3EE" />}
+          <span style={{ fontSize: '0.88rem', fontWeight: 700 }}>
+            Active RBAC Session: <span style={{ color: '#FFFFFF' }}>{currentRole} Mode</span>
+          </span>
+          <span style={{ color: 'rgba(255, 255, 255, 0.2)' }}>|</span>
+          <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+            {currentRole === 'Admin' && 'Administrator (Vinay R) — Full access to DDL, DML, Procedures & Transactions'}
+            {currentRole === 'Agent' && 'Support Agent (Prateek Hachadad) — Queue Management & ACID Transactions'}
+            {currentRole === 'Employee' && 'Self-Service Employee (Aditya Verma) — Incident creation & status tracking'}
+          </span>
+        </div>
+        <span className={`badge ${currentRole === 'Admin' ? 'badge-high' : currentRole === 'Agent' ? 'badge-operational' : 'badge-medium'}`} style={{ fontSize: '0.7rem' }}>
+          RBAC ACTIVE
+        </span>
+      </div>
+
       {/* Action Notification Banner */}
       {actionMessage && (
         <div style={{

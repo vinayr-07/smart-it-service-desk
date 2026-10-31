@@ -23,6 +23,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const [currentTime, setCurrentTime] = useState<string>('');
 
   useEffect(() => {
+    const savedRole = localStorage.getItem('active_role') as 'Admin' | 'Agent' | 'Employee';
+    if (savedRole) {
+      setCurrentRole(savedRole);
+    }
+  }, []);
+
+  const handleRoleChange = (newRole: 'Admin' | 'Agent' | 'Employee') => {
+    setCurrentRole(newRole);
+    localStorage.setItem('active_role', newRole);
+    window.dispatchEvent(new CustomEvent('roleChanged', { detail: newRole }));
+  };
+
+  useEffect(() => {
     const updateTime = () => {
       const now = new Date();
       setCurrentTime(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
@@ -92,7 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <select
                 className="role-select"
                 value={currentRole}
-                onChange={(e) => setCurrentRole(e.target.value as any)}
+                onChange={(e) => handleRoleChange(e.target.value as any)}
               >
                 <option value="Admin">Admin (Vinay R - Lead)</option>
                 <option value="Agent">Agent (Karthik Raja - Tier 2)</option>

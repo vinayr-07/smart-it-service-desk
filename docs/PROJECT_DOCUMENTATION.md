@@ -484,6 +484,39 @@ WHERE (
 );
 ```
 
+### Query 5: Recursive CTE (Incident Escalation Chain)
+```sql
+WITH RECURSIVE IncidentEscalationChain AS (
+    SELECT 
+        u.user_id, u.full_name AS employee_name, u.role, u.dept_id,
+        d.manager_name AS direct_supervisor, 1 AS escalation_level
+    FROM users u
+    JOIN departments d ON u.dept_id = d.dept_id
+    WHERE u.role = 'Agent' AND u.user_id = 3
+    UNION ALL
+    SELECT 
+        mgr.user_id, mgr.full_name, mgr.role, mgr.dept_id,
+        'Executive Governance Board' AS direct_supervisor,
+        chain.escalation_level + 1
+    FROM users mgr
+    JOIN IncidentEscalationChain chain ON mgr.full_name = chain.direct_supervisor
+    WHERE chain.escalation_level < 3
+)
+SELECT escalation_level, employee_name, role, direct_supervisor
+FROM IncidentEscalationChain
+ORDER BY escalation_level ASC;
+```
+
+### Query 6: Database Role-Based Access Control (RBAC)
+```sql
+-- Role creation and privilege grants in MySQL engine
+CREATE ROLE IF NOT EXISTS 'sd_admin_role', 'sd_agent_role', 'sd_employee_role';
+GRANT ALL PRIVILEGES ON smart_service_desk.* TO 'sd_admin_role';
+GRANT SELECT, INSERT, UPDATE ON smart_service_desk.tickets TO 'sd_agent_role';
+GRANT EXECUTE ON PROCEDURE smart_service_desk.sp_resolve_ticket_with_asset_update TO 'sd_agent_role';
+GRANT SELECT, INSERT ON smart_service_desk.tickets TO 'sd_employee_role';
+```
+
 ---
 
 ## 9. System Architecture

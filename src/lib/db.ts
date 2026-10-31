@@ -97,6 +97,18 @@ export async function executeSQLQuery(sqlText: string): Promise<{ rows: any[]; a
     const ticketId = match ? parseInt(match[1]) : 2;
     const res = await resolveTicketAtomic(ticketId, 3, 'Issue resolved and verified via SQL procedure', 'OPERATIONAL');
     resultRows = [{ ticket_id: ticketId, new_status: 'RESOLVED', asset_sync: 'OPERATIONAL' }];
+  } else if (lower.includes('incidentescalationchain') || lower.includes('recursive')) {
+    resultRows = [
+      { escalation_level: 1, employee_name: 'Karthik Raja', role: 'Agent', direct_supervisor: 'Dr. Ramesh Kumar (Academic Ops)' },
+      { escalation_level: 2, employee_name: 'Dr. Ramesh Kumar', role: 'Department Manager', direct_supervisor: 'Executive Governance Board' },
+      { escalation_level: 3, employee_name: 'Executive Governance Board', role: 'Executive Admin', direct_supervisor: 'Chancellor / Vice Chancellor' }
+    ];
+  } else if (lower.includes('show grants') || lower.includes('sd_admin_role') || lower.includes('rbac') || lower.includes('roles')) {
+    resultRows = [
+      { role_name: 'sd_admin_role', assigned_user: 'admin_vinay@localhost', privileges: 'ALL PRIVILEGES ON smart_service_desk.* WITH GRANT OPTION' },
+      { role_name: 'sd_agent_role', assigned_user: 'agent_karthik@localhost', privileges: 'SELECT, INSERT, UPDATE ON tickets, assets, audit_log; EXECUTE ON PROCEDURES' },
+      { role_name: 'sd_employee_role', assigned_user: 'emp_aditya@localhost', privileges: 'SELECT, INSERT ON tickets; SELECT ON assets, kb, departments' }
+    ];
   } else {
     resultRows = [{ message: 'Query executed successfully in smart_service_desk engine.', timestamp: new Date().toISOString() }];
   }

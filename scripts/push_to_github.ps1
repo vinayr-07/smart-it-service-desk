@@ -40,3 +40,4 @@ if ($LASTEXITCODE -eq 0) {
 } else {
     Write-Host "`nPush failed. Please ensure you are authenticated with GitHub and have write permissions." -ForegroundColor Yellow
 }
+

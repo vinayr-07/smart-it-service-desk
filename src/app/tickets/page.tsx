@@ -41,6 +41,19 @@ export default function TicketsPage() {
   const [resolveAssetStatus, setResolveAssetStatus] = useState<'OPERATIONAL' | 'DEGRADED' | 'OUTAGE' | 'MAINTENANCE'>('OPERATIONAL');
 
   const [actionMessage, setActionMessage] = useState<string | null>(null);
+  const [currentRole, setCurrentRole] = useState<'Admin' | 'Agent' | 'Employee'>('Admin');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('active_role') as 'Admin' | 'Agent' | 'Employee';
+    if (saved) setCurrentRole(saved);
+
+    const onRoleChange = (e: any) => {
+      const role = e.detail || localStorage.getItem('active_role') || 'Admin';
+      setCurrentRole(role);
+    };
+    window.addEventListener('roleChanged', onRoleChange);
+    return () => window.removeEventListener('roleChanged', onRoleChange);
+  }, []);
 
   const fetchTickets = async () => {
     try {
@@ -100,6 +113,11 @@ export default function TicketsPage() {
   };
 
   const handleAutoAssign = async (ticketId: number) => {
+    if (currentRole === 'Employee') {
+      setActionMessage('RBAC Access Denied: Employee role cannot execute sp_auto_assign_ticket. Only Agent or Admin can assign tickets.');
+      setTimeout(() => setActionMessage(null), 5000);
+      return;
+    }
     try {
       const res = await fetch('/api/tickets', {
         method: 'PATCH',
@@ -123,6 +141,13 @@ export default function TicketsPage() {
   const handleResolveTicket = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!showResolveModal) return;
+
+    if (currentRole === 'Employee') {
+      setActionMessage('RBAC Access Denied: Employee role cannot execute sp_resolve_ticket_with_asset_update. Technician credentials required.');
+      setShowResolveModal(null);
+      setTimeout(() => setActionMessage(null), 5000);
+      return;
+    }
 
     try {
       const res = await fetch('/api/tickets', {

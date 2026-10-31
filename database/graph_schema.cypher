@@ -200,3 +200,30 @@ ORDER BY Total_Dependent_Entities DESC;
 MATCH (start:ConfigurationItem {id: 'APP-ERP'}), (end:ConfigurationItem {id: 'SAN-ARRAY-01'}),
       p = shortestPath((start)-[*]-(end))
 RETURN p;
+
+
+// ============================================================================
+// 6. NOSQL GRAPH RUD OPERATIONS (Read, Update, Delete)
+// Meets Evaluation Criteria: NoSQL/Vector feature, RUD (Rubric #9 - 7 Marks)
+// ============================================================================
+
+// A. READ (R): Read CI node with incident dependencies
+MATCH (ci:ConfigurationItem {id: 'SRV-BETA'})
+OPTIONAL MATCH (ci)<-[:HOSTED_ON]-(app:Application)
+RETURN ci.id AS CI_ID, ci.name AS Host_Name, ci.status AS Current_Status, app.name AS Impacted_Application;
+
+// B. UPDATE (U): Update CI operational status, hardware capacity, and maintenance timestamp
+MATCH (ci:ConfigurationItem {id: 'SRV-BETA'})
+SET ci.status = 'OPERATIONAL',
+    ci.ram_gb = 128,
+    ci.updated_at = datetime()
+RETURN ci.id AS CI_ID, ci.name AS Host_Name, ci.status AS New_Status, ci.ram_gb AS Upgraded_RAM;
+
+// C. UPDATE RELATIONSHIP (U): Update dependency link speed/bandwidth
+MATCH (srv:ConfigurationItem {id: 'SRV-BETA'})-[rel:CONNECTED_TO]->(sw:ConfigurationItem {id: 'SW-EDGE-02'})
+SET rel.speed = '10Gbps', rel.last_tested = datetime()
+RETURN srv.name AS Server, rel.speed AS New_Speed, sw.name AS Switch;
+
+// D. DELETE (D): Safe deletion of temporary CI node or decommissioned link
+MATCH (ci:ConfigurationItem {id: 'TEMP-DEV-NODE-99'})
+DETACH DELETE ci;

@@ -100,7 +100,7 @@ CREATE TABLE tickets (
     ticket_code VARCHAR(30) NOT NULL UNIQUE,
     title VARCHAR(200) NOT NULL,
     description TEXT NOT NULL,
-    category ENUM('Hardware', 'Software', 'Network', 'Security', 'Access') NOT NULL,
+    category ENUM('Hardware', 'Software', 'Network', 'Security', 'Access', 'Database') NOT NULL,
     priority ENUM('LOW', 'MEDIUM', 'HIGH', 'CRITICAL') NOT NULL DEFAULT 'MEDIUM',
     status ENUM('OPEN', 'IN_PROGRESS', 'RESOLVED', 'CLOSED') NOT NULL DEFAULT 'OPEN',
     asset_id INT,

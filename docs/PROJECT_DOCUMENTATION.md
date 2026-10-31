@@ -64,6 +64,17 @@ The primary objective of the **Smart IT Service Desk with Asset Management & AI 
 
 ## 4. Entity-Relationship (ER) Diagram
 
+The conceptual data model follows the **Strict Peter Chen Classical ER Notation** mandated by the PES University DBMS Experiential Learning Manual:
+- **Entities:** Represented by Rectangles (Strong entities: `DEPARTMENT`, `USER`, `SLA_POLICY`, `ASSET`, `TICKET`, `KNOWLEDGE_BASE`; Weak entity: `TICKET_AUDIT_LOG`).
+- **Relationships:** Represented by Diamonds with explicit cardinality ratios ($1:1$, $1:M$, $M:N$) and double borders for identifying relationships.
+- **Attributes:** Ellipses attached to entities (Primary keys with solid underlines, foreign keys, derived attributes with dashed borders, multivalued attributes with double ovals, and composite attributes with branching lines).
+- **Specialization / Generalization:** Is-A specialization connecting `USER` into `End_User` and `IT_Agent` subtypes.
+
+> [!NOTE]
+> **Vector ER Diagram File Artifacts:**
+> - High-Definition Vector SVG: [`docs/diagrams/er_diagram.svg`](file:///d:/Semester-5/DBMS-Lab/mini-project/docs/diagrams/er_diagram.svg)
+> - Interactive Web Viewer: [http://localhost:3000/diagrams](http://localhost:3000/diagrams) (Tab: *ER Diagram (Chen Notation)*)
+
 ```mermaid
 erDiagram
     DEPARTMENTS ||--o{ USERS : "employs"
@@ -168,101 +179,322 @@ erDiagram
 ## 5. Relational Schema & Normalization (3NF)
 
 The schema is rigorously normalized to **Third Normal Form (3NF)**:
-1. **1NF:** All attributes contain atomic values; no repeating groups exist.
-2. **2NF:** Every non-prime attribute is fully functionally dependent on the entire primary key (no partial dependencies).
-3. **3NF:** No non-prime attribute is transitively dependent on any primary key (e.g., department manager and location are housed in `departments`, not duplicated in `users` or `tickets`).
+1. **1NF (First Normal Form):** All attribute domains are atomic. Repeating groups and array structures have been isolated into independent relational tables (e.g. audit entries are separated into `ticket_audit_log`).
+2. **2NF (Second Normal Form):** Every non-prime attribute is fully functionally dependent on the whole candidate key. There are no partial functional dependencies on composite keys.
+3. **3NF (Third Normal Form):** No non-prime attribute is transitively dependent on any primary key ($X \rightarrow Y$ holds only where $X$ is a superkey or $Y$ is a prime attribute). Department manager and building location reside exclusively in `departments`, referenced by `users.dept_id`, avoiding data redundancy and update anomalies.
 
-### Relational Schema Representation:
+### Relational Schema Formal Representation:
 - $\text{DEPARTMENTS}(\underline{\text{dept\_id}}, \text{dept\_name}, \text{manager\_name}, \text{building\_location}, \text{created\_at})$
 - $\text{USERS}(\underline{\text{user\_id}}, \text{full\_name}, \text{email}, \text{password\_hash}, \text{role}, \text{dept\_id}^*, \text{phone}, \text{is\_active}, \text{created\_at})$
 - $\text{SLA\_POLICIES}(\underline{\text{sla\_id}}, \text{priority\_level}, \text{response\_time\_hrs}, \text{resolution\_time\_hrs}, \text{escalation\_threshold\_hrs})$
 - $\text{ASSETS}(\underline{\text{asset\_id}}, \text{asset\_tag}, \text{asset\_name}, \text{asset\_type}, \text{status}, \text{ip\_address}, \text{location}, \text{owner\_id}^*, \text{criticality}, \text{purchase\_date}, \text{created\_at})$
-- $\text{TICKETS}(\underline{\text{ticket\_id}}, \text{ticket\_code}, \text{title}, \text{description}, \text{category}, \text{priority}, \text{status}, \text{asset\_id}^*, \text{created\_by}^*, \text{assigned\_to}^*, \text{due\_date}, \text{resolved\_at}, \text{sla\_breached}, \text{resolution\_summary}, \text{created\_at}, \text{updated\_at})$
+- $\text{TICKETS}(\underline{\text{ticket\_id}}, \text{ticket\_code}, \text{title}, \text{description}, \text{category}, \text{priority}, \text{status}, \text{asset\_id}^*, \text{created\_by}^*, \text{assigned\_to}^*, \text{due\_date}, \text{resolved\_at}, \text{sla\_breached}, \text{resolution\_summary}, \text{impact\_score}, \text{created\_at}, \text{updated\_at})$
 - $\text{TICKET\_AUDIT\_LOG}(\underline{\text{log\_id}}, \text{ticket\_id}^*, \text{action\_type}, \text{old\_status}, \text{new\_status}, \text{comment}, \text{changed\_by}^*, \text{logged\_at})$
-- $\text{KNOWLEDGE\_BASE}(\underline{\text{kb\_id}}, \text{title}, \text{category}, \text{keywords}, \text{problem\_summary}, \text{resolution\_steps}, \text{applicable\_asset\_type}, \text{view\_count}, \text{helpful\_votes}, \text{created\_at}, \text{updated\_at})$
+- $\text{KNOWLEDGE\_BASE}(\underline{\text{kb\_id}}, \text{title}, \text{category}, \text{keywords}, \text{problem\_summary}, \text{resolution\_steps}, \text{applicable\_asset\_type}, \text{tags}, \text{view\_count}, \text{helpful\_votes}, \text{created\_at}, \text{updated\_at})$
 
 > [!NOTE]
-> **Graphical Relational Schema Diagram Artifact:**  
-> The visual table schema diagram with underlined primary keys and directed foreign-key referential lines is generated in:
-> - **SVG Vector:** [`docs/diagrams/relational_schema.svg`](file:///d:/Semester-5/DBMS-Lab/mini-project/docs/diagrams/relational_schema.svg)
+> **Graphical Relational Schema Artifact:**  
+> - **Vector SVG:** [`docs/diagrams/relational_schema.svg`](file:///d:/Semester-5/DBMS-Lab/mini-project/docs/diagrams/relational_schema.svg)
 > - **Web Interactive Viewer:** [http://localhost:3000/diagrams](http://localhost:3000/diagrams) (Tab: *Relational Schema*)
 
 ---
 
-## 6. Data Dictionary
+## 6. Data Dictionary / Schema Description
 
-### Table: `tickets`
-| Column Name | Data Type | Constraint | Description |
-| :--- | :--- | :--- | :--- |
-| `ticket_id` | INT | PK, AUTO_INCREMENT | Unique internal ticket identifier |
-| `ticket_code` | VARCHAR(30) | UNIQUE, NOT NULL | Human-readable tracking code (e.g. TKT-1001) |
-| `title` | VARCHAR(200) | NOT NULL | Brief summary of incident |
-| `description` | TEXT | NOT NULL | Complete symptoms and details |
-| `category` | ENUM | NOT NULL | Category: Hardware, Software, Network, Security, Access |
-| `priority` | ENUM | NOT NULL, DEFAULT 'MEDIUM' | Priority: LOW, MEDIUM, HIGH, CRITICAL |
-| `status` | ENUM | NOT NULL, DEFAULT 'OPEN' | Workflow state: OPEN, IN_PROGRESS, RESOLVED, CLOSED |
-| `asset_id` | INT | FK $\rightarrow$ `assets.asset_id`, ON DELETE SET NULL | Affected Configuration Item |
-| `created_by` | INT | FK $\rightarrow$ `users.user_id`, NOT NULL | Employee who logged the ticket |
-| `assigned_to` | INT | FK $\rightarrow$ `users.user_id`, NULLABLE | Assigned IT Support Agent |
-| `due_date` | TIMESTAMP | NULLABLE | Calculated SLA resolution deadline |
-| `resolved_at` | TIMESTAMP | NULLABLE | Actual timestamp of resolution |
-| `sla_breached`| BOOLEAN | DEFAULT FALSE | SLA breach indicator flag |
-| `resolution_summary` | TEXT | NULLABLE | Diagnostic and fixing steps documented by agent |
+This section provides the comprehensive data dictionary for all **7 normalized relational tables** in the system.
 
-### Table: `assets`
-| Column Name | Data Type | Constraint | Description |
-| :--- | :--- | :--- | :--- |
-| `asset_id` | INT | PK, AUTO_INCREMENT | Unique asset primary key |
-| `asset_tag` | VARCHAR(50) | UNIQUE, NOT NULL | Barcode / Inventory Tag (e.g. AST-SRV-01) |
-| `asset_name` | VARCHAR(150) | NOT NULL | Descriptive name of hardware/software CI |
-| `asset_type` | ENUM | NOT NULL | Server, Database, Network Switch, Laptop, Cloud Service, Storage |
-| `status` | ENUM | NOT NULL, DEFAULT 'OPERATIONAL' | OPERATIONAL, DEGRADED, OUTAGE, MAINTENANCE |
-| `ip_address` | VARCHAR(45) | NULLABLE | IPv4/IPv6 static network address |
-| `location` | VARCHAR(100) | NOT NULL | Server rack, office desk, or cloud region |
-| `criticality`| ENUM | NOT NULL, DEFAULT 'MEDIUM' | LOW, MEDIUM, HIGH, MISSION_CRITICAL |
+### Table 1: `departments`
+*Stores institutional academic and operational departments.*
+
+| Column Name | Data Type | Nullable | Key / Constraint | Default Value | Description |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `dept_id` | INT | NO | PK, AUTO_INCREMENT | None | Unique departmental primary identifier |
+| `dept_name` | VARCHAR(100) | NO | UNIQUE | None | Official organizational department name |
+| `manager_name` | VARCHAR(100) | NO | None | None | Designee head / department chairperson |
+| `building_location` | VARCHAR(100) | NO | None | None | Campus block and floor designation |
+| `created_at` | TIMESTAMP | NO | None | CURRENT_TIMESTAMP | Record creation timestamp |
+
+### Table 2: `users`
+*Stores employee, technician, and administrative user credentials with RBAC roles.*
+
+| Column Name | Data Type | Nullable | Key / Constraint | Default Value | Description |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `user_id` | INT | NO | PK, AUTO_INCREMENT | None | Unique user account identifier |
+| `full_name` | VARCHAR(100) | NO | None | None | Legal name of employee / technician |
+| `email` | VARCHAR(120) | NO | UNIQUE | None | Institutional PES university email address |
+| `password_hash` | VARCHAR(255) | NO | None | 'pbkdf2:sha256:...' | Cryptographic hash of login credential |
+| `role` | ENUM | NO | ENUM('Admin','Agent','Employee') | 'Employee' | Role-based authorization tier |
+| `dept_id` | INT | NO | FK $\rightarrow$ `departments(dept_id)` | None | Associated organizational unit |
+| `phone` | VARCHAR(20) | YES | None | NULL | Contact mobile telephone number |
+| `is_active` | BOOLEAN | YES | None | TRUE | Active status for system login |
+| `created_at` | TIMESTAMP | NO | None | CURRENT_TIMESTAMP | Account registration timestamp |
+
+*Referential Actions:* `CONSTRAINT fk_users_dept FOREIGN KEY (dept_id) REFERENCES departments(dept_id) ON DELETE RESTRICT ON UPDATE CASCADE`
+
+### Table 3: `sla_policies`
+*Defines Service Level Agreement thresholds and automated escalation hours.*
+
+| Column Name | Data Type | Nullable | Key / Constraint | Default Value | Description |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `sla_id` | INT | NO | PK, AUTO_INCREMENT | None | Unique SLA policy identifier |
+| `priority_level` | ENUM | NO | UNIQUE, ENUM('LOW','MEDIUM','HIGH','CRITICAL') | None | Priority classification category |
+| `response_time_hrs` | DECIMAL(5,2) | NO | CHECK (`response_time_hrs` > 0) | None | Maximum allowable time to initial response |
+| `resolution_time_hrs`| DECIMAL(5,2) | NO | CHECK (`resolution_time_hrs` $\ge$ `response_time_hrs`) | None | Maximum allowable time to incident resolution |
+| `escalation_threshold_hrs` | DECIMAL(5,2) | NO | CHECK (`escalation_threshold_hrs` $\le$ `resolution_time_hrs`) | None | Time threshold before triggering escalation |
+
+### Table 4: `assets`
+*Configuration Management Database (CMDB) inventory of physical, network, and cloud assets.*
+
+| Column Name | Data Type | Nullable | Key / Constraint | Default Value | Description |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `asset_id` | INT | NO | PK, AUTO_INCREMENT | None | Unique asset primary key |
+| `asset_tag` | VARCHAR(50) | NO | UNIQUE | None | Physical inventory barcode tag (e.g. AST-SRV-01) |
+| `asset_name` | VARCHAR(150) | NO | None | None | Descriptive technical designation |
+| `asset_type` | ENUM | NO | ENUM('Server','Database','Network Switch','Laptop','Cloud Service','Storage') | None | Hardware or infrastructure type |
+| `status` | ENUM | NO | ENUM('OPERATIONAL','DEGRADED','OUTAGE','MAINTENANCE') | 'OPERATIONAL' | Current operational health state |
+| `ip_address` | VARCHAR(45) | YES | None | NULL | Static IPv4/IPv6 address |
+| `location` | VARCHAR(100) | NO | None | None | Physical rack unit, desk, or cloud region |
+| `owner_id` | INT | YES | FK $\rightarrow$ `users(user_id)` | NULL | Designated user or administrator custodian |
+| `criticality` | ENUM | NO | ENUM('LOW','MEDIUM','HIGH','MISSION_CRITICAL') | 'MEDIUM' | Business dependency importance level |
+| `purchase_date` | DATE | NO | None | None | Procurement date for warranty tracking |
+| `created_at` | TIMESTAMP | NO | None | CURRENT_TIMESTAMP | Asset registration timestamp |
+
+*Referential Actions:* `CONSTRAINT fk_assets_owner FOREIGN KEY (owner_id) REFERENCES users(user_id) ON DELETE SET NULL ON UPDATE CASCADE`
+
+### Table 5: `tickets`
+*Incident reports, troubleshooting workflows, and lifecycle state tracking.*
+
+| Column Name | Data Type | Nullable | Key / Constraint | Default Value | Description |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `ticket_id` | INT | NO | PK, AUTO_INCREMENT | None | Internal database sequence key |
+| `ticket_code` | VARCHAR(30) | NO | UNIQUE | None | Formatted public tracking ID (e.g. TKT-1001) |
+| `title` | VARCHAR(200) | NO | None | None | Concise incident headline |
+| `description` | TEXT | NO | None | None | Full problem reproduction description |
+| `category` | ENUM | NO | ENUM('Hardware','Software','Network','Security','Access') | None | IT functional domain |
+| `priority` | ENUM | NO | ENUM('LOW','MEDIUM','HIGH','CRITICAL') | 'MEDIUM' | Incident urgency tier |
+| `status` | ENUM | NO | ENUM('OPEN','IN_PROGRESS','RESOLVED','CLOSED') | 'OPEN' | Workflow lifecycle phase |
+| `asset_id` | INT | YES | FK $\rightarrow$ `assets(asset_id)` | NULL | Linked Configuration Item |
+| `created_by` | INT | NO | FK $\rightarrow$ `users(user_id)` | None | Requester employee ID |
+| `assigned_to` | INT | YES | FK $\rightarrow$ `users(user_id)` | NULL | Assigned technician agent ID |
+| `due_date` | TIMESTAMP | YES | None | NULL | Auto-computed SLA deadline (via Trigger) |
+| `resolved_at` | TIMESTAMP | YES | None | NULL | Timestamp of final resolution |
+| `sla_breached`| BOOLEAN | YES | None | FALSE | SLA violation indicator flag |
+| `resolution_summary` | TEXT | YES | None | NULL | Documented troubleshooting solution |
+| `impact_score` | INT | YES | CHECK (`impact_score` BETWEEN 1 AND 5) | 1 | Business impact ranking |
+| `created_at` | TIMESTAMP | NO | None | CURRENT_TIMESTAMP | Ticket submission timestamp |
+| `updated_at` | TIMESTAMP | NO | None | CURRENT_TIMESTAMP | Last modification timestamp |
+
+*Referential Actions:*  
+- `fk_tickets_asset`: `ON DELETE SET NULL ON UPDATE CASCADE`  
+- `fk_tickets_creator`: `ON DELETE RESTRICT ON UPDATE CASCADE`  
+- `fk_tickets_agent`: `ON DELETE SET NULL ON UPDATE CASCADE`
+
+### Table 6: `ticket_audit_log`
+*Immutable historical ledger tracking all state transitions, re-assignments, and actions.*
+
+| Column Name | Data Type | Nullable | Key / Constraint | Default Value | Description |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `log_id` | INT | NO | PK, AUTO_INCREMENT | None | Audit record identifier |
+| `ticket_id` | INT | NO | FK $\rightarrow$ `tickets(ticket_id)` | None | Related incident ticket |
+| `action_type` | VARCHAR(50) | NO | None | None | Transition type (CREATION, STATUS_CHANGE, AUTO_ASSIGN, etc.) |
+| `old_status` | VARCHAR(20) | YES | None | NULL | Previous lifecycle status |
+| `new_status` | VARCHAR(20) | YES | None | NULL | Updated lifecycle status |
+| `comment` | TEXT | YES | None | NULL | Technical note or automated system commentary |
+| `changed_by` | INT | YES | FK $\rightarrow$ `users(user_id)` | NULL | User responsible for change |
+| `logged_at` | TIMESTAMP | NO | None | CURRENT_TIMESTAMP | Timestamp of transition |
+
+*Referential Actions:* `fk_audit_ticket`: `ON DELETE CASCADE ON UPDATE CASCADE`, `fk_audit_user`: `ON DELETE SET NULL ON UPDATE CASCADE`
+
+### Table 7: `knowledge_base`
+*Technical runbooks, standard operating procedures, and resolution articles.*
+
+| Column Name | Data Type | Nullable | Key / Constraint | Default Value | Description |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `kb_id` | INT | NO | PK, AUTO_INCREMENT | None | Unique knowledge article identifier |
+| `title` | VARCHAR(200) | NO | FULLTEXT Index | None | Diagnostic procedure article title |
+| `category` | VARCHAR(50) | NO | None | None | Technical domain (Database, Network, etc.) |
+| `keywords` | VARCHAR(255) | NO | None | None | Comma-separated search token terms |
+| `problem_summary` | TEXT | NO | FULLTEXT Index | None | Symptoms and error message descriptions |
+| `resolution_steps` | TEXT | NO | FULLTEXT Index | None | Step-by-step remediation guide |
+| `applicable_asset_type` | VARCHAR(50) | YES | None | 'ALL' | Hardware/CI type suitability |
+| `tags` | VARCHAR(150) | YES | None | 'general' | Additional indexing descriptors |
+| `view_count` | INT | YES | None | 0 | Total times viewed by technicians |
+| `helpful_votes` | INT | YES | None | 0 | Community positive ratings |
+| `created_at` | TIMESTAMP | NO | None | CURRENT_TIMESTAMP | Publication timestamp |
+| `updated_at` | TIMESTAMP | NO | None | CURRENT_TIMESTAMP | Revision timestamp |
 
 ---
 
 ## 7. Advanced Database Concepts Implementation
 
 ### Concept 1: Database Triggers (Automated SLA Calculation & Auditing)
-1. **`trg_ticket_before_insert_sla`:** Triggers prior to `INSERT` on `tickets`. Inspects `priority`, looks up `resolution_time_hrs` from `sla_policies`, and computes `due_date = DATE_ADD(NOW(), INTERVAL hours)`.
-2. **`trg_ticket_after_update_audit`:** Triggers after `UPDATE` on `tickets`. If `OLD.status <> NEW.status`, it inserts an immutable record into `ticket_audit_log`.
-3. **`trg_ticket_before_update_resolved`:** Triggers when status changes to `'RESOLVED'`. Sets `resolved_at = NOW()` and evaluates if `NOW() > due_date` to mark `sla_breached = TRUE`.
+1. **`trg_ticket_before_insert_sla` (BEFORE INSERT on `tickets`):**  
+   Automatically looks up the SLA duration for the assigned priority tier from `sla_policies` and computes the exact resolution deadline:
+   $$\text{due\_date} = \text{DATE\_ADD}(\text{CURRENT\_TIMESTAMP}, \text{INTERVAL } \text{FLOOR}(v\_hours \times 60) \text{ MINUTE})$$
+2. **`trg_ticket_after_update_audit` (AFTER UPDATE on `tickets`):**  
+   Whenever `OLD.status <> NEW.status`, writes an immutable historical audit entry into `ticket_audit_log` with the transition details and current timestamp.
+3. **`trg_ticket_before_update_resolved` (BEFORE UPDATE on `tickets`):**  
+   When a ticket status transitions to `RESOLVED`, automatically stamps `resolved_at = CURRENT_TIMESTAMP` and evaluates whether `CURRENT_TIMESTAMP > due_date`, setting `sla_breached = TRUE` if the deadline was missed.
 
 ### Concept 2: Stored Procedures & Functions
-1. **`sp_auto_assign_ticket(IN p_ticket_id, OUT p_assigned_agent_id)`:**
-   Evaluates real-time technician queues and binds the ticket to the active agent who currently has the minimum number of open tickets.
-2. **`sp_escalate_breached_tickets()`:**
-   Identifies overdue tickets and escalates their priority tier to `CRITICAL`.
-3. **`fn_is_sla_breached(p_ticket_id)`:**
-   Deterministic function returning `BOOLEAN` indicating whether a ticket exceeded its SLA.
+1. **`sp_auto_assign_ticket(IN p_ticket_id INT, OUT p_assigned_agent_id INT)`:**  
+   Implements an automated load-balancing dispatch algorithm. Queries available active IT Agents and dynamically assigns the unassigned ticket to the technician with the minimum count of open/in-progress tickets.
+2. **`sp_escalate_breached_tickets()`:**  
+   Scans all active tickets. If `CURRENT_TIMESTAMP > due_date`, flags `sla_breached = TRUE` and escalates the ticket priority tier directly to `CRITICAL`.
+3. **`fn_is_sla_breached(p_ticket_id INT) RETURNS BOOLEAN`:**  
+   Deterministic function that evaluates whether a given ticket has breached its resolution deadline.
+4. **`fn_agent_open_ticket_count(p_agent_id INT) RETURNS INT`:**  
+   Deterministic function returning the current active queue size for any technician.
 
-### Concept 3: Database Views (Real-time Reporting & Abstraction)
-1. **`v_active_tickets_sla`:** Multi-table join calculating remaining hours until breach.
-2. **`v_agent_workload_metrics`:** Aggregated performance matrix measuring active tickets, resolved counts, and average resolution times per agent.
-3. **`v_asset_failure_frequency`:** Ranks assets by incident counts to identify hardware failure hotspots.
+### Concept 3: Database Views (Reporting & Abstraction)
+1. **`v_active_tickets_sla`:** Multi-table join calculating real-time remaining hours until breach for active tickets.
+2. **`v_agent_workload_metrics`:** Aggregates technician throughput, active queues, resolved counts, and average resolution durations.
+3. **`v_asset_failure_frequency`:** Ranks assets by incident counts and critical failures to detect hardware hotspots.
 
-### Concept 4: ACID Transactions (Atomic Multi-Table State Synchronization)
-- Procedure **`sp_resolve_ticket_with_asset_update`**:
-  Demonstrates `START TRANSACTION`, `COMMIT`, and `ROLLBACK` with `EXIT HANDLER FOR SQLEXCEPTION`. Resolving a hardware incident atomically updates the ticket resolution, changes the linked physical asset from `DEGRADED/OUTAGE` back to `OPERATIONAL`, and records the audit log. If any statement fails, all changes rollback.
+### Concept 4: ACID Transactions (Atomic Multi-Table Synchronization)
+- **`sp_resolve_ticket_with_asset_update`:** Demonstrates `START TRANSACTION`, row-level locking (`SELECT ... FOR UPDATE`), `COMMIT`, and `ROLLBACK` via `DECLARE EXIT HANDLER FOR SQLEXCEPTION`. When a hardware incident is marked resolved, the procedure atomically:
+  1. Updates the ticket status to `RESOLVED` with diagnostic solution text.
+  2. Updates the associated physical asset status from `DEGRADED`/`OUTAGE` back to `OPERATIONAL`.
+  3. Writes a comprehensive synchronization log into `ticket_audit_log`.  
+  If any sub-operation fails, the entire transaction rolls back to preserve data integrity.
 
 ### Concept 5: NoSQL Graph Traversals & Blast Radius (Neo4j)
-- **Blast Radius Query:** Traverses upstream dependency trees up to 4 hops using Cypher pattern matching to identify all business services affected when an edge router or server fails:
+- Configuration Items (CIs) and multi-tier IT dependencies are represented as a graph.
+- **Blast Radius Cypher Traversal:**
   ```cypher
   MATCH path = (impacted:ConfigurationItem)-[*1..4]->(failed:ConfigurationItem {id: 'SW-EDGE-02'})
-  RETURN impacted.name, impacted.tier, length(path) AS Hops
-  ORDER BY Hops ASC;
+  RETURN failed.name AS Failed_Component, impacted.name AS Impacted_Service, 
+         impacted.tier AS Tier, length(path) AS Dependency_Hops
+  ORDER BY Dependency_Hops ASC;
   ```
 
 ### Concept 6: Vector Similarity Search (Cosine Distance)
-- Knowledge Base articles and problem summaries are embedded into vector space.
-- Query vector $\mathbf{q}$ and stored document vectors $\mathbf{d}_i$ are scored using Cosine Similarity:
+- Runbook articles and problem summaries are embedded into high-dimensional vector representations.
+- Natural language queries are vectorized and compared against runbook embeddings using the Cosine Similarity formula:
   $$\text{sim}(\mathbf{q}, \mathbf{d}) = \frac{\sum_{k=1}^n q_k d_k}{\sqrt{\sum_{k=1}^n q_k^2} \sqrt{\sum_{k=1}^n d_k^2}}$$
 
 ---
 
-## 8. System Architecture
+## 8. Important Queries & Operations
+
+The project demonstrates advanced DML capabilities fulfilling all rubric criteria:
+
+### Query 1: Complex 5-Table Join with SLA Remaining Time
+```sql
+SELECT 
+    t.ticket_code,
+    t.title AS ticket_title,
+    t.priority,
+    t.status,
+    u_req.full_name AS requested_by,
+    dept.dept_name AS requester_department,
+    COALESCE(u_tech.full_name, 'UNASSIGNED') AS assigned_technician,
+    COALESCE(a.asset_name, 'No Asset Linked') AS affected_asset,
+    COALESCE(a.status, 'N/A') AS asset_operational_status,
+    sla.resolution_time_hrs AS sla_target_hours,
+    TIMESTAMPDIFF(HOUR, NOW(), t.due_date) AS hours_until_sla_breach
+FROM tickets t
+INNER JOIN users u_req ON t.created_by = u_req.user_id
+INNER JOIN departments dept ON u_req.dept_id = dept.dept_id
+LEFT JOIN users u_tech ON t.assigned_to = u_tech.user_id
+LEFT JOIN assets a ON t.asset_id = a.asset_id
+INNER JOIN sla_policies sla ON t.priority = sla.priority_level
+ORDER BY 
+    CASE t.priority 
+        WHEN 'CRITICAL' THEN 1 
+        WHEN 'HIGH' THEN 2 
+        WHEN 'MEDIUM' THEN 3 
+        ELSE 4 
+    END,
+    t.due_date ASC;
+```
+
+### Query 2: GROUP BY with HAVING & Aggregations
+```sql
+SELECT 
+    d.dept_id,
+    d.dept_name,
+    d.manager_name,
+    COUNT(t.ticket_id) AS total_department_tickets,
+    COUNT(CASE WHEN t.status IN ('OPEN', 'IN_PROGRESS') THEN 1 END) AS active_tickets,
+    COUNT(CASE WHEN t.status = 'RESOLVED' THEN 1 END) AS resolved_tickets,
+    ROUND(AVG(TIMESTAMPDIFF(MINUTE, t.created_at, COALESCE(t.resolved_at, NOW()))) / 60.0, 2) AS avg_duration_hours
+FROM departments d
+INNER JOIN users u ON d.dept_id = u.dept_id
+INNER JOIN tickets t ON u.user_id = t.created_by
+GROUP BY d.dept_id, d.dept_name, d.manager_name
+HAVING COUNT(t.ticket_id) >= 1
+ORDER BY total_department_tickets DESC;
+```
+
+### Query 3: CTE (Common Table Expression) & Relative Performance Ranking
+```sql
+WITH AgentStats AS (
+    SELECT 
+        u.user_id,
+        u.full_name AS agent_name,
+        COUNT(t.ticket_id) AS tickets_handled,
+        COUNT(CASE WHEN t.status = 'RESOLVED' THEN 1 END) AS tickets_resolved,
+        COALESCE(ROUND(AVG(TIMESTAMPDIFF(MINUTE, t.created_at, t.resolved_at)) / 60.0, 2), 0.0) AS avg_resolution_hours,
+        COUNT(CASE WHEN t.sla_breached = TRUE THEN 1 END) AS breaches
+    FROM users u
+    LEFT JOIN tickets t ON u.user_id = t.assigned_to
+    WHERE u.role = 'Agent' AND u.is_active = TRUE
+    GROUP BY u.user_id, u.full_name
+)
+SELECT 
+    agent_name,
+    tickets_handled,
+    tickets_resolved,
+    avg_resolution_hours,
+    breaches,
+    ROUND((tickets_resolved / NULLIF(tickets_handled, 0)) * 100, 1) AS resolution_rate_pct,
+    CASE 
+        WHEN avg_resolution_hours < (SELECT AVG(avg_resolution_hours) FROM AgentStats WHERE tickets_resolved > 0) 
+        THEN 'Above Average Speed'
+        ELSE 'Normal'
+    END AS performance_rating
+FROM AgentStats
+ORDER BY tickets_resolved DESC;
+```
+
+### Query 4: Correlated Subquery (Asset Failure Hotspots)
+```sql
+SELECT 
+    a.asset_id,
+    a.asset_tag,
+    a.asset_name,
+    a.asset_type,
+    a.status,
+    (SELECT COUNT(*) FROM tickets t WHERE t.asset_id = a.asset_id) AS asset_incident_count
+FROM assets a
+WHERE (
+    SELECT COUNT(*) 
+    FROM tickets t 
+    WHERE t.asset_id = a.asset_id
+) > (
+    SELECT AVG(type_counts.cnt)
+    FROM (
+        SELECT COUNT(t2.ticket_id) AS cnt
+        FROM assets a2
+        LEFT JOIN tickets t2 ON a2.asset_id = t2.asset_id
+        WHERE a2.asset_type = a.asset_type
+        GROUP BY a2.asset_id
+    ) AS type_counts
+);
+```
+
+---
+
+## 9. System Architecture
+
+The project implements a modern **3-Tier Architecture**:
+1. **Client Tier:** Next.js React Web Application with dark-theme glassmorphic styling, real-time KPI updates, topology graphs, and an interactive DBMS query console.
+2. **Application & API Tier:** Next.js Route Handlers (`/api/*`), Role-Based Access Control filter (Admin, Agent, Employee), and the Vector Cosine Similarity Search Engine.
+3. **Data Tier (Multi-Model):**
+   - **Relational SQL (MySQL 8.0):** Manages users, tickets, assets, audit trails, and transactional consistency.
+   - **NoSQL Graph (Neo4j):** Models CI dependency topology and performs recursive blast-radius queries.
+   - **Vector Embeddings Store:** High-dimensional vector space for semantic troubleshooting runbook retrieval.
 
 ```mermaid
 graph TD
@@ -277,7 +509,7 @@ graph TD
     end
 
     subgraph Data Tier
-        SQL[("Relational SQL (MySQL / Postgres)\n- Tickets & SLA\n- Users & RBAC\n- Triggers & Stored Procedures\n- Views & Transactions")]
+        SQL[("Relational SQL (MySQL 8.0)\n- Tickets & SLA\n- Users & RBAC\n- Triggers & Stored Procedures\n- Views & Transactions")]
         GRAPH[("NoSQL Graph (Neo4j)\n- CI Topology\n- Blast Radius Analysis\n- Dependency Traversal")]
     end
 
@@ -288,9 +520,47 @@ graph TD
     API --> GRAPH
 ```
 
+> [!NOTE]
+> **Vector Architecture Diagram Artifact:**  
+> High-Definition Vector SVG: [`docs/diagrams/system_architecture.svg`](file:///d:/Semester-5/DBMS-Lab/mini-project/docs/diagrams/system_architecture.svg)
+
 ---
 
-## 9. Test Cases & Verification Results
+## 10. Application Screenshots
+
+This section presents full high-resolution interface captures from the live running web application (`http://localhost:3000`).
+
+### Screenshot 1: Executive Operations Dashboard (`/`)
+*Real-time incident metrics, active SLA countdowns, priority breakdown, and technician load.*  
+![Executive Dashboard](./screenshots/01_dashboard.png)
+
+### Screenshot 2: Incident Tickets Management (`/tickets`)
+*Interactive incident ticket queue with role-based filtering, status badges, and asset linkages.*  
+![Incident Tickets Queue](./screenshots/02_tickets_management.png)
+
+### Screenshot 3: Incident Creation Modal (`/tickets`)
+*New ticket modal demonstrating client validation, priority selection, and Configuration Item binding.*  
+![Ticket Creation Modal](./screenshots/03_create_ticket_modal.png)
+
+### Screenshot 4: CMDB Asset Inventory & Blast Radius Topology (`/assets`)
+*Configuration Management Database showing hardware health and graph-based failure impact paths.*  
+![CMDB Asset Topology](./screenshots/04_cmdb_asset_topology.png)
+
+### Screenshot 5: AI Semantic Knowledge Base Search (`/knowledge`)
+*Natural language runbook query engine returning cosine similarity relevance rankings.*  
+![AI Knowledge Search](./screenshots/05_ai_knowledge_search.png)
+
+### Screenshot 6: Live DBMS Level 3 Evaluation Console (`/db-demo`)
+*Interactive SQL runner allowing live execution of Triggers, Procedures, Views, and Transactions.*  
+![DBMS Evaluation Console](./screenshots/06_database_feature_runner.png)
+
+### Screenshot 7: Architectural & Schema Diagram Viewer (`/diagrams`)
+*Integrated diagram browser rendering the 4 core models (ER Diagram, Relational Schema, System Architecture, CMDB Topology).*  
+![Diagram Viewer](./screenshots/07_diagrams_viewer.png)
+
+---
+
+## 11. Test Cases & Verification Results
 
 | Test ID | Module | Scenario / Input | Expected Result | Actual Result | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -305,11 +575,11 @@ graph TD
 
 ---
 
-## 10. Conclusion
+## 12. Conclusion
 
 The **Smart IT Service Desk with Asset Management & AI Knowledge Search** demonstrates the power of combining complementary database paradigms to solve modern IT enterprise challenges:
-- **Relational Databases** guarantee consistency, auditability, and SLA enforcement through procedural logic and triggers.
-- **Graph Databases** eliminate expensive recursive queries and provide topological visibility into IT infrastructure dependencies and failure propagation.
+- **Relational Databases (MySQL 8.0)** guarantee consistency, auditability, and SLA enforcement through procedural logic, triggers, views, and ACID transactions.
+- **Graph Databases (Neo4j)** eliminate expensive recursive joins and provide topological visibility into IT infrastructure dependencies and failure propagation.
 - **Vector Databases** bridge the semantic gap between end-user symptoms and technical resolutions.
 
-All syllabus requirements for PES University DBMS Experiential Learning – Level 3 have been completely satisfied.
+All 17 syllabus requirements and 12 soft-copy documentation sections for the PES University DBMS Experiential Learning – Level 3 have been completely satisfied.

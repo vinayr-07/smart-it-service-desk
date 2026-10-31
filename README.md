@@ -82,6 +82,21 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your web browser.
 
+### 6. Linking and Pushing to GitHub
+Link your local repository to your team's GitHub repository:
+```bash
+# Add your GitHub remote repository
+git remote add origin https://github.com/<your-username>/smart-it-service-desk.git
+
+# Set branch to main and push
+git branch -M main
+git push -u origin main
+```
+Alternatively, run the interactive helper script:
+```powershell
+.\scripts\push_to_github.ps1 -RepoUrl "https://github.com/<your-username>/smart-it-service-desk.git"
+```
+
 ---
 
 ## 📁 Repository Directory Structure
@@ -97,7 +112,12 @@ mini-project/
 ├── docs/
 │   ├── PROJECT_DOCUMENTATION.md# Soft-copy documentation fulfilling all 12 syllabus requirements
 │   ├── ER_DIAGRAM.md           # Entity-Relationship diagram and 3NF relational mapping
-│   └── TEST_CASES.md           # Comprehensive test cases and verification results
+│   ├── TEST_CASES.md           # Comprehensive test cases and verification results
+│   ├── screenshots/            # High-resolution screenshots of all app pages
+│   └── diagrams/               # High-definition vector SVGs (ER, Schema, Architecture, CMDB)
+├── scripts/
+│   ├── capture_screenshots.py  # Automated UI screenshot capture script
+│   └── push_to_github.ps1      # GitHub remote setup and push utility
 ├── src/
 │   ├── app/
 │   │   ├── api/                # Next.js backend API Route Handlers

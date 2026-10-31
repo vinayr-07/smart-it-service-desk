@@ -85,42 +85,7 @@ export default function DashboardPage() {
         position: 'relative'
       }}>
         <div>
-          {/* Sourced Color Pills Ribbon */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px', flexWrap: 'wrap' }}>
-            <span style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              gap: '6px', 
-              padding: '4px 12px', 
-              background: 'rgba(244, 217, 160, 0.15)', 
-              border: '1px solid var(--c-gold)',
-              borderRadius: 'var(--radius-full)', 
-              fontSize: '0.72rem', 
-              fontWeight: 800, 
-              color: 'var(--c-gold)',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase'
-            }}>
-              <Sparkles size={12} color="var(--c-lemon)" /> DBMS LEVEL 3 EXPERIENTIAL LEARNING
-            </span>
-            <span style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '4px 12px',
-              background: 'rgba(166, 107, 255, 0.15)',
-              border: '1px solid var(--c-lavender)',
-              borderRadius: 'var(--radius-full)',
-              fontSize: '0.72rem',
-              fontWeight: 800,
-              color: 'var(--c-lavender)',
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase'
-            }}>
-              <span className="status-dot pulse"></span>
-              9-COLOR PALETTE ARCHITECTURE
-            </span>
-          </div>
+
 
           <h1 style={{ 
             fontFamily: 'var(--font-display)',

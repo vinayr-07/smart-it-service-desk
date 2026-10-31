@@ -9,10 +9,11 @@ import {
   Maximize2, 
   ZoomIn, 
   ZoomOut, 
-  FileText,
-  ShieldCheck,
-  CheckCircle2,
-  Sparkles
+  FileText, 
+  ShieldCheck, 
+  CheckCircle2, 
+  Sparkles,
+  Printer
 } from 'lucide-react';
 
 export default function DiagramsPage() {
@@ -206,7 +207,21 @@ export default function DiagramsPage() {
             </div>
 
             <button onClick={handleDownload} className="btn btn-secondary btn-sm" style={{ borderColor: 'var(--c-mocha)', display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px' }}>
-              <Download size={14} color="var(--c-gold)" /> Export Vector SVG
+              <Download size={14} color="var(--c-gold)" /> Export SVG
+            </button>
+
+            <button 
+              onClick={() => {
+                const printWindow = window.open(current.file, '_blank');
+                if (printWindow) {
+                  printWindow.focus();
+                  setTimeout(() => printWindow.print(), 300);
+                }
+              }} 
+              className="btn btn-primary btn-sm" 
+              style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px' }}
+            >
+              <Printer size={14} /> Print / Save PDF
             </button>
           </div>
         </div>

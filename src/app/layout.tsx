@@ -108,7 +108,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 onChange={(e) => handleRoleChange(e.target.value as any)}
               >
                 <option value="Admin">Admin (Vinay R - Lead)</option>
-                <option value="Agent">Agent (Karthik Raja - Tier 2)</option>
+                <option value="Agent">Agent (Prateek Hachadad - Co-Lead)</option>
                 <option value="Employee">Employee (Aditya Verma)</option>
               </select>
               <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '8px' }}>

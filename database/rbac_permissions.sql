@@ -44,17 +44,17 @@ GRANT SELECT ON smart_service_desk.departments TO 'sd_employee_role';
 -- 3. CREATE DATABASE USER ACCOUNTS AND BIND ROLES
 -- ----------------------------------------------------------------------------
 CREATE USER IF NOT EXISTS 'admin_vinay'@'localhost' IDENTIFIED BY 'AdminPass@2026';
-CREATE USER IF NOT EXISTS 'agent_karthik'@'localhost' IDENTIFIED BY 'AgentPass@2026';
+CREATE USER IF NOT EXISTS 'agent_prateek'@'localhost' IDENTIFIED BY 'AgentPass@2026';
 CREATE USER IF NOT EXISTS 'emp_aditya'@'localhost' IDENTIFIED BY 'EmpPass@2026';
 
 -- Grant roles to users
 GRANT 'sd_admin_role' TO 'admin_vinay'@'localhost';
-GRANT 'sd_agent_role' TO 'agent_karthik'@'localhost';
+GRANT 'sd_agent_role' TO 'agent_prateek'@'localhost';
 GRANT 'sd_employee_role' TO 'emp_aditya'@'localhost';
 
 -- Activate roles as default
 SET DEFAULT ROLE 'sd_admin_role' TO 'admin_vinay'@'localhost';
-SET DEFAULT ROLE 'sd_agent_role' TO 'agent_karthik'@'localhost';
+SET DEFAULT ROLE 'sd_agent_role' TO 'agent_prateek'@'localhost';
 SET DEFAULT ROLE 'sd_employee_role' TO 'emp_aditya'@'localhost';
 
 -- ----------------------------------------------------------------------------
@@ -66,3 +66,4 @@ SET DEFAULT ROLE 'sd_employee_role' TO 'emp_aditya'@'localhost';
 -- SHOW GRANTS FOR 'emp_aditya'@'localhost';
 
 FLUSH PRIVILEGES;
+

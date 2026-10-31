@@ -7,6 +7,10 @@
 **Academic Year / Semester:** Semester 5 (2026)  
 **Instructor:** Dr. Nagasundari S  
 
+**Project Team Members:**  
+1. **Vinay R** — `PES1UG24CS353` (Team Lead)  
+2. **Prateek Hachadad** — `PES1UG24CS340` (Co-Lead)  
+
 ---
 
 ## 1. Objectives

@@ -33,7 +33,7 @@ INSERT INTO users (user_id, full_name, email, password_hash, role, dept_id, phon
 
 -- Agents (IT Support Technicians)
 INSERT INTO users (user_id, full_name, email, password_hash, role, dept_id, phone, is_active) VALUES
-(3, 'Karthik Raja', 'karthik.agent@pes.edu', 'hash_agent_01', 'Agent', 1, '+91-9880011223', TRUE),
+(3, 'Prateek Hachadad', 'prateek.agent@pes.edu', 'hash_agent_01', 'Agent', 1, '+91-9880011223', TRUE),
 (4, 'Sneha Patel', 'sneha.agent@pes.edu', 'hash_agent_02', 'Agent', 1, '+91-9880011224', TRUE),
 (5, 'Mohammed Zaid', 'zaid.agent@pes.edu', 'hash_agent_03', 'Agent', 5, '+91-9880011225', TRUE),
 (6, 'Deepa Mohan', 'deepa.agent@pes.edu', 'hash_agent_04', 'Agent', 1, '+91-9880011226', TRUE);

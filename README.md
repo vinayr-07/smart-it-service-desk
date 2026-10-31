@@ -168,7 +168,7 @@ mini-project/
 | Team Member | Roll / SRN | Responsibilities |
 | :--- | :--- | :--- |
 | **Team Member 1 (Lead)** | PES1UG24CS353 (Vinay R) | Relational Database Design (DDL, Triggers, Stored Procedures, ACID Transactions), Next.js Backend API integration, Neo4j Graph CMDB topology modeling. |
-| **Team Member 2** | Co-Lead | Vector Database Semantic Search implementation, Next.js Frontend Dashboard and UI components, Test Case validation and documentation. |
+| **Team Member 2** | PES1UG24CS340 (Prateek Hachadad) | Vector Database Semantic Search implementation, Next.js Frontend Dashboard and UI components, Test Case validation and documentation. |
 
 ---
 

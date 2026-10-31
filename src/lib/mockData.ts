@@ -87,7 +87,7 @@ export const initialDepartments: Department[] = [
 export const initialUsers: User[] = [
   { user_id: 1, full_name: 'Vinay R', email: 'vinay.admin@pes.edu', role: 'Admin', dept_id: 1, phone: '+91-9880011221' },
   { user_id: 2, full_name: 'Dr. Nagasundari S', email: 'nagasundari@pes.edu', role: 'Admin', dept_id: 1, phone: '+91-9880011222' },
-  { user_id: 3, full_name: 'Karthik Raja', email: 'karthik.agent@pes.edu', role: 'Agent', dept_id: 1, phone: '+91-9880011223' },
+  { user_id: 3, full_name: 'Prateek Hachadad', email: 'prateek.agent@pes.edu', role: 'Agent', dept_id: 1, phone: '+91-9880011223' },
   { user_id: 4, full_name: 'Sneha Patel', email: 'sneha.agent@pes.edu', role: 'Agent', dept_id: 1, phone: '+91-9880011224' },
   { user_id: 5, full_name: 'Mohammed Zaid', email: 'zaid.agent@pes.edu', role: 'Agent', dept_id: 5, phone: '+91-9880011225' },
   { user_id: 6, full_name: 'Deepa Mohan', email: 'deepa.agent@pes.edu', role: 'Agent', dept_id: 1, phone: '+91-9880011226' },

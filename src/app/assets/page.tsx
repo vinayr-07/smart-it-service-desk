@@ -12,7 +12,9 @@ import {
   ShieldAlert, 
   CheckCircle,
   Radio,
-  Layers
+  Layers,
+  Flame,
+  ArrowRight
 } from 'lucide-react';
 import { Asset, GraphNode, GraphEdge } from '@/lib/mockData';
 
@@ -62,30 +64,99 @@ export default function AssetsPage() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
       
-      {/* Header Banner */}
-      <div className="glass-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+      {/* Header Banner - 9-Color Editorial Treatment */}
+      <div className="glass-card" style={{ 
+        background: 'linear-gradient(135deg, rgba(23, 23, 23, 0.96) 0%, rgba(6, 17, 12, 0.94) 55%, rgba(91, 70, 50, 0.35) 100%)',
+        border: '1px solid rgba(244, 217, 160, 0.32)',
+        padding: '36px 40px',
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        flexWrap: 'wrap', 
+        gap: '20px' 
+      }}>
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', fontWeight: 700, color: '#67E8F9', marginBottom: '6px' }}>
-            <Radio size={14} /> NOSQL GRAPH PARADIGM (NEO4J CMDB)
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px', flexWrap: 'wrap' }}>
+            <span style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '6px', 
+              padding: '4px 12px', 
+              background: 'rgba(166, 107, 255, 0.14)', 
+              border: '1px solid rgba(166, 107, 255, 0.45)',
+              borderRadius: 'var(--radius-full)', 
+              fontSize: '0.72rem', 
+              fontWeight: 800, 
+              color: 'var(--c-lavender)',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase'
+            }}>
+              <Radio size={13} /> NoSQL Graph CMDB • Neo4j Engine
+            </span>
+            <span style={{ 
+              fontSize: '0.7rem', 
+              padding: '3px 10px', 
+              background: 'rgba(244, 217, 160, 0.1)', 
+              border: '1px solid rgba(244, 217, 160, 0.35)', 
+              borderRadius: 'var(--radius-full)', 
+              color: 'var(--c-gold)', 
+              fontWeight: 800,
+              letterSpacing: '0.06em'
+            }}>
+              CYPHER RECURSIVE TRAVERSAL
+            </span>
           </div>
-          <h1 style={{ fontSize: '1.4rem', fontWeight: 800 }}>Configuration Items & Blast Radius Engine</h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem' }}>
-            Traversing recursive IT asset dependency graphs via Cypher to simulate infrastructure outages and upstream business impact.
+
+          <h1 className="font-editorial" style={{ 
+            fontSize: '2.1rem', 
+            fontWeight: 700, 
+            color: 'var(--c-gold)', 
+            letterSpacing: '0.03em', 
+            marginBottom: '10px',
+            textShadow: '0 2px 20px rgba(244, 217, 160, 0.15)'
+          }}>
+            Configuration Items &amp; Blast Radius Topology
+          </h1>
+
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', maxWidth: '820px', lineHeight: 1.6 }}>
+            Traverses directed property graph edges (<code style={{ color: 'var(--c-lemon)', fontFamily: 'var(--font-mono)' }}>:DEPENDS_ON</code>, <code style={{ color: 'var(--c-lavender)', fontFamily: 'var(--font-mono)' }}>:HOSTED_ON</code>) 
+            to simulate physical hardware outages, mapping propagation across services and business SLA obligations.
           </p>
         </div>
 
         {/* Tab Controls */}
-        <div style={{ display: 'flex', background: 'var(--bg-input)', padding: '4px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)' }}>
+        <div style={{ 
+          display: 'flex', 
+          background: 'rgba(11, 14, 13, 0.9)', 
+          padding: '5px', 
+          borderRadius: 'var(--radius-sm)', 
+          border: '1px solid var(--c-mocha)',
+          gap: '6px'
+        }}>
           <button 
             className={`btn btn-sm ${activeTab === 'topology' ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ 
+              padding: '8px 16px', 
+              fontSize: '0.82rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
             onClick={() => setActiveTab('topology')}
           >
             <Network size={14} /> Dependency Graph
           </button>
           <button 
             className={`btn btn-sm ${activeTab === 'table' ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ 
+              padding: '8px 16px', 
+              fontSize: '0.82rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
             onClick={() => setActiveTab('table')}
           >
             <Layers size={14} /> Asset Inventory Table
@@ -93,21 +164,32 @@ export default function AssetsPage() {
         </div>
       </div>
 
-      {/* Blast Radius Interactive Simulator Ribbon */}
-      <div className="glass-card" style={{ border: '1px solid rgba(244, 63, 94, 0.3)', background: 'rgba(244, 63, 94, 0.04)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-rose)', fontWeight: 700, fontSize: '0.95rem' }}>
-              <ShieldAlert size={20} /> Simulate Hardware / Network Failure:
+      {/* Blast Radius Interactive Simulator Ribbon - Sourced Crimson Red (#A31C1B) & Burnt Amber */}
+      <div className="glass-card" style={{ 
+        border: '1px solid rgba(163, 28, 27, 0.5)', 
+        background: 'linear-gradient(135deg, rgba(23, 23, 23, 0.95) 0%, rgba(163, 28, 27, 0.12) 100%)',
+        padding: '24px 28px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '18px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#FDA4AF', fontWeight: 700, fontSize: '0.94rem' }}>
+              <ShieldAlert size={20} color="var(--c-crimson)" /> 
+              <span className="font-editorial" style={{ letterSpacing: '0.04em', color: '#FFFFFF' }}>Simulate Infrastructure Failure:</span>
             </div>
 
             <select
               className="form-select"
-              style={{ width: '280px' }}
+              style={{ 
+                width: '320px', 
+                background: 'rgba(11, 14, 13, 0.85)',
+                borderColor: 'var(--c-mocha)',
+                color: '#FFFFFF',
+                fontSize: '0.88rem'
+              }}
               value={selectedFailedCi}
               onChange={(e) => setSelectedFailedCi(e.target.value)}
             >
-              <option value="SW-EDGE-02">SW-EDGE-02 (CS Edge Switch - OUTAGE)</option>
+              <option value="SW-EDGE-02">SW-EDGE-02 (CS Edge Switch - Critical Outage)</option>
               <option value="SRV-ALPHA">SRV-ALPHA (App Host Node Alpha)</option>
               <option value="SRV-BETA">SRV-BETA (ERP Host Server)</option>
               <option value="DB-MYSQL">DB-MYSQL (MySQL Database Node 1)</option>
@@ -118,6 +200,13 @@ export default function AssetsPage() {
           <button 
             onClick={handleRunBlastRadius}
             className="btn btn-danger"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px',
+              padding: '10px 22px',
+              fontSize: '0.88rem'
+            }}
             disabled={loadingBlast}
           >
             <Activity size={16} /> {loadingBlast ? 'Traversing Cypher...' : 'Calculate Blast Radius'}
@@ -126,27 +215,42 @@ export default function AssetsPage() {
 
         {/* Blast Radius Result Drawer */}
         {blastResult && (
-          <div style={{ marginTop: '20px', borderTop: '1px solid rgba(244, 63, 94, 0.2)', paddingTop: '16px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <div style={{ marginTop: '22px', borderTop: '1px solid rgba(163, 28, 27, 0.35)', paddingTop: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
               <div>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Failure Simulation on: </span>
-                <span style={{ fontWeight: 700, color: 'var(--accent-rose)' }}>{blastResult.failedNodeName} ({blastResult.failedNodeId})</span>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Failure Simulation Origin: </span>
+                <span style={{ fontWeight: 800, color: 'var(--c-lemon)', fontFamily: 'var(--font-mono)' }}>
+                  {blastResult.failedNodeName} ({blastResult.failedNodeId})
+                </span>
               </div>
-              <div style={{ display: 'flex', gap: '16px', fontSize: '0.82rem' }}>
-                <span>Impacted Entities: <b>{blastResult.totalImpactedCount}</b></span>
-                <span style={{ color: 'var(--accent-rose)' }}>Tier-1 Critical Services: <b>{blastResult.criticalServicesImpacted}</b></span>
+              <div style={{ display: 'flex', gap: '20px', fontSize: '0.84rem' }}>
+                <span style={{ color: 'var(--text-secondary)' }}>Impacted Dependencies: <b style={{ color: '#FFFFFF', fontFamily: 'var(--font-mono)' }}>{blastResult.totalImpactedCount}</b></span>
+                <span style={{ color: '#FDA4AF' }}>Tier-1 Mission Critical Outages: <b style={{ color: 'var(--c-lemon)', fontFamily: 'var(--font-mono)' }}>{blastResult.criticalServicesImpacted}</b></span>
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '12px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '14px' }}>
               {blastResult.impactedNodes.map((item: any) => (
-                <div key={item.id} style={{ background: 'var(--bg-input)', border: '1px solid rgba(244, 63, 94, 0.25)', borderRadius: 'var(--radius-sm)', padding: '12px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                    <span style={{ fontWeight: 700, fontSize: '0.88rem', color: '#FDA4AF' }}>{item.name}</span>
-                    <span className="badge badge-critical" style={{ fontSize: '0.65rem' }}>{item.hops} Hop(s)</span>
+                <div key={item.id} style={{ 
+                  background: 'rgba(11, 14, 13, 0.9)', 
+                  border: '1px solid rgba(163, 28, 27, 0.45)', 
+                  borderRadius: 'var(--radius-sm)', 
+                  padding: '14px 16px' 
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                    <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--c-gold)' }}>{item.name}</span>
+                    <span className="badge badge-critical" style={{ fontSize: '0.64rem', padding: '2px 8px' }}>{item.hops} Hop(s)</span>
                   </div>
                   <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Type: {item.type} | ID: {item.id}</div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '6px', fontFamily: 'var(--font-mono)' }}>
+                  <div style={{ 
+                    fontSize: '0.74rem', 
+                    color: 'var(--c-lavender)', 
+                    marginTop: '8px', 
+                    fontFamily: 'var(--font-mono)',
+                    background: 'rgba(0,0,0,0.4)',
+                    padding: '4px 8px',
+                    borderRadius: '4px'
+                  }}>
                     Chain: {item.failurePath.join(' ➔ ')}
                   </div>
                 </div>
@@ -156,51 +260,55 @@ export default function AssetsPage() {
         )}
       </div>
 
-      {/* TOPOLOGY GRAPH VIEW */}
+      {/* TOPOLOGY GRAPH VIEW - 9-Color Visual Architecture */}
       {activeTab === 'topology' && (
-        <div className="glass-card" style={{ padding: '24px', overflowX: 'auto' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <div className="glass-card" style={{ padding: '28px', overflowX: 'auto', border: '1px solid rgba(244, 217, 160, 0.25)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '22px', flexWrap: 'wrap', gap: '14px' }}>
             <div>
-              <h2 style={{ fontSize: '1.1rem', fontWeight: 700 }}>IT Infrastructure Dependency Topology</h2>
-              <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                Directed graph edges represent <code>[:DEPENDS_ON]</code>, <code>[:HOSTED_ON]</code>, and <code>[:CONNECTED_TO]</code>
+              <h2 className="font-editorial" style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--c-gold)', letterSpacing: '0.04em' }}>
+                IT Infrastructure Dependency Topology
+              </h2>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                Directed graph edges represent recursive relationships: <code style={{ color: 'var(--c-lavender)' }}>[:DEPENDS_ON]</code>, <code style={{ color: 'var(--c-amber)' }}>[:HOSTED_ON]</code>, and <code style={{ color: 'var(--c-lemon)' }}>[:CONNECTED_TO]</code>
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '14px', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '10px', height: '10px', background: '#6366F1', borderRadius: '50%' }}></span> Application
+            {/* Color Legend using 9-Color Palette */}
+            <div style={{ display: 'flex', gap: '16px', fontSize: '0.76rem', color: 'var(--text-secondary)', flexWrap: 'wrap' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ width: '10px', height: '10px', background: 'var(--c-lavender)', borderRadius: '50%' }}></span> Application
               </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '10px', height: '10px', background: '#06B6D4', borderRadius: '50%' }}></span> Microservice
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ width: '10px', height: '10px', background: 'var(--c-gold)', borderRadius: '50%' }}></span> Microservice
               </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '10px', height: '10px', background: '#F59E0B', borderRadius: '50%' }}></span> Database
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ width: '10px', height: '10px', background: 'var(--c-amber)', borderRadius: '50%' }}></span> Database
               </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '10px', height: '10px', background: '#10B981', borderRadius: '50%' }}></span> Server
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ width: '10px', height: '10px', background: 'var(--c-lemon)', borderRadius: '50%' }}></span> Server
               </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '10px', height: '10px', background: '#F43F5E', borderRadius: '50%' }}></span> Switch / Storage
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ width: '10px', height: '10px', background: 'var(--c-crimson)', borderRadius: '50%' }}></span> Switch / Storage
               </span>
             </div>
           </div>
 
-          {/* SVG Graph Canvas */}
+          {/* SVG Graph Canvas with Deep Forest Black (#06110C) Canvas */}
           <div style={{ 
-            background: '#070A12', 
-            border: '1px solid var(--border-color)', 
+            background: 'radial-gradient(ellipse at center, #0F1612 0%, #06110C 100%)', 
+            border: '1px solid var(--c-mocha)', 
             borderRadius: 'var(--radius-md)', 
             minWidth: '1150px', 
             height: '620px', 
-            position: 'relative' 
+            position: 'relative',
+            boxShadow: 'inset 0 0 40px rgba(0,0,0,0.8)'
           }}>
             <svg style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
               <defs>
                 <marker id="arrow" viewBox="0 0 10 10" refX="28" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(255, 255, 255, 0.25)" />
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(244, 217, 160, 0.35)" />
                 </marker>
                 <marker id="arrow-impact" viewBox="0 0 10 10" refX="28" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#F43F5E" />
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--c-crimson)" />
                 </marker>
               </defs>
 
@@ -222,7 +330,7 @@ export default function AssetsPage() {
                       y1={srcNode.y}
                       x2={tgtNode.x}
                       y2={tgtNode.y}
-                      stroke={isEdgeInBlast ? '#F43F5E' : 'rgba(255, 255, 255, 0.15)'}
+                      stroke={isEdgeInBlast ? 'var(--c-crimson)' : 'rgba(244, 217, 160, 0.18)'}
                       strokeWidth={isEdgeInBlast ? 2.5 : 1.2}
                       strokeDasharray={isEdgeInBlast ? '4,4' : undefined}
                       markerEnd={isEdgeInBlast ? 'url(#arrow-impact)' : 'url(#arrow)'}
@@ -230,10 +338,10 @@ export default function AssetsPage() {
                     <text
                       x={(srcNode.x! + tgtNode.x!) / 2}
                       y={(srcNode.y! + tgtNode.y!) / 2 - 6}
-                      fill={isEdgeInBlast ? '#FDA4AF' : 'rgba(255, 255, 255, 0.35)'}
+                      fill={isEdgeInBlast ? '#FDA4AF' : 'rgba(244, 217, 160, 0.45)'}
                       fontSize="9"
                       textAnchor="middle"
-                      fontFamily="monospace"
+                      fontFamily="var(--font-mono)"
                     >
                       {edge.type}
                     </text>
@@ -246,11 +354,11 @@ export default function AssetsPage() {
                 const isFailed = blastResult && blastResult.failedNodeId === node.id;
                 const isImpacted = isNodeImpacted(node.id);
 
-                let nodeColor = '#6366F1';
-                if (node.type === 'Microservice') nodeColor = '#06B6D4';
-                if (node.type === 'Database') nodeColor = '#F59E0B';
-                if (node.type === 'Server') nodeColor = '#10B981';
-                if (node.type === 'NetworkDevice' || node.type === 'Storage') nodeColor = '#EC4899';
+                let nodeColor = 'var(--c-lavender)';
+                if (node.type === 'Microservice') nodeColor = 'var(--c-gold)';
+                if (node.type === 'Database') nodeColor = 'var(--c-amber)';
+                if (node.type === 'Server') nodeColor = 'var(--c-lemon)';
+                if (node.type === 'NetworkDevice' || node.type === 'Storage') nodeColor = 'var(--c-crimson)';
 
                 return (
                   <g 
@@ -261,27 +369,28 @@ export default function AssetsPage() {
                   >
                     {/* Pulsing ring if failed or impacted */}
                     {isFailed && (
-                      <circle r="30" fill="none" stroke="#F43F5E" strokeWidth="2.5" className="status-dot pulse" />
+                      <circle r="30" fill="none" stroke="var(--c-crimson)" strokeWidth="2.5" className="status-dot pulse" />
                     )}
                     {isImpacted && (
-                      <circle r="26" fill="none" stroke="#FB7185" strokeWidth="1.5" strokeDasharray="3,3" />
+                      <circle r="26" fill="none" stroke="#FDA4AF" strokeWidth="1.5" strokeDasharray="3,3" />
                     )}
 
                     {/* Node Core Circle */}
                     <circle 
                       r="18" 
-                      fill={isFailed ? '#E11D48' : isImpacted ? '#9F1239' : '#111827'} 
-                      stroke={isFailed ? '#F43F5E' : nodeColor} 
-                      strokeWidth="2.5" 
+                      fill={isFailed ? 'var(--c-crimson)' : isImpacted ? 'rgba(163, 28, 27, 0.6)' : 'var(--c-charcoal)'} 
+                      stroke={isFailed ? 'var(--c-lemon)' : nodeColor} 
+                      strokeWidth="2.2" 
                     />
 
                     {/* Node Text Label */}
                     <text
                       y="32"
                       textAnchor="middle"
-                      fill={isFailed ? '#FDA4AF' : isImpacted ? '#FECDD3' : '#F8FAFC'}
+                      fill={isFailed ? 'var(--c-lemon)' : isImpacted ? '#FECDD3' : '#F8FAFC'}
                       fontSize="11"
-                      fontWeight="600"
+                      fontWeight="700"
+                      fontFamily="var(--font-mono)"
                     >
                       {node.id}
                     </text>
@@ -320,16 +429,16 @@ export default function AssetsPage() {
               {assets.map((a) => (
                 <tr key={a.asset_id}>
                   <td>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--accent-cyan)' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--c-lavender)' }}>
                       {a.asset_tag}
                     </span>
                   </td>
                   <td>
-                    <div style={{ fontWeight: 600 }}>{a.asset_name}</div>
+                    <div style={{ fontWeight: 600, color: '#FFFFFF' }}>{a.asset_name}</div>
                     <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Purchase: {a.purchase_date}</div>
                   </td>
                   <td>
-                    <span style={{ fontSize: '0.82rem' }}>{a.asset_type}</span>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>{a.asset_type}</span>
                   </td>
                   <td>
                     <span className={`badge ${a.criticality === 'MISSION_CRITICAL' ? 'badge-critical' : a.criticality === 'HIGH' ? 'badge-high' : 'badge-low'}`}>
@@ -348,6 +457,7 @@ export default function AssetsPage() {
                   <td>
                     <button 
                       className="btn btn-secondary btn-sm"
+                      style={{ borderColor: 'var(--c-mocha)', fontSize: '0.76rem' }}
                       onClick={() => {
                         const topNode = topology.nodes.find(n => a.asset_tag.includes(n.id) || a.asset_name.includes(n.name));
                         if (topNode) {

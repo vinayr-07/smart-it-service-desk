@@ -317,37 +317,37 @@ export default function TicketsPage() {
             {filteredTickets.map((ticket) => (
               <tr key={ticket.ticket_id}>
                 <td>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#A5B4FC' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--c-gold)', fontSize: '0.92rem' }}>
                     {ticket.ticket_code}
                   </span>
                 </td>
                 <td>
-                  <div style={{ fontWeight: 600, cursor: 'pointer' }} onClick={() => handleViewDetails(ticket)}>
+                  <div style={{ fontWeight: 700, cursor: 'pointer', color: 'var(--text-primary)' }} onClick={() => handleViewDetails(ticket)}>
                     {ticket.title}
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                    Asset: {ticket.asset_id ? assets.find(a => a.asset_id === ticket.asset_id)?.asset_name || `Asset #${ticket.asset_id}` : 'None'}
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    Asset: {ticket.asset_id ? <span style={{ color: 'var(--c-lavender)' }}>{assets.find(a => a.asset_id === ticket.asset_id)?.asset_name || `Asset #${ticket.asset_id}`}</span> : 'None Linked'}
                   </div>
                 </td>
                 <td>
-                  <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
                     {ticket.category}
                   </span>
                 </td>
                 <td>
-                  <span className={`badge badge-${ticket.priority.toLowerCase()}`}>
+                  <span className={`badge ${ticket.priority === 'CRITICAL' ? 'badge-critical' : ticket.priority === 'HIGH' ? 'badge-high' : 'badge-medium'}`}>
                     {ticket.priority}
                   </span>
                 </td>
                 <td>
-                  <span className={`badge ${ticket.status === 'RESOLVED' ? 'badge-operational' : ticket.status === 'IN_PROGRESS' ? 'badge-high' : 'badge-low'}`}>
+                  <span className={`badge ${ticket.status === 'RESOLVED' ? 'badge-operational' : ticket.status === 'IN_PROGRESS' ? 'badge-lemon' : 'badge-lavender'}`}>
                     {ticket.status}
                   </span>
                 </td>
                 <td>
-                  <div style={{ fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Clock size={13} color={ticket.sla_breached ? 'var(--accent-rose)' : 'var(--text-muted)'} />
-                    <span style={{ color: ticket.sla_breached ? 'var(--accent-rose)' : 'inherit', fontWeight: ticket.sla_breached ? 700 : 400 }}>
+                  <div style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <Clock size={13} color={ticket.sla_breached ? 'var(--c-crimson)' : 'var(--text-muted)'} />
+                    <span style={{ color: ticket.sla_breached ? 'var(--c-crimson)' : 'var(--text-secondary)', fontWeight: ticket.sla_breached ? 800 : 500, fontFamily: 'var(--font-mono)' }}>
                       {ticket.due_date}
                     </span>
                   </div>
@@ -360,7 +360,7 @@ export default function TicketsPage() {
                         title="Run Stored Procedure: sp_auto_assign_ticket"
                         onClick={() => handleAutoAssign(ticket.ticket_id)}
                       >
-                        <Zap size={13} color="var(--accent-cyan)" /> Auto-Assign
+                        <Zap size={13} color="var(--c-lemon)" /> Auto-Assign
                       </button>
                     )}
 

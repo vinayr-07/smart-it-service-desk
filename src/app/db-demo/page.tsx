@@ -11,11 +11,14 @@ import {
   Clock, 
   Activity,
   CheckCircle,
-  Copy
+  Copy,
+  Sparkles,
+  Zap,
+  Cpu
 } from 'lucide-react';
 
 export default function DbDemoPage() {
-  const [activeCategory, setActiveCategory] = useState<'views' | 'procedures' | 'triggers' | 'transactions' | 'queries' | 'cypher'>('views');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'views' | 'procedures' | 'triggers' | 'transactions' | 'queries' | 'cypher'>('all');
   const [selectedDemo, setSelectedDemo] = useState<string>('view_sla');
   const [running, setRunning] = useState(false);
   const [output, setOutput] = useState<any | null>(null);
@@ -207,22 +210,6 @@ ORDER BY total_department_tickets DESC;`,
       executeSql: 'SELECT * FROM departments;',
       explanation: 'Meets DBMS requirement for GROUP BY with HAVING clause filtering on aggregate properties.'
     },
-    cypher_blast_radius: {
-      title: 'Neo4j Cypher: Blast Radius Impact Analysis',
-      category: 'cypher',
-      description: 'Traverses variable-depth recursive dependencies (1 to 4 hops) to discover affected business applications.',
-      code: `MATCH path = (impacted:ConfigurationItem)-[*1..4]->(failed:ConfigurationItem {id: 'SW-EDGE-02'})
-RETURN 
-    failed.name AS Failed_Component,
-    impacted.id AS Impacted_CI_ID,
-    impacted.name AS Impacted_Service,
-    impacted.tier AS Tier,
-    impacted.status AS Status,
-    length(path) AS Dependency_Hops
-ORDER BY Dependency_Hops ASC;`,
-      executeSql: 'NEO4J_BLAST_RADIUS:SW-EDGE-02',
-      explanation: 'NoSQL Graph demonstration solving exponential relational join problems via index-free adjacency graph traversal.'
-    },
     query_recursive: {
       title: 'SQL Recursive CTE: Management & Escalation Chain',
       category: 'queries',
@@ -248,6 +235,22 @@ FROM IncidentEscalationChain
 ORDER BY escalation_level ASC;`,
       executeSql: 'SELECT * FROM IncidentEscalationChain;',
       explanation: 'Meets DBMS Rubric #7: Demonstrates recursive CTE query solving multi-level hierarchy escalation chains.'
+    },
+    cypher_blast_radius: {
+      title: 'Neo4j Cypher: Blast Radius Impact Analysis',
+      category: 'cypher',
+      description: 'Traverses variable-depth recursive dependencies (1 to 4 hops) to discover affected business applications.',
+      code: `MATCH path = (impacted:ConfigurationItem)-[*1..4]->(failed:ConfigurationItem {id: 'SW-EDGE-02'})
+RETURN 
+    failed.name AS Failed_Component,
+    impacted.id AS Impacted_CI_ID,
+    impacted.name AS Impacted_Service,
+    impacted.tier AS Tier,
+    impacted.status AS Status,
+    length(path) AS Dependency_Hops
+ORDER BY Dependency_Hops ASC;`,
+      executeSql: 'NEO4J_BLAST_RADIUS:SW-EDGE-02',
+      explanation: 'NoSQL Graph demonstration solving exponential relational join problems via index-free adjacency graph traversal.'
     },
     cypher_rud: {
       title: 'Neo4j Cypher: RUD Operations (Read, Update, Delete)',
@@ -330,35 +333,90 @@ GRANT 'sd_employee_role' TO 'emp_aditya'@'localhost';`,
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
       
-      {/* Header Banner */}
+      {/* Header Banner - 9-Color Editorial Treatment */}
       <div className="glass-card" style={{
-        background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.1) 100%)',
-        border: '1px solid rgba(99, 102, 241, 0.3)'
+        background: 'linear-gradient(135deg, rgba(23, 23, 23, 0.96) 0%, rgba(6, 17, 12, 0.94) 55%, rgba(91, 70, 50, 0.35) 100%)',
+        border: '1px solid rgba(244, 217, 160, 0.32)',
+        padding: '36px 40px',
+        position: 'relative'
       }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', fontWeight: 700, color: '#A5B4FC', marginBottom: '8px' }}>
-          <Terminal size={14} /> EVALUATION & LAB DEMO SHOWCASE
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px', flexWrap: 'wrap' }}>
+          <span style={{ 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            gap: '6px', 
+            padding: '4px 12px', 
+            background: 'rgba(255, 242, 26, 0.12)', 
+            border: '1px solid var(--c-lemon)',
+            borderRadius: 'var(--radius-full)', 
+            fontSize: '0.72rem', 
+            fontWeight: 800, 
+            color: 'var(--c-lemon)',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase'
+          }}>
+            <Terminal size={13} /> Interactive DBMS Evaluator • 50/50 Rubric Harness
+          </span>
+          <span style={{ 
+            fontSize: '0.7rem', 
+            padding: '3px 10px', 
+            background: 'rgba(244, 217, 160, 0.1)', 
+            border: '1px solid rgba(244, 217, 160, 0.35)', 
+            borderRadius: 'var(--radius-full)', 
+            color: 'var(--c-gold)', 
+            fontWeight: 800,
+            letterSpacing: '0.06em'
+          }}>
+            LIVE RELATIONAL + GRAPH EXECUTION
+          </span>
         </div>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '6px' }}>
+
+        <h1 className="font-editorial" style={{ 
+          fontSize: '2.1rem', 
+          fontWeight: 700, 
+          color: 'var(--c-gold)', 
+          letterSpacing: '0.03em', 
+          marginBottom: '10px',
+          textShadow: '0 2px 20px rgba(244, 217, 160, 0.15)'
+        }}>
           DBMS Level 3 Advanced Concepts Runner
         </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', maxWidth: '820px' }}>
-          Execute and benchmark every mandatory syllabus feature: <b>Database Views</b>, <b>Stored Procedures</b>, 
-          <b>Triggers</b>, <b>ACID Transactions</b>, <b>Complex JOINs with HAVING</b>, and <b>Neo4j Cypher Traversals</b>.
+
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', maxWidth: '860px', lineHeight: 1.6 }}>
+          Directly execute and benchmark all mandatory syllabus components: 
+          <span style={{ color: 'var(--c-gold)' }}> Database Views</span>, 
+          <span style={{ color: 'var(--c-amber)' }}> Stored Procedures</span>, 
+          <span style={{ color: 'var(--c-lemon)' }}> Triggers</span>, 
+          <span style={{ color: '#FDA4AF' }}> ACID Transactions</span>, 
+          <span style={{ color: 'var(--c-lavender)' }}> Recursive CTEs</span>, and 
+          <span style={{ color: 'var(--c-gold)' }}> Neo4j Cypher Traversal</span>.
         </p>
       </div>
 
       {/* Main Two-Column Evaluation Workspace */}
-      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '24px', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '330px 1fr', gap: '26px', alignItems: 'start' }}>
         
         {/* Navigation Sidebar of Demonstrations */}
-        <div className="glass-card" style={{ padding: '16px' }}>
-          <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '12px', paddingLeft: '8px' }}>
-            Select Concept to Evaluate
+        <div className="glass-card" style={{ 
+          padding: '20px', 
+          background: 'rgba(23, 23, 23, 0.85)',
+          border: '1px solid var(--c-mocha)'
+        }}>
+          <div className="font-editorial" style={{ 
+            fontSize: '0.82rem', 
+            fontWeight: 700, 
+            color: 'var(--c-gold)', 
+            textTransform: 'uppercase', 
+            marginBottom: '16px', 
+            letterSpacing: '0.08em',
+            paddingLeft: '6px' 
+          }}>
+            Rubric Evaluation Suite ({Object.keys(demoItems).length})
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {Object.entries(demoItems).map(([key, item]) => {
               const isSelected = selectedDemo === key;
               return (
@@ -366,15 +424,18 @@ GRANT 'sd_employee_role' TO 'emp_aditya'@'localhost';`,
                   key={key}
                   style={{
                     textAlign: 'left',
-                    padding: '10px 12px',
+                    padding: '12px 14px',
                     borderRadius: 'var(--radius-sm)',
-                    background: isSelected ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
-                    border: isSelected ? '1px solid rgba(99, 102, 241, 0.4)' : '1px solid transparent',
-                    color: isSelected ? '#C7D2FE' : 'var(--text-secondary)',
+                    background: isSelected 
+                      ? 'linear-gradient(135deg, rgba(244, 217, 160, 0.18) 0%, rgba(91, 70, 50, 0.3) 100%)' 
+                      : 'rgba(11, 14, 13, 0.5)',
+                    border: isSelected ? '1px solid var(--c-gold)' : '1px solid rgba(91, 70, 50, 0.3)',
+                    color: isSelected ? 'var(--c-gold)' : 'var(--text-secondary)',
                     cursor: 'pointer',
                     fontSize: '0.82rem',
-                    fontWeight: isSelected ? 600 : 500,
-                    transition: 'all 0.15s'
+                    fontWeight: isSelected ? 700 : 500,
+                    transition: 'all 0.2s',
+                    boxShadow: isSelected ? '0 4px 12px rgba(0,0,0,0.4)' : 'none'
                   }}
                   onClick={() => {
                     setSelectedDemo(key);
@@ -382,13 +443,23 @@ GRANT 'sd_employee_role' TO 'emp_aditya'@'localhost';`,
                     setExecutionTime(null);
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span>{item.title.split(':')[0]}</span>
-                    <span className="badge badge-low" style={{ fontSize: '0.62rem', padding: '1px 5px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3px' }}>
+                    <span style={{ fontWeight: 700, color: isSelected ? 'var(--c-gold)' : '#FFFFFF' }}>
+                      {item.title.split(':')[0]}
+                    </span>
+                    <span style={{ 
+                      fontSize: '0.62rem', 
+                      padding: '2px 6px',
+                      borderRadius: '4px',
+                      fontWeight: 700,
+                      background: item.category === 'cypher' ? 'rgba(166, 107, 255, 0.18)' : item.category === 'transactions' ? 'rgba(163, 28, 27, 0.25)' : 'rgba(244, 217, 160, 0.15)',
+                      color: item.category === 'cypher' ? 'var(--c-lavender)' : item.category === 'transactions' ? '#FDA4AF' : 'var(--c-gold)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)'
+                    }}>
                       {item.category}
                     </span>
                   </div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {item.title.includes(':') ? item.title.split(':')[1] : item.title}
                   </div>
                 </button>
@@ -398,20 +469,45 @@ GRANT 'sd_employee_role' TO 'emp_aditya'@'localhost';`,
         </div>
 
         {/* Live Execution Panel */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           
           {/* Card: Concept Overview & SQL/Cypher Source */}
-          <div className="glass-card" style={{ padding: '24px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+          <div className="glass-card" style={{ 
+            padding: '28px', 
+            background: 'linear-gradient(135deg, rgba(23, 23, 23, 0.95) 0%, rgba(6, 17, 12, 0.92) 100%)',
+            border: '1px solid rgba(244, 217, 160, 0.3)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px', gap: '16px', flexWrap: 'wrap' }}>
               <div>
-                <span className="badge badge-medium" style={{ textTransform: 'uppercase', marginBottom: '6px' }}>
+                <span style={{ 
+                  textTransform: 'uppercase', 
+                  fontSize: '0.68rem', 
+                  fontWeight: 800, 
+                  letterSpacing: '0.08em',
+                  color: 'var(--c-gold)',
+                  background: 'rgba(244, 217, 160, 0.12)',
+                  border: '1px solid rgba(244, 217, 160, 0.3)',
+                  padding: '3px 8px',
+                  borderRadius: '4px',
+                  display: 'inline-block',
+                  marginBottom: '8px'
+                }}>
                   {currentItem.category}
                 </span>
-                <h2 style={{ fontSize: '1.25rem', fontWeight: 800 }}>{currentItem.title}</h2>
+                <h2 className="font-editorial" style={{ fontSize: '1.45rem', fontWeight: 700, color: '#FFFFFF', letterSpacing: '0.02em', lineHeight: 1.3 }}>
+                  {currentItem.title}
+                </h2>
               </div>
 
               <button
                 className="btn btn-primary"
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '8px',
+                  padding: '10px 24px',
+                  fontSize: '0.88rem'
+                }}
                 onClick={handleRunDemo}
                 disabled={running}
               >
@@ -419,52 +515,83 @@ GRANT 'sd_employee_role' TO 'emp_aditya'@'localhost';`,
               </button>
             </div>
 
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.86rem', marginBottom: '16px' }}>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '20px', lineHeight: 1.5 }}>
               {currentItem.description}
             </p>
 
             {/* DDL / Routine Code Block */}
-            <div style={{ marginBottom: '16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)' }}>
-                  DATABASE DEFINITION & IMPLEMENTATION (DDL / Cypher):
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--c-gold)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                  DATABASE DEFINITION &amp; IMPLEMENTATION (DDL / Cypher):
                 </span>
-                <span style={{ fontSize: '0.72rem', color: '#38BDF8', fontFamily: 'var(--font-mono)' }}>
+                <span style={{ fontSize: '0.74rem', color: 'var(--c-lemon)', fontFamily: 'var(--font-mono)' }}>
                   MySQL 8.0 / Neo4j
                 </span>
               </div>
-              <div className="code-box" style={{ maxHeight: '240px' }}>
+              <div className="code-box" style={{ 
+                maxHeight: '260px', 
+                background: '#070A08', 
+                border: '1px solid var(--c-mocha)',
+                color: '#F4D9A0',
+                padding: '18px',
+                fontSize: '0.84rem',
+                lineHeight: 1.6
+              }}>
                 {currentItem.code}
               </div>
             </div>
 
             {/* Syllabus Justification Note */}
-            <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '12px 14px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-              <b>DBMS Syllabus Mapping:</b> {currentItem.explanation}
+            <div style={{ 
+              background: 'rgba(244, 217, 160, 0.06)', 
+              padding: '14px 18px', 
+              borderRadius: 'var(--radius-sm)', 
+              border: '1px solid rgba(244, 217, 160, 0.25)', 
+              fontSize: '0.85rem', 
+              color: 'var(--text-secondary)',
+              lineHeight: 1.5
+            }}>
+              <b style={{ color: 'var(--c-gold)' }}>DBMS Syllabus Mapping:</b> {currentItem.explanation}
             </div>
           </div>
 
           {/* Card: Live Output & Benchmarks */}
-          <div className="glass-card" style={{ padding: '24px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', fontWeight: 700 }}>
-                <Activity size={18} color="var(--accent-cyan)" /> Live Database Execution Result
+          <div className="glass-card" style={{ 
+            padding: '28px', 
+            background: 'linear-gradient(135deg, rgba(23, 23, 23, 0.95) 0%, rgba(6, 17, 12, 0.9) 100%)',
+            border: '1px solid rgba(244, 217, 160, 0.25)' 
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.98rem', fontWeight: 700, color: 'var(--c-gold)' }}>
+                <Activity size={18} color="var(--c-gold)" /> Live Database Execution Result
               </div>
 
               {executionTime !== null && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', color: '#6EE7B7', fontFamily: 'var(--font-mono)', background: 'rgba(16, 185, 129, 0.1)', padding: '4px 10px', borderRadius: 'var(--radius-sm)' }}>
-                  <Clock size={13} /> Query Completed in {executionTime}ms
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '6px', 
+                  fontSize: '0.78rem', 
+                  color: 'var(--c-lemon)', 
+                  fontFamily: 'var(--font-mono)', 
+                  background: 'rgba(255, 242, 26, 0.1)', 
+                  border: '1px solid rgba(255, 242, 26, 0.3)',
+                  padding: '4px 12px', 
+                  borderRadius: 'var(--radius-full)' 
+                }}>
+                  <Clock size={13} /> Engine Benchmark: {executionTime}ms
                 </div>
               )}
             </div>
 
             {running ? (
-              <div style={{ padding: '36px', textAlign: 'center', color: 'var(--text-muted)' }}>
-                Executing database engine instructions...
+              <div style={{ padding: '44px', textAlign: 'center', color: 'var(--c-gold)', fontFamily: 'var(--font-mono)' }}>
+                Traversing database storage engines &amp; compiling results...
               </div>
             ) : output ? (
               Array.isArray(output) && output.length > 0 && typeof output[0] === 'object' ? (
-                <div className="table-container" style={{ maxHeight: '350px' }}>
+                <div className="table-container" style={{ maxHeight: '360px' }}>
                   <table className="custom-table">
                     <thead>
                       <tr>
@@ -477,7 +604,7 @@ GRANT 'sd_employee_role' TO 'emp_aditya'@'localhost';`,
                       {output.map((row, rIdx) => (
                         <tr key={rIdx}>
                           {Object.values(row).map((val: any, cIdx) => (
-                            <td key={cIdx} style={{ fontSize: '0.8rem' }}>
+                            <td key={cIdx} style={{ fontSize: '0.82rem' }}>
                               {val === null || val === undefined ? (
                                 <span style={{ color: 'var(--text-muted)' }}>NULL</span>
                               ) : typeof val === 'boolean' ? (
@@ -495,13 +622,13 @@ GRANT 'sd_employee_role' TO 'emp_aditya'@'localhost';`,
                   </table>
                 </div>
               ) : (
-                <div className="code-box">
+                <div className="code-box" style={{ background: '#070A08', color: 'var(--c-gold)', border: '1px solid var(--c-mocha)' }}>
                   {JSON.stringify(output, null, 2)}
                 </div>
               )
             ) : (
-              <div style={{ padding: '36px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.86rem' }}>
-                Click <b>"Run Live Query"</b> to execute this database object and inspect results.
+              <div style={{ padding: '44px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.88rem' }}>
+                Click <b style={{ color: 'var(--c-gold)' }}>&ldquo;Run Live Query&rdquo;</b> above to execute this database routine against the live engine.
               </div>
             )}
           </div>

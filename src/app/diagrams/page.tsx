@@ -11,7 +11,8 @@ import {
   ZoomOut, 
   FileText,
   ShieldCheck,
-  CheckCircle2
+  CheckCircle2,
+  Sparkles
 } from 'lucide-react';
 
 export default function DiagramsPage() {
@@ -57,52 +58,105 @@ export default function DiagramsPage() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
       
-      {/* Header Banner */}
+      {/* Header Banner - 9-Color Editorial Treatment */}
       <div className="glass-card" style={{
-        background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(14, 165, 233, 0.1) 100%)',
-        border: '1px solid rgba(99, 102, 241, 0.3)',
+        background: 'linear-gradient(135deg, rgba(23, 23, 23, 0.96) 0%, rgba(6, 17, 12, 0.94) 55%, rgba(91, 70, 50, 0.35) 100%)',
+        border: '1px solid rgba(244, 217, 160, 0.32)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
-        gap: '16px'
+        gap: '20px',
+        padding: '36px 40px'
       }}>
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', fontWeight: 700, color: '#A5B4FC', marginBottom: '8px' }}>
-            <Layers size={14} /> SYSTEM DESIGN ARTIFACTS &amp; DIAGRAMS
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px', flexWrap: 'wrap' }}>
+            <span style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '6px', 
+              padding: '4px 12px', 
+              background: 'rgba(244, 217, 160, 0.12)', 
+              border: '1px solid var(--c-gold)',
+              borderRadius: 'var(--radius-full)', 
+              fontSize: '0.72rem', 
+              fontWeight: 800, 
+              color: 'var(--c-gold)',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase'
+            }}>
+              <Layers size={13} /> Architecture &amp; Schematics • Formal Artifacts
+            </span>
+            <span style={{ 
+              fontSize: '0.7rem', 
+              padding: '3px 10px', 
+              background: 'rgba(255, 242, 26, 0.1)', 
+              border: '1px solid rgba(255, 242, 26, 0.35)', 
+              borderRadius: 'var(--radius-full)', 
+              color: 'var(--c-lemon)', 
+              fontWeight: 800,
+              letterSpacing: '0.06em'
+            }}>
+              SECTIONS 4, 7 &amp; 13
+            </span>
           </div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '6px' }}>
+
+          <h1 className="font-editorial" style={{ 
+            fontSize: '2.1rem', 
+            fontWeight: 700, 
+            color: 'var(--c-gold)', 
+            letterSpacing: '0.03em', 
+            marginBottom: '10px',
+            textShadow: '0 2px 20px rgba(244, 217, 160, 0.15)'
+          }}>
             Database Design &amp; Architectural Diagrams
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', maxWidth: '800px' }}>
-            Official graphical deliverables fulfilling <b>Section 4 (Database Design / ER Diagram)</b> and <b>Section 13 (System Architecture)</b> of the DBMS Level 3 syllabus.
+
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', maxWidth: '820px', lineHeight: 1.6 }}>
+            Formal graphical deliverables fulfilling 
+            <span style={{ color: 'var(--c-gold)' }}> Section 4 (Peter Chen ER Notation)</span>, 
+            <span style={{ color: 'var(--c-amber)' }}> Section 5 (3NF Relational Schema)</span>, 
+            <span style={{ color: 'var(--c-lavender)' }}> Section 7 (Graph Topology)</span>, and 
+            <span style={{ color: 'var(--c-lemon)' }}> Section 13 (3-Tier Enterprise Architecture)</span>.
           </p>
         </div>
 
         {/* Tab Switcher */}
-        <div style={{ display: 'flex', background: 'var(--bg-input)', padding: '4px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', gap: '4px' }}>
+        <div style={{ 
+          display: 'flex', 
+          background: 'rgba(11, 14, 13, 0.9)', 
+          padding: '5px', 
+          borderRadius: 'var(--radius-sm)', 
+          border: '1px solid var(--c-mocha)', 
+          gap: '6px',
+          flexWrap: 'wrap'
+        }}>
           <button
             className={`btn btn-sm ${activeTab === 'er' ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ padding: '8px 14px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
             onClick={() => { setActiveTab('er'); setZoomLevel(100); }}
           >
             <GitBranch size={14} /> ER Diagram
           </button>
           <button
             className={`btn btn-sm ${activeTab === 'rel' ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ padding: '8px 14px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
             onClick={() => { setActiveTab('rel'); setZoomLevel(100); }}
           >
             <FileText size={14} /> Relational Schema
           </button>
           <button
             className={`btn btn-sm ${activeTab === 'arch' ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ padding: '8px 14px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
             onClick={() => { setActiveTab('arch'); setZoomLevel(100); }}
           >
-            <Layers size={14} /> System Architecture
+            <Layers size={14} /> 3-Tier Architecture
           </button>
           <button
             className={`btn btn-sm ${activeTab === 'cmdb' ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ padding: '8px 14px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '6px' }}
             onClick={() => { setActiveTab('cmdb'); setZoomLevel(100); }}
           >
             <Network size={14} /> CMDB Topology
@@ -111,65 +165,86 @@ export default function DiagramsPage() {
       </div>
 
       {/* Diagram Viewer Card */}
-      <div className="glass-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div className="glass-card" style={{ 
+        padding: '28px', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: '20px',
+        background: 'linear-gradient(135deg, rgba(23, 23, 23, 0.95) 0%, rgba(6, 17, 12, 0.92) 100%)',
+        border: '1px solid rgba(244, 217, 160, 0.3)'
+      }}>
         
         {/* Controls Toolbar */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', borderBottom: '1px solid var(--border-color)', paddingBottom: '16px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', borderBottom: '1px solid rgba(91, 70, 50, 0.4)', paddingBottom: '20px' }}>
           <div>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 700 }}>{current.title}</h2>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{current.subtitle}</div>
+            <h2 className="font-editorial" style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--c-gold)', letterSpacing: '0.03em', marginBottom: '4px' }}>
+              {current.title}
+            </h2>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>{current.subtitle}</div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             {/* Zoom Controls */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'var(--bg-input)', padding: '4px 8px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(11, 14, 13, 0.85)', padding: '5px 10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--c-mocha)' }}>
               <button 
                 onClick={() => setZoomLevel(prev => Math.max(60, prev - 15))}
-                style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex' }}
+                style={{ background: 'none', border: 'none', color: 'var(--c-gold)', cursor: 'pointer', display: 'flex', padding: '2px' }}
                 title="Zoom Out"
               >
                 <ZoomOut size={16} />
               </button>
-              <span style={{ fontSize: '0.78rem', fontFamily: 'var(--font-mono)', minWidth: '45px', textAlign: 'center' }}>
+              <span style={{ fontSize: '0.8rem', fontFamily: 'var(--font-mono)', minWidth: '48px', textAlign: 'center', color: '#FFFFFF' }}>
                 {zoomLevel}%
               </span>
               <button 
                 onClick={() => setZoomLevel(prev => Math.min(180, prev + 15))}
-                style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex' }}
+                style={{ background: 'none', border: 'none', color: 'var(--c-gold)', cursor: 'pointer', display: 'flex', padding: '2px' }}
                 title="Zoom In"
               >
                 <ZoomIn size={16} />
               </button>
             </div>
 
-            <button onClick={handleDownload} className="btn btn-secondary btn-sm">
-              <Download size={14} /> Export SVG
+            <button onClick={handleDownload} className="btn btn-secondary btn-sm" style={{ borderColor: 'var(--c-mocha)', display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px' }}>
+              <Download size={14} color="var(--c-gold)" /> Export Vector SVG
             </button>
           </div>
         </div>
 
         {/* Description Banner */}
-        <div style={{ background: 'rgba(255, 255, 255, 0.02)', padding: '12px 16px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', fontSize: '0.84rem', color: 'var(--text-secondary)' }}>
-          <b>Overview:</b> {current.desc}
+        <div style={{ 
+          background: 'rgba(11, 14, 13, 0.8)', 
+          padding: '14px 18px', 
+          borderRadius: 'var(--radius-sm)', 
+          border: '1px solid var(--c-mocha)', 
+          fontSize: '0.88rem', 
+          color: 'var(--text-secondary)',
+          lineHeight: 1.6
+        }}>
+          <b style={{ color: 'var(--c-gold)', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '0.8rem', marginRight: '8px' }}>
+            Specification &amp; Notation:
+          </b> 
+          {current.desc}
         </div>
 
         {/* Viewport Frame */}
         <div style={{
-          background: '#040711',
-          border: '1px solid var(--border-color)',
+          background: 'radial-gradient(ellipse at center, #0F1612 0%, #06110C 100%)',
+          border: '1px solid var(--c-mocha)',
           borderRadius: 'var(--radius-md)',
           overflow: 'auto',
           maxHeight: '780px',
-          padding: '24px',
+          padding: '28px',
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'flex-start'
+          alignItems: 'flex-start',
+          boxShadow: 'inset 0 0 50px rgba(0,0,0,0.85)'
         }}>
-          <div style={{ width: `${zoomLevel}%`, minWidth: '900px', transition: 'width 0.2s ease-out', margin: '0 auto' }}>
+          <div style={{ width: `${zoomLevel}%`, minWidth: '920px', transition: 'width 0.2s ease-out', margin: '0 auto' }}>
             <img 
               src={current.file} 
               alt={current.title} 
-              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '8px' }} 
+              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '8px', filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.7))' }} 
             />
           </div>
         </div>
@@ -177,38 +252,41 @@ export default function DiagramsPage() {
       </div>
 
       {/* Checklist Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
-        <div className="glass-card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#6EE7B7', fontWeight: 700, fontSize: '0.95rem', marginBottom: '10px' }}>
-            <CheckCircle2 size={18} /> Syllabus Section 4: ER Design
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '22px' }}>
+        <div className="glass-card" style={{ padding: '24px', background: 'rgba(23, 23, 23, 0.85)', border: '1px solid rgba(244, 217, 160, 0.25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--c-lemon)', fontWeight: 700, fontSize: '0.98rem', marginBottom: '12px' }}>
+            <CheckCircle2 size={18} color="var(--c-lemon)" /> 
+            <span className="font-editorial" style={{ letterSpacing: '0.03em', color: '#FFFFFF' }}>Syllabus Section 4: ER Design</span>
           </div>
-          <ul style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <ul style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '8px', lineHeight: 1.5 }}>
             <li>Entity identification with primary keys (PK) and foreign keys (FK)</li>
-            <li>Referential actions: <code>ON DELETE RESTRICT</code> and <code>CASCADE</code></li>
-            <li>Crow's foot cardinality indicators (1:1 and 1:N)</li>
+            <li>Referential actions: <code style={{ color: 'var(--c-lemon)' }}>ON DELETE RESTRICT</code> and <code style={{ color: 'var(--c-lemon)' }}>CASCADE</code></li>
+            <li>Crow&apos;s foot cardinality indicators (1:1 and 1:N)</li>
             <li>Domain check constraints and enum definitions</li>
           </ul>
         </div>
 
-        <div className="glass-card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#67E8F9', fontWeight: 700, fontSize: '0.95rem', marginBottom: '10px' }}>
-            <CheckCircle2 size={18} /> Syllabus Section 13: System Architecture
+        <div className="glass-card" style={{ padding: '24px', background: 'rgba(23, 23, 23, 0.85)', border: '1px solid rgba(166, 107, 255, 0.25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--c-lavender)', fontWeight: 700, fontSize: '0.98rem', marginBottom: '12px' }}>
+            <CheckCircle2 size={18} color="var(--c-lavender)" /> 
+            <span className="font-editorial" style={{ letterSpacing: '0.03em', color: '#FFFFFF' }}>Syllabus Section 13: Architecture</span>
           </div>
-          <ul style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <li>3-Tier separation: Client, API Middleware, Multi-Model DBs</li>
-            <li>Role-Based Access Control integration for 3 user types</li>
+          <ul style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '8px', lineHeight: 1.5 }}>
+            <li>3-Tier separation: Client Presentation, Route Handlers, Multi-Model DBs</li>
+            <li>Role-Based Access Control integration for 3 user roles</li>
             <li>Connection routes from Next.js to MySQL and Neo4j</li>
-            <li>Decoupled on-device vector embedding engine</li>
+            <li>On-device high-dimensional vector embedding engine</li>
           </ul>
         </div>
 
-        <div className="glass-card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#C084FC', fontWeight: 700, fontSize: '0.95rem', marginBottom: '10px' }}>
-            <CheckCircle2 size={18} /> Syllabus Section 7: NoSQL CMDB
+        <div className="glass-card" style={{ padding: '24px', background: 'rgba(23, 23, 23, 0.85)', border: '1px solid rgba(200, 121, 44, 0.25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--c-amber)', fontWeight: 700, fontSize: '0.98rem', marginBottom: '12px' }}>
+            <CheckCircle2 size={18} color="var(--c-amber)" /> 
+            <span className="font-editorial" style={{ letterSpacing: '0.03em', color: '#FFFFFF' }}>Syllabus Section 7: NoSQL CMDB</span>
           </div>
-          <ul style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <ul style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', paddingLeft: '18px', display: 'flex', flexDirection: 'column', gap: '8px', lineHeight: 1.5 }}>
             <li>Configuration Items mapped across 5 architectural tiers</li>
-            <li>Directed edges: <code>[:DEPENDS_ON]</code> and <code>[:HOSTED_ON]</code></li>
+            <li>Directed edges: <code style={{ color: 'var(--c-amber)' }}>[:DEPENDS_ON]</code> and <code style={{ color: 'var(--c-amber)' }}>[:HOSTED_ON]</code></li>
             <li>Outage blast-radius propagation path calculation</li>
             <li>Sub-millisecond graph query traversal via Cypher</li>
           </ul>

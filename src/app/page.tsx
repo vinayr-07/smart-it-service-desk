@@ -14,7 +14,10 @@ import {
   Network,
   Zap,
   Activity,
-  Layers
+  Layers,
+  Database,
+  Flame,
+  Radio
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -67,144 +70,177 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '34px' }}>
       
-      {/* Hero Welcome Banner */}
+      {/* Haute Luxe Hero Banner (Image 1, 2, 3 Sourced Aesthetics) */}
       <div className="glass-card" style={{
-        background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.16) 0%, rgba(6, 182, 212, 0.12) 50%, rgba(139, 92, 246, 0.08) 100%)',
-        border: '1px solid rgba(99, 102, 241, 0.35)',
+        background: 'linear-gradient(135deg, rgba(23, 23, 23, 0.95) 0%, rgba(6, 17, 12, 0.92) 50%, rgba(91, 70, 50, 0.35) 100%)',
+        border: '1px solid rgba(244, 217, 160, 0.35)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
-        gap: '24px',
-        padding: '32px'
+        gap: '26px',
+        padding: '36px 40px',
+        position: 'relative'
       }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+          {/* Sourced Color Pills Ribbon */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px', flexWrap: 'wrap' }}>
             <span style={{ 
               display: 'inline-flex', 
               alignItems: 'center', 
               gap: '6px', 
               padding: '4px 12px', 
-              background: 'rgba(99, 102, 241, 0.25)', 
+              background: 'rgba(244, 217, 160, 0.15)', 
+              border: '1px solid var(--c-gold)',
               borderRadius: 'var(--radius-full)', 
-              fontSize: '0.74rem', 
-              fontWeight: 700, 
-              color: '#C7D2FE',
-              letterSpacing: '0.04em',
+              fontSize: '0.72rem', 
+              fontWeight: 800, 
+              color: 'var(--c-gold)',
+              letterSpacing: '0.08em',
               textTransform: 'uppercase'
             }}>
-              <Sparkles size={13} /> DBMS EXPERIENTIAL LEARNING — LEVEL 3
+              <Sparkles size={12} color="var(--c-lemon)" /> DBMS LEVEL 3 EXPERIENTIAL LEARNING
             </span>
             <span style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '6px',
               padding: '4px 12px',
-              background: 'rgba(16, 185, 129, 0.18)',
-              border: '1px solid rgba(16, 185, 129, 0.35)',
+              background: 'rgba(166, 107, 255, 0.15)',
+              border: '1px solid var(--c-lavender)',
               borderRadius: 'var(--radius-full)',
-              fontSize: '0.74rem',
-              fontWeight: 700,
-              color: '#6EE7B7'
+              fontSize: '0.72rem',
+              fontWeight: 800,
+              color: 'var(--c-lavender)',
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase'
             }}>
-              <span className="status-dot pulse" style={{ backgroundColor: '#10B981' }}></span>
-              3-PARADIGM ENGINE LIVE
+              <span className="status-dot pulse"></span>
+              9-COLOR PALETTE ARCHITECTURE
             </span>
           </div>
 
-          <h1 style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: '10px' }}>
-            Operations & CMDB Command Center
+          <h1 style={{ 
+            fontFamily: 'var(--font-display)',
+            fontSize: '2.4rem', 
+            fontWeight: 800, 
+            letterSpacing: '0.03em', 
+            color: 'var(--c-gold)',
+            lineHeight: 1.15,
+            marginBottom: '12px' 
+          }}>
+            Operations &amp; CMDB Command Center
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.94rem', maxWidth: '780px', lineHeight: 1.65 }}>
-            Enterprise IT incident operations powered by <b>MySQL 8.0</b> for ACID transactions, triggers, and SLA deadlines; 
-            <b> Neo4j Graph Database</b> for multi-hop blast-radius dependency traversal; and <b>Vector Embeddings</b> with Cosine Similarity for AI runbook search.
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.96rem', maxWidth: '820px', lineHeight: 1.7 }}>
+            Multi-model database platform leveraging <b style={{ color: 'var(--c-gold)' }}>MySQL 8.0</b> for relational ACID transactions, SLA triggers, and audit ledgers; 
+            <b style={{ color: 'var(--c-lavender)' }}> Neo4j Graph CMDB</b> for recursive blast-radius traversal; and <b style={{ color: 'var(--c-lemon)' }}>Vector Embeddings</b> with Cosine Similarity for AI runbook diagnostics.
           </p>
         </div>
 
         <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
-          <Link href="/tickets" className="btn btn-primary" style={{ padding: '12px 22px' }}>
-            <Activity size={16} /> Manage Incidents <ArrowUpRight size={15} />
+          <Link href="/tickets" className="btn btn-primary" style={{ padding: '13px 26px' }}>
+            <Activity size={17} /> Incident Desk <ArrowUpRight size={16} />
           </Link>
-          <Link href="/assets" className="btn btn-secondary" style={{ padding: '12px 22px' }}>
-            <Network size={16} /> Topology Graph
+          <Link href="/assets" className="btn btn-lavender" style={{ padding: '13px 26px' }}>
+            <Network size={17} /> CMDB Graph
           </Link>
         </div>
       </div>
 
-      {/* KPI Stats Grid */}
+      {/* 5 Luxury Stat Cards Featuring all 9 Colors */}
       <div className="stats-grid">
+        
+        {/* Card 1: Crimson Red (Image 2) */}
         <div className="stat-card critical">
           <div className="stat-header">
-            <span>Critical Incidents</span>
-            <div style={{ padding: '8px', background: 'rgba(244, 63, 94, 0.15)', borderRadius: 'var(--radius-sm)' }}>
-              <ShieldAlert size={20} color="var(--accent-rose)" />
+            <span>Critical P1 Incidents</span>
+            <div style={{ padding: '8px', background: 'rgba(163, 28, 27, 0.25)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--c-crimson)' }}>
+              <ShieldAlert size={20} color="#FDA4AF" />
             </div>
           </div>
-          <div className="stat-value" style={{ color: 'var(--accent-rose)' }}>{stats.criticalIncidents}</div>
+          <div className="stat-value">{stats.criticalIncidents}</div>
           <div className="stat-desc">
-            <span style={{ color: 'var(--accent-rose)', fontWeight: 700 }}>Priority 1</span> · Immediate engineering dispatch
+            <span style={{ color: '#FDA4AF', fontWeight: 800 }}>CRIMSON PRIORITY</span> · Immediate dispatch
           </div>
         </div>
 
+        {/* Card 2: Burnt Amber (Image 3) */}
         <div className="stat-card amber">
           <div className="stat-header">
             <span>Active Open Tickets</span>
-            <div style={{ padding: '8px', background: 'rgba(245, 158, 11, 0.15)', borderRadius: 'var(--radius-sm)' }}>
-              <Clock size={20} color="var(--accent-amber)" />
+            <div style={{ padding: '8px', background: 'rgba(200, 121, 44, 0.25)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--c-amber)' }}>
+              <Clock size={20} color="var(--c-gold)" />
             </div>
           </div>
           <div className="stat-value">{stats.openTickets}</div>
           <div className="stat-desc">
-            <span>Trigger governed:</span> <code style={{ color: '#FCD34D' }}>trg_ticket_before_insert_sla</code>
+            <span style={{ color: 'var(--c-amber)', fontWeight: 800 }}>BURNT AMBER SLA</span> · Active Queue
           </div>
         </div>
 
-        <div className="stat-card critical">
+        {/* Card 3: Lemon Yellow (Image 1) */}
+        <div className="stat-card lemon">
           <div className="stat-header">
             <span>SLA Breaches</span>
-            <div style={{ padding: '8px', background: 'rgba(244, 63, 94, 0.15)', borderRadius: 'var(--radius-sm)' }}>
-              <AlertTriangle size={20} color="var(--accent-rose)" />
+            <div style={{ padding: '8px', background: 'rgba(255, 242, 26, 0.2)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--c-lemon)' }}>
+              <AlertTriangle size={20} color="var(--c-lemon)" />
             </div>
           </div>
           <div className="stat-value">{stats.slaBreached}</div>
           <div className="stat-desc">
-            <span>Function evaluated:</span> <code style={{ color: '#FDA4AF' }}>fn_is_sla_breached()</code>
+            <span style={{ color: 'var(--c-lemon)', fontWeight: 800 }}>LEMON ALERT</span> · Evaluated via Function
           </div>
         </div>
 
-        <div className="stat-card cyan">
+        {/* Card 4: Electric Lavender (Image 1) */}
+        <div className="stat-card lavender">
           <div className="stat-header">
-            <span>Degraded Assets / CIs</span>
-            <div style={{ padding: '8px', background: 'rgba(6, 182, 212, 0.15)', borderRadius: 'var(--radius-sm)' }}>
-              <Server size={20} color="var(--accent-cyan)" />
+            <span>CMDB Graph CIs</span>
+            <div style={{ padding: '8px', background: 'rgba(166, 107, 255, 0.25)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--c-lavender)' }}>
+              <Radio size={20} color="var(--c-lavender)" />
             </div>
           </div>
-          <div className="stat-value">{stats.degradedAssets}</div>
+          <div className="stat-value">{stats.degradedAssets} Degraded</div>
           <div className="stat-desc">
-            <span>Neo4j Cypher Traversal:</span> <code style={{ color: '#67E8F9' }}>[*1..4]</code>
+            <span style={{ color: 'var(--c-lavender)', fontWeight: 800 }}>ELECTRIC LAVENDER</span> · Cypher [*1..4]
           </div>
         </div>
+
+        {/* Card 5: Mocha Brown & Champagne Gold (Image 3) */}
+        <div className="stat-card mocha">
+          <div className="stat-header">
+            <span>Hardware Cluster</span>
+            <div style={{ padding: '8px', background: 'rgba(91, 70, 50, 0.35)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--c-mocha)' }}>
+              <Server size={20} color="var(--c-gold)" />
+            </div>
+          </div>
+          <div className="stat-value">{stats.healthyAssets} Active</div>
+          <div className="stat-desc">
+            <span style={{ color: 'var(--c-gold)', fontWeight: 800 }}>MOCHA &amp; GOLD</span> · 3NF Normalized
+          </div>
+        </div>
+
       </div>
 
       {/* Main Two-Column Analytics Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(520px, 1fr))', gap: '28px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(520px, 1fr))', gap: '30px' }}>
         
-        {/* Real-time SLA Tracking (Database View v_active_tickets_sla) */}
+        {/* Real-time SLA Watchlist (Database View v_active_tickets_sla) */}
         <div className="glass-card" style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '22px' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>Real-Time SLA Watchlist</h2>
-                <span className="badge badge-medium">Active View</span>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--c-gold)' }}>Real-Time SLA Watchlist</h2>
+                <span className="badge badge-lemon">v_active_tickets_sla</span>
               </div>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                Sourced from SQL View <code>v_active_tickets_sla</code> with remaining time computations
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                Relational view calculating real-time countdown hours across tickets and policies
               </p>
             </div>
             <Link href="/tickets" className="btn btn-secondary btn-sm">
-              View all queue <ArrowUpRight size={14} />
+              All Tickets <ArrowUpRight size={14} />
             </Link>
           </div>
 
@@ -213,17 +249,17 @@ export default function DashboardPage() {
               <thead>
                 <tr>
                   <th>Ticket</th>
-                  <th>Priority</th>
+                  <th>Priority Tier</th>
                   <th>Assigned Agent</th>
-                  <th>Time Left</th>
-                  <th>Status</th>
+                  <th>Remaining</th>
+                  <th>SLA Status</th>
                 </tr>
               </thead>
               <tbody>
                 {activeSlaTickets.slice(0, 5).map((row: any) => (
                   <tr key={row.ticket_id}>
                     <td>
-                      <div style={{ fontWeight: 700, fontFamily: 'var(--font-mono)', color: '#A5B4FC' }}>
+                      <div style={{ fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--c-gold)' }}>
                         {row.ticket_code}
                       </div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -231,16 +267,16 @@ export default function DashboardPage() {
                       </div>
                     </td>
                     <td>
-                      <span className={`badge badge-${row.priority.toLowerCase()}`}>
+                      <span className={`badge ${row.priority === 'CRITICAL' ? 'badge-critical' : row.priority === 'HIGH' ? 'badge-high' : 'badge-medium'}`}>
                         {row.priority}
                       </span>
                     </td>
-                    <td style={{ fontSize: '0.84rem', fontWeight: 500 }}>{row.assigned_agent}</td>
+                    <td style={{ fontSize: '0.85rem', fontWeight: 600 }}>{row.assigned_agent}</td>
                     <td>
                       <span style={{ 
                         fontWeight: 800, 
                         fontFamily: 'var(--font-mono)',
-                        color: row.sla_breached ? 'var(--accent-rose)' : row.hours_remaining < 4 ? 'var(--accent-amber)' : 'var(--accent-emerald)' 
+                        color: row.sla_breached ? 'var(--c-crimson)' : row.hours_remaining < 4 ? 'var(--c-lemon)' : 'var(--c-gold)' 
                       }}>
                         {row.hours_remaining !== undefined ? `${row.hours_remaining} hrs` : 'N/A'}
                       </span>
@@ -249,7 +285,7 @@ export default function DashboardPage() {
                       {row.sla_breached ? (
                         <span className="badge badge-critical">BREACHED</span>
                       ) : (
-                        <span className="badge badge-operational">ON TRACK</span>
+                        <span className="badge badge-lemon">ON TRACK</span>
                       )}
                     </td>
                   </tr>
@@ -261,37 +297,37 @@ export default function DashboardPage() {
 
         {/* Technician Workload & Performance (Database View v_agent_workload_metrics) */}
         <div className="glass-card" style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '22px' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>Technician Queue Load</h2>
-                <span className="badge badge-operational">Auto-Balance</span>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--c-gold)' }}>Technician Dispatch Queue</h2>
+                <span className="badge badge-lavender">Auto-Balance</span>
               </div>
-              <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                Powered by SQL View <code>v_agent_workload_metrics</code> for least-load auto-assignment
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                Powered by SQL View <code>v_agent_workload_metrics</code> for minimum workload allocation
               </p>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: 'var(--accent-emerald)', fontWeight: 600 }}>
-              <UserCheck size={16} /> Balanced
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: 'var(--c-gold)', fontWeight: 700 }}>
+              <UserCheck size={16} color="var(--c-lemon)" /> Balanced
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1, justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1, justifyContent: 'center' }}>
             {agentWorkloads.map((agent: any) => {
               const maxLoad = 6;
               const loadPercent = Math.min(100, Math.round((agent.total_active_workload / maxLoad) * 100));
 
               return (
                 <div key={agent.agent_id} style={{ 
-                  background: 'linear-gradient(180deg, rgba(16, 23, 38, 0.8) 0%, rgba(10, 14, 23, 0.9) 100%)', 
-                  padding: '16px', 
+                  background: 'linear-gradient(180deg, #1C1C1C 0%, #111413 100%)', 
+                  padding: '16px 20px', 
                   borderRadius: 'var(--radius-md)', 
-                  border: '1px solid var(--border-color)',
-                  boxShadow: 'var(--shadow-sm)'
+                  border: '1px solid rgba(244, 217, 160, 0.16)',
+                  boxShadow: 'var(--shadow-card)'
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.94rem', color: 'var(--text-primary)' }}>
+                      <div style={{ fontWeight: 800, fontSize: '0.96rem', color: 'var(--c-gold)' }}>
                         {agent.agent_name}
                       </div>
                       <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>{agent.email}</div>
@@ -299,26 +335,26 @@ export default function DashboardPage() {
                     <div style={{ textAlign: 'right' }}>
                       <span style={{ 
                         fontWeight: 800, 
-                        fontSize: '1.05rem', 
+                        fontSize: '1.1rem', 
                         fontFamily: 'var(--font-mono)',
-                        color: agent.total_active_workload > 3 ? 'var(--accent-rose)' : 'var(--accent-cyan)' 
+                        color: agent.total_active_workload > 3 ? 'var(--c-crimson)' : 'var(--c-lemon)' 
                       }}>
                         {agent.total_active_workload} Active
                       </span>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                      <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
                         {agent.resolved_tickets} Resolved · Avg: {agent.avg_resolution_hours || '0.8'}h
                       </div>
                     </div>
                   </div>
 
-                  {/* Workload Progress Bar */}
-                  <div style={{ width: '100%', height: '8px', background: 'rgba(255, 255, 255, 0.06)', borderRadius: '4px', overflow: 'hidden' }}>
+                  {/* Gradient Workload Progress Bar */}
+                  <div style={{ width: '100%', height: '8px', background: '#0C0F0E', borderRadius: '4px', overflow: 'hidden', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
                     <div style={{ 
                       width: `${loadPercent}%`, 
                       height: '100%', 
-                      background: agent.total_active_workload > 3 ? 'var(--gradient-critical)' : 'var(--gradient-brand)',
+                      background: agent.total_active_workload > 3 ? 'var(--gradient-crimson)' : 'var(--gradient-gold)',
                       borderRadius: '4px',
-                      transition: 'width 0.4s var(--ease-spring)'
+                      transition: 'width 0.4s ease'
                     }} />
                   </div>
                 </div>
@@ -335,27 +371,27 @@ export default function DashboardPage() {
         justifyContent: 'space-between', 
         alignItems: 'center', 
         flexWrap: 'wrap', 
-        gap: '20px',
-        background: 'linear-gradient(135deg, rgba(16, 23, 38, 0.9) 0%, rgba(99, 102, 241, 0.12) 100%)',
-        border: '1px solid rgba(99, 102, 241, 0.3)',
-        padding: '24px 30px'
+        gap: '22px',
+        background: 'linear-gradient(135deg, #1C1C1C 0%, #111413 50%, rgba(91, 70, 50, 0.4) 100%)',
+        border: '1px solid rgba(244, 217, 160, 0.35)',
+        padding: '26px 36px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{ width: '46px', height: '46px', borderRadius: 'var(--radius-md)', background: 'var(--gradient-brand)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', boxShadow: 'var(--shadow-btn-glow)' }}>
-            <Zap size={22} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-md)', background: 'var(--gradient-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--c-charcoal)', boxShadow: 'var(--shadow-gold-glow)' }}>
+            <Zap size={24} />
           </div>
           <div>
-            <div style={{ fontWeight: 800, fontSize: '1.05rem', marginBottom: '4px' }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.15rem', color: 'var(--c-gold)', marginBottom: '4px' }}>
               Evaluation Ready: Interactive DBMS Routine Benchmark
             </div>
-            <div style={{ fontSize: '0.86rem', color: 'var(--text-secondary)' }}>
+            <div style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
               Execute live Stored Procedures, Views, Triggers, Recursive CTEs, and Neo4j Cypher blast-radius traversals.
             </div>
           </div>
         </div>
 
-        <Link href="/db-demo" className="btn btn-primary" style={{ padding: '12px 24px' }}>
-          Launch Evaluation Console <ArrowUpRight size={16} />
+        <Link href="/db-demo" className="btn btn-primary" style={{ padding: '13px 28px' }}>
+          Open Benchmark Console <ArrowUpRight size={16} />
         </Link>
       </div>
 

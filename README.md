@@ -2,7 +2,10 @@
 
 > **DBMS Experiential Learning – Level 3 Project**  
 > Department of Computer Science and Engineering, PES University  
-> Multi-Model Database System: **SQL (MySQL 8.0 / PostgreSQL) + NoSQL Graph (Neo4j) + Vector Search**
+> **Authors / Project Team:**  
+> - **Vinay R** (`PES1UG24CS353`) — Team Lead  
+> - **Prateek Hachadad** (`PES1UG24CS340`) — Co-Lead  
+> **Multi-Model Database System:** SQL (MySQL 8.0) + NoSQL Graph (Neo4j) + Vector Search  
 
 ---
 

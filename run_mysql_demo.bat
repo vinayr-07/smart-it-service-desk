@@ -52,7 +52,7 @@ echo ===========================================================================
 echo Explanation: Traverses the organizational supervisor hierarchy starting from a
 echo Tier 1 Agent up to Department Supervisor and Governance Board.
 echo -------------------------------------------------------------------------------
-"%MYSQL_EXE%" -u root -pvinay smart_service_desk -t -e "WITH RECURSIVE IncidentEscalationChain AS (SELECT u.user_id, u.full_name AS employee_name, u.role, d.dept_name, d.manager_name AS direct_supervisor, 1 AS escalation_level FROM users u JOIN departments d ON u.dept_id = d.dept_id WHERE u.user_id = 3 UNION ALL SELECT mgr.user_id, mgr.full_name, mgr.role, d2.dept_name, 'Executive Governance Board' AS direct_supervisor, chain.escalation_level + 1 FROM users mgr JOIN departments d2 ON mgr.dept_id = d2.dept_id JOIN IncidentEscalationChain chain ON mgr.full_name = chain.direct_supervisor WHERE chain.escalation_level < 3) SELECT escalation_level, employee_name, role, dept_name, direct_supervisor FROM IncidentEscalationChain ORDER BY escalation_level ASC;"
+"%MYSQL_EXE%" -u root -pvinay smart_service_desk -t -e "WITH RECURSIVE IncidentEscalationChain AS (SELECT u.user_id, u.full_name AS employee_name, u.role, d.dept_name, d.manager_name AS direct_supervisor, 1 AS escalation_level FROM users u JOIN departments d ON u.dept_id = d.dept_id WHERE u.user_id = 3 UNION ALL SELECT mgr.user_id, mgr.full_name, mgr.role, d2.dept_name, CASE WHEN chain.escalation_level = 1 THEN 'Executive Governance Board' ELSE 'Chancellor / Vice Chancellor' END AS direct_supervisor, chain.escalation_level + 1 FROM users mgr JOIN departments d2 ON mgr.dept_id = d2.dept_id JOIN IncidentEscalationChain chain ON mgr.full_name = chain.direct_supervisor WHERE chain.escalation_level < 3) SELECT escalation_level, employee_name, role, dept_name, direct_supervisor FROM IncidentEscalationChain ORDER BY escalation_level ASC;"
 echo.
 pause
 
@@ -69,3 +69,4 @@ echo ===========================================================================
 echo   DEMONSTRATION COMPLETE - ALL QUERIES EXECUTED SUCCESSFULLY!
 echo ===============================================================================
 pause
+

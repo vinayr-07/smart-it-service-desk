@@ -62,7 +62,7 @@ SET DEFAULT ROLE 'sd_employee_role' TO 'emp_aditya'@'localhost';
 -- ----------------------------------------------------------------------------
 -- View active role assignments
 -- SHOW GRANTS FOR 'admin_vinay'@'localhost';
--- SHOW GRANTS FOR 'agent_karthik'@'localhost';
+-- SHOW GRANTS FOR 'agent_prateek'@'localhost';
 -- SHOW GRANTS FOR 'emp_aditya'@'localhost';
 
 FLUSH PRIVILEGES;

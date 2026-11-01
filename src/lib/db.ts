@@ -99,14 +99,14 @@ export async function executeSQLQuery(sqlText: string): Promise<{ rows: any[]; a
     resultRows = [{ ticket_id: ticketId, new_status: 'RESOLVED', asset_sync: 'OPERATIONAL' }];
   } else if (lower.includes('incidentescalationchain') || lower.includes('recursive')) {
     resultRows = [
-      { escalation_level: 1, employee_name: 'Karthik Raja', role: 'Agent', direct_supervisor: 'Dr. Ramesh Kumar (Academic Ops)' },
-      { escalation_level: 2, employee_name: 'Dr. Ramesh Kumar', role: 'Department Manager', direct_supervisor: 'Executive Governance Board' },
+      { escalation_level: 1, employee_name: 'Prateek Hachadad', role: 'Agent', direct_supervisor: 'Suresh Kumar' },
+      { escalation_level: 2, employee_name: 'Suresh Kumar', role: 'Department Manager', direct_supervisor: 'Executive Governance Board' },
       { escalation_level: 3, employee_name: 'Executive Governance Board', role: 'Executive Admin', direct_supervisor: 'Chancellor / Vice Chancellor' }
     ];
   } else if (lower.includes('show grants') || lower.includes('sd_admin_role') || lower.includes('rbac') || lower.includes('roles')) {
     resultRows = [
       { role_name: 'sd_admin_role', assigned_user: 'admin_vinay@localhost', privileges: 'ALL PRIVILEGES ON smart_service_desk.* WITH GRANT OPTION' },
-      { role_name: 'sd_agent_role', assigned_user: 'agent_karthik@localhost', privileges: 'SELECT, INSERT, UPDATE ON tickets, assets, audit_log; EXECUTE ON PROCEDURES' },
+      { role_name: 'sd_agent_role', assigned_user: 'agent_prateek@localhost', privileges: 'SELECT, INSERT, UPDATE ON tickets, assets, audit_log; EXECUTE ON PROCEDURES' },
       { role_name: 'sd_employee_role', assigned_user: 'emp_aditya@localhost', privileges: 'SELECT, INSERT ON tickets; SELECT ON assets, kb, departments' }
     ];
   } else {
@@ -155,7 +155,7 @@ export async function getTickets(statusFilter?: string, priorityFilter?: string)
 export async function createTicket(data: {
   title: string;
   description: string;
-  category: 'Hardware' | 'Software' | 'Network' | 'Security' | 'Access';
+  category: 'Hardware' | 'Software' | 'Network' | 'Security' | 'Access' | 'Database';
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
   asset_id?: number;
   created_by: number;
@@ -163,11 +163,34 @@ export async function createTicket(data: {
   const newId = inMemoryTickets.length > 0 ? Math.max(...inMemoryTickets.map(t => t.ticket_id)) + 1 : 1;
   const ticketCode = `TKT-${1000 + newId}`;
   
-  // Calculate SLA resolution hours: CRITICAL: 2h, HIGH: 8h, MEDIUM: 24h, LOW: 72h
+  // Calculate fallback SLA resolution hours: CRITICAL: 2h, HIGH: 8h, MEDIUM: 24h, LOW: 72h
   const slaHoursMap: Record<string, number> = { CRITICAL: 2, HIGH: 8, MEDIUM: 24, LOW: 72 };
   const hours = slaHoursMap[data.priority] || 24;
   const now = new Date();
-  const dueDate = new Date(now.getTime() + hours * 60 * 60 * 1000).toISOString().replace('T', ' ').substring(0, 19);
+  let dueDate = new Date(now.getTime() + hours * 60 * 60 * 1000).toISOString().replace('T', ' ').substring(0, 19);
+
+  if (pool) {
+    try {
+      // By passing NULL for due_date, we let MySQL trigger trg_ticket_before_insert_sla calculate it natively
+      const sql = `
+        INSERT INTO tickets (ticket_code, title, description, category, priority, status, asset_id, created_by, due_date)
+        VALUES (?, ?, ?, ?, ?, 'OPEN', ?, ?, NULL)
+      `;
+      const [result]: any = await pool.query(sql, [
+        ticketCode, data.title, data.description, data.category, data.priority,
+        data.asset_id || null, data.created_by
+      ]);
+
+      if (result && result.insertId) {
+        const [rows]: any = await pool.query('SELECT * FROM tickets WHERE ticket_id = ?', [result.insertId]);
+        if (rows && rows[0] && rows[0].due_date) {
+          dueDate = new Date(rows[0].due_date).toISOString().replace('T', ' ').substring(0, 19);
+        }
+      }
+    } catch (e) {
+      console.warn('MySQL insert error, saved locally:', e);
+    }
+  }
 
   const newTicket: Ticket = {
     ticket_id: newId,
@@ -183,21 +206,6 @@ export async function createTicket(data: {
     sla_breached: false,
     created_at: now.toISOString().replace('T', ' ').substring(0, 19)
   };
-
-  if (pool) {
-    try {
-      const sql = `
-        INSERT INTO tickets (ticket_code, title, description, category, priority, status, asset_id, created_by, due_date)
-        VALUES (?, ?, ?, ?, ?, 'OPEN', ?, ?, ?)
-      `;
-      await pool.query(sql, [
-        ticketCode, data.title, data.description, data.category, data.priority,
-        data.asset_id || null, data.created_by, dueDate
-      ]);
-    } catch (e) {
-      console.warn('MySQL insert error, saved locally:', e);
-    }
-  }
 
   inMemoryTickets.unshift(newTicket);
   
@@ -220,35 +228,58 @@ export async function createTicket(data: {
  * Auto-assign Ticket (Demonstrating Stored Procedure sp_auto_assign_ticket)
  */
 export async function autoAssignTicket(ticketId: number): Promise<{ ticket_id: number; assigned_to: number; agent_name: string }> {
-  // Find Agent with lowest active queue
-  const agents = initialUsers.filter(u => u.role === 'Agent');
-  const agentWorkload: Record<number, number> = {};
-  agents.forEach(a => agentWorkload[a.user_id] = 0);
+  let assignedAgentId: number | null = null;
+  let assignedAgentName = '';
 
-  inMemoryTickets.forEach(t => {
-    if (t.assigned_to && (t.status === 'OPEN' || t.status === 'IN_PROGRESS')) {
-      if (agentWorkload[t.assigned_to] !== undefined) {
-        agentWorkload[t.assigned_to]++;
+  // 1. If live MySQL pool is available, execute stored procedure sp_auto_assign_ticket
+  if (pool) {
+    try {
+      await pool.query('CALL sp_auto_assign_ticket(?, @assigned_agent)', [ticketId]);
+      const [rows]: any = await pool.query('SELECT @assigned_agent AS assigned_agent_id');
+      if (rows && rows[0] && rows[0].assigned_agent_id) {
+        assignedAgentId = Number(rows[0].assigned_agent_id);
+        const [uRows]: any = await pool.query('SELECT full_name FROM users WHERE user_id = ?', [assignedAgentId]);
+        if (uRows && uRows[0]) {
+          assignedAgentName = uRows[0].full_name;
+        }
       }
-    }
-  });
-
-  // Pick agent with min load
-  let bestAgent = agents[0];
-  let minCount = Infinity;
-  for (const agent of agents) {
-    const count = agentWorkload[agent.user_id] || 0;
-    if (count < minCount) {
-      minCount = count;
-      bestAgent = agent;
+    } catch (err) {
+      console.warn('MySQL sp_auto_assign_ticket error, using local fallback:', (err as Error).message);
     }
   }
 
-  // Update Ticket
+  // 2. If not assigned via MySQL, execute local workload dispatch
+  if (!assignedAgentId) {
+    const agents = initialUsers.filter(u => u.role === 'Agent');
+    const agentWorkload: Record<number, number> = {};
+    agents.forEach(a => agentWorkload[a.user_id] = 0);
+
+    inMemoryTickets.forEach(t => {
+      if (t.assigned_to && (t.status === 'OPEN' || t.status === 'IN_PROGRESS')) {
+        if (agentWorkload[t.assigned_to] !== undefined) {
+          agentWorkload[t.assigned_to]++;
+        }
+      }
+    });
+
+    let bestAgent = agents[0];
+    let minCount = Infinity;
+    for (const agent of agents) {
+      const count = agentWorkload[agent.user_id] || 0;
+      if (count < minCount) {
+        minCount = count;
+        bestAgent = agent;
+      }
+    }
+    assignedAgentId = bestAgent.user_id;
+    assignedAgentName = bestAgent.full_name;
+  }
+
+  // Update in-memory ticket
   const ticket = inMemoryTickets.find(t => t.ticket_id === ticketId);
   if (ticket) {
     const oldStatus = ticket.status;
-    ticket.assigned_to = bestAgent.user_id;
+    ticket.assigned_to = assignedAgentId;
     ticket.status = 'IN_PROGRESS';
 
     inMemoryAuditLogs.push({
@@ -257,16 +288,16 @@ export async function autoAssignTicket(ticketId: number): Promise<{ ticket_id: n
       action_type: 'AUTO_ASSIGN',
       old_status: oldStatus,
       new_status: 'IN_PROGRESS',
-      comment: `Auto-assigned to ${bestAgent.full_name} via lowest-workload algorithm (Load: ${minCount} tickets).`,
-      changed_by: bestAgent.user_id,
+      comment: `Auto-assigned to ${assignedAgentName} via lowest-workload stored procedure algorithm.`,
+      changed_by: assignedAgentId,
       logged_at: new Date().toISOString().replace('T', ' ').substring(0, 19)
     });
   }
 
   return {
     ticket_id: ticketId,
-    assigned_to: bestAgent.user_id,
-    agent_name: bestAgent.full_name
+    assigned_to: assignedAgentId,
+    agent_name: assignedAgentName
   };
 }
 
@@ -280,6 +311,27 @@ export async function resolveTicketAtomic(
   solution: string, 
   assetStatus: 'OPERATIONAL' | 'DEGRADED' | 'OUTAGE' | 'MAINTENANCE' = 'OPERATIONAL'
 ): Promise<Ticket> {
+  // 1. If live MySQL pool is available, execute ACID stored procedure
+  if (pool) {
+    try {
+      await pool.query('CALL sp_resolve_ticket_with_asset_update(?, ?, ?, ?)', [
+        ticketId, agentId, solution, assetStatus
+      ]);
+      const [rows]: any = await pool.query('SELECT * FROM tickets WHERE ticket_id = ?', [ticketId]);
+      if (rows && rows[0]) {
+        const dbTicket = rows[0] as Ticket;
+        const idx = inMemoryTickets.findIndex(t => t.ticket_id === ticketId);
+        if (idx !== -1) {
+          inMemoryTickets[idx] = { ...inMemoryTickets[idx], ...dbTicket, status: 'RESOLVED', resolution_summary: solution };
+        }
+        return inMemoryTickets[idx] || dbTicket;
+      }
+    } catch (err) {
+      console.warn('MySQL sp_resolve_ticket_with_asset_update error, using local fallback:', (err as Error).message);
+    }
+  }
+
+  // 2. Local fallback
   const ticket = inMemoryTickets.find(t => t.ticket_id === ticketId);
   if (!ticket) throw new Error('Ticket not found');
 
@@ -317,6 +369,15 @@ export async function resolveTicketAtomic(
  * Fetch View 1: v_active_tickets_sla
  */
 export async function getViewActiveTicketsSLA() {
+  if (pool) {
+    try {
+      const [rows]: any = await pool.query('SELECT * FROM v_active_tickets_sla');
+      if (rows && rows.length > 0) return rows;
+    } catch (e) {
+      console.warn('MySQL view v_active_tickets_sla query fallback:', (e as Error).message);
+    }
+  }
+
   return inMemoryTickets
     .filter(t => t.status === 'OPEN' || t.status === 'IN_PROGRESS')
     .map(t => {
@@ -346,6 +407,15 @@ export async function getViewActiveTicketsSLA() {
  * Fetch View 2: v_agent_workload_metrics
  */
 export async function getViewAgentWorkload() {
+  if (pool) {
+    try {
+      const [rows]: any = await pool.query('SELECT * FROM v_agent_workload_metrics');
+      if (rows && rows.length > 0) return rows;
+    } catch (e) {
+      console.warn('MySQL view v_agent_workload_metrics query fallback:', (e as Error).message);
+    }
+  }
+
   const agents = initialUsers.filter(u => u.role === 'Agent');
   return agents.map(agent => {
     const handled = inMemoryTickets.filter(t => t.assigned_to === agent.user_id);
@@ -372,6 +442,15 @@ export async function getViewAgentWorkload() {
  * Fetch View 3: v_asset_failure_frequency
  */
 export async function getViewAssetFailureFrequency() {
+  if (pool) {
+    try {
+      const [rows]: any = await pool.query('SELECT * FROM v_asset_failure_frequency WHERE total_incidents > 0');
+      if (rows && rows.length > 0) return rows;
+    } catch (e) {
+      console.warn('MySQL view v_asset_failure_frequency query fallback:', (e as Error).message);
+    }
+  }
+
   return inMemoryAssets.map(asset => {
     const linkedTickets = inMemoryTickets.filter(t => t.asset_id === asset.asset_id);
     const criticals = linkedTickets.filter(t => t.priority === 'CRITICAL').length;
@@ -390,10 +469,31 @@ export async function getViewAssetFailureFrequency() {
 }
 
 export async function getAssets(): Promise<Asset[]> {
+  if (pool) {
+    try {
+      const [rows]: any = await pool.query('SELECT * FROM assets ORDER BY asset_id ASC');
+      if (rows && rows.length > 0) return rows as Asset[];
+    } catch (e) {
+      console.warn('MySQL getAssets fallback:', (e as Error).message);
+    }
+  }
   return inMemoryAssets;
 }
 
 export async function getAuditLogs(ticketId?: number) {
+  if (pool) {
+    try {
+      const sql = ticketId 
+        ? 'SELECT * FROM ticket_audit_log WHERE ticket_id = ? ORDER BY logged_at DESC' 
+        : 'SELECT * FROM ticket_audit_log ORDER BY logged_at DESC LIMIT 50';
+      const params = ticketId ? [ticketId] : [];
+      const [rows]: any = await pool.query(sql, params);
+      if (rows && rows.length > 0) return rows;
+    } catch (e) {
+      console.warn('MySQL getAuditLogs fallback:', (e as Error).message);
+    }
+  }
+
   if (ticketId) {
     return inMemoryAuditLogs.filter(l => l.ticket_id === ticketId);
   }

@@ -190,13 +190,16 @@ WITH RECURSIVE IncidentEscalationChain AS (
     
     UNION ALL
     
-    -- Recursive Member: Traverse upwards to Department Manager and Executive Admin
+    -- Recursive Member: Traverse upwards to Department Manager and Executive Governance
     SELECT 
         mgr.user_id,
         mgr.full_name,
         mgr.role,
         mgr.dept_id,
-        'Executive Governance Board' AS direct_supervisor,
+        CASE 
+            WHEN chain.escalation_level = 1 THEN 'Executive Governance Board'
+            ELSE 'Chancellor / Vice Chancellor'
+        END AS direct_supervisor,
         chain.escalation_level + 1
     FROM users mgr
     JOIN IncidentEscalationChain chain ON mgr.full_name = chain.direct_supervisor

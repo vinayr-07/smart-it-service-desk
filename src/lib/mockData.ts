@@ -34,7 +34,7 @@ export interface Ticket {
   ticket_code: string;
   title: string;
   description: string;
-  category: 'Hardware' | 'Software' | 'Network' | 'Security' | 'Access';
+  category: 'Hardware' | 'Software' | 'Network' | 'Security' | 'Access' | 'Database';
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
   status: 'OPEN' | 'IN_PROGRESS' | 'RESOLVED' | 'CLOSED';
   asset_id?: number;
@@ -95,6 +95,10 @@ export const initialUsers: User[] = [
   { user_id: 8, full_name: 'Meera Nair', email: 'meera.n@pes.edu', role: 'Employee', dept_id: 2, phone: '+91-9880011228' },
   { user_id: 9, full_name: 'Rahul Joshi', email: 'rahul.j@pes.edu', role: 'Employee', dept_id: 3, phone: '+91-9880011229' },
   { user_id: 10, full_name: 'Priya Kulkarni', email: 'priya.k@pes.edu', role: 'Employee', dept_id: 4, phone: '+91-9880011230' },
+  { user_id: 11, full_name: 'Vikram Sen', email: 'vikram.s@pes.edu', role: 'Employee', dept_id: 2, phone: '+91-9880011231' },
+  { user_id: 12, full_name: 'Suresh Kumar', email: 'suresh.k@pes.edu', role: 'Admin', dept_id: 1, phone: '+91-9880011232' },
+  { user_id: 13, full_name: 'Ananya Sharma', email: 'ananya.s@pes.edu', role: 'Admin', dept_id: 2, phone: '+91-9880011233' },
+  { user_id: 14, full_name: 'Executive Governance Board', email: 'governance@pes.edu', role: 'Admin', dept_id: 1, phone: '+91-9880011234' },
 ];
 
 export const initialAssets: Asset[] = [
@@ -108,7 +112,8 @@ export const initialAssets: Asset[] = [
   { asset_id: 8, asset_tag: 'AST-CLD-02', asset_name: 'Azure Active Directory SSO Gateway', asset_type: 'Cloud Service', status: 'OPERATIONAL', ip_address: '40.112.50.14', location: 'Azure Central India', owner_id: 1, criticality: 'HIGH', purchase_date: '2023-09-15' },
   { asset_id: 9, asset_tag: 'AST-DEV-01', asset_name: 'MacBook Pro M2 - Aditya Verma', asset_type: 'Laptop', status: 'OPERATIONAL', ip_address: '10.50.4.101', location: 'CS Block 3F Dev Lab', owner_id: 7, criticality: 'MEDIUM', purchase_date: '2023-07-22' },
   { asset_id: 10, asset_tag: 'AST-DEV-02', asset_name: 'Dell XPS 15 - Meera Nair', asset_type: 'Laptop', status: 'DEGRADED', ip_address: '10.50.4.102', location: 'CS Block 3F Dev Lab', owner_id: 8, criticality: 'MEDIUM', purchase_date: '2023-09-05' },
-  { asset_id: 11, asset_tag: 'AST-STG-01', asset_name: 'NetApp SAN Enterprise Storage Array', asset_type: 'Storage', status: 'OPERATIONAL', ip_address: '192.168.30.5', location: 'Server Room Rack C1', owner_id: 1, criticality: 'MISSION_CRITICAL', purchase_date: '2022-05-18' }
+  { asset_id: 11, asset_tag: 'AST-STG-01', asset_name: 'NetApp SAN Enterprise Storage Array', asset_type: 'Storage', status: 'OPERATIONAL', ip_address: '192.168.30.5', location: 'Server Room Rack C1', owner_id: 1, criticality: 'MISSION_CRITICAL', purchase_date: '2022-05-18' },
+  { asset_id: 12, asset_tag: 'AST-DEV-03', asset_name: 'ThinkPad T14 - Rahul Joshi', asset_type: 'Laptop', status: 'OPERATIONAL', ip_address: '10.50.4.103', location: 'Admin Block 2F HR', owner_id: 9, criticality: 'LOW', purchase_date: '2024-02-14' }
 ];
 
 export const initialTickets: Ticket[] = [
@@ -147,7 +152,7 @@ export const initialTickets: Ticket[] = [
     ticket_code: 'TKT-1003',
     title: 'MySQL Connection Pool Exhaustion on Node 1',
     description: 'App backend threw Too many connections error. Max connection limit reached.',
-    category: 'Database' as any,
+    category: 'Database',
     priority: 'CRITICAL',
     status: 'RESOLVED',
     asset_id: 3,
@@ -234,6 +239,40 @@ export const initialTickets: Ticket[] = [
     due_date: '2026-10-26 09:00:00',
     sla_breached: true,
     created_at: '2026-10-26 07:00:00'
+  },
+  {
+    ticket_id: 9,
+    ticket_code: 'TKT-1009',
+    title: 'Finance ERP Printer Driver Incompatibility on Windows 11',
+    description: 'Cheque printer not responding after Windows update KB5034441.',
+    category: 'Hardware',
+    priority: 'MEDIUM',
+    status: 'RESOLVED',
+    asset_id: undefined,
+    created_by: 10,
+    assigned_to: 4,
+    due_date: '2026-10-23 14:00:00',
+    resolved_at: '2026-10-22 18:00:00',
+    sla_breached: false,
+    resolution_summary: 'Reinstalled Type-4 PCL6 OEM drivers and disabled auto-driver update.',
+    created_at: '2026-10-22 14:00:00'
+  },
+  {
+    ticket_id: 10,
+    ticket_code: 'TKT-1010',
+    title: 'Neo4j Graph Database Out-Of-Memory Error during Traversal',
+    description: 'Graph analytics query with 5 hops caused Heap exhaustion on AST-DB-02.',
+    category: 'Database',
+    priority: 'MEDIUM',
+    status: 'RESOLVED',
+    asset_id: 4,
+    created_by: 1,
+    assigned_to: 3,
+    due_date: '2026-10-22 09:00:00',
+    resolved_at: '2026-10-21 13:45:00',
+    sla_breached: false,
+    resolution_summary: 'Tuned neo4j.conf dbms.memory.heap.max_size=8G and added index on CI labels.',
+    created_at: '2026-10-21 09:00:00'
   }
 ];
 

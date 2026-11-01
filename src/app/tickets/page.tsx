@@ -158,7 +158,7 @@ export default function TicketsPage() {
           ticket_id: showResolveModal.ticket_id,
           solution: resolveSolution,
           asset_status: resolveAssetStatus,
-          agent_id: 3 // Karthik Raja (Agent)
+          agent_id: 3 // Prateek Hachadad (Agent)
         })
       });
       const data = await res.json();

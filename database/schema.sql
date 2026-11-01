@@ -6,7 +6,9 @@
 -- ============================================================================
 
 -- Create Database
-CREATE DATABASE IF NOT EXISTS smart_service_desk;
+CREATE DATABASE IF NOT EXISTS smart_service_desk
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
 USE smart_service_desk;
 
 -- ============================================================================

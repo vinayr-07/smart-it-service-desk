@@ -46,6 +46,12 @@ INSERT INTO users (user_id, full_name, email, password_hash, role, dept_id, phon
 (10, 'Priya Kulkarni', 'priya.k@pes.edu', 'hash_emp_04', 'Employee', 4, '+91-9880011230', TRUE),
 (11, 'Vikram Sen', 'vikram.s@pes.edu', 'hash_emp_05', 'Employee', 2, '+91-9880011231', TRUE);
 
+-- Management & Governance (For Escalation Hierarchy)
+INSERT INTO users (user_id, full_name, email, password_hash, role, dept_id, phone, is_active) VALUES
+(12, 'Suresh Kumar', 'suresh.k@pes.edu', 'hash_mgr_01', 'Admin', 1, '+91-9880011232', TRUE),
+(13, 'Ananya Sharma', 'ananya.s@pes.edu', 'hash_mgr_02', 'Admin', 2, '+91-9880011233', TRUE),
+(14, 'Executive Governance Board', 'governance@pes.edu', 'hash_gov_01', 'Admin', 1, '+91-9880011234', TRUE);
+
 -- 3. SLA POLICIES
 INSERT INTO sla_policies (sla_id, priority_level, response_time_hrs, resolution_time_hrs, escalation_threshold_hrs) VALUES
 (1, 'CRITICAL', 0.50, 2.00, 1.50),
@@ -96,7 +102,7 @@ INSERT INTO ticket_audit_log (log_id, ticket_id, action_type, old_status, new_st
 (2, 1, 'AUTO_ASSIGN', 'OPEN', 'IN_PROGRESS', 'Assigned to Network Engineer Mohammed Zaid', 5, '2026-10-25 08:35:00'),
 (3, 1, 'SLA_BREACH', 'IN_PROGRESS', 'OPEN', 'Resolution deadline exceeded 2.0 hours. Escalated.', 1, '2026-10-25 10:30:00'),
 (4, 3, 'CREATION', NULL, 'OPEN', 'Ticket logged by Admin', 1, '2026-10-24 14:00:00'),
-(5, 3, 'ASSIGN', 'OPEN', 'IN_PROGRESS', 'Assigned to Karthik Raja', 3, '2026-10-24 14:05:00'),
+(5, 3, 'ASSIGN', 'OPEN', 'IN_PROGRESS', 'Assigned to Prateek Hachadad', 3, '2026-10-24 14:05:00'),
 (6, 3, 'STATUS_CHANGE', 'IN_PROGRESS', 'RESOLVED', 'Issue resolved and DB verified.', 3, '2026-10-24 15:20:00');
 
 -- 7. KNOWLEDGE BASE ARTICLES (For AI Knowledge Search)

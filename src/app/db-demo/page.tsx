@@ -224,7 +224,10 @@ ORDER BY total_department_tickets DESC;`,
     UNION ALL
     SELECT 
         mgr.user_id, mgr.full_name, mgr.role, mgr.dept_id,
-        'Executive Governance Board' AS direct_supervisor,
+        CASE 
+            WHEN chain.escalation_level = 1 THEN 'Executive Governance Board'
+            ELSE 'Chancellor / Vice Chancellor'
+        END AS direct_supervisor,
         chain.escalation_level + 1
     FROM users mgr
     JOIN IncidentEscalationChain chain ON mgr.full_name = chain.direct_supervisor
@@ -233,7 +236,28 @@ ORDER BY total_department_tickets DESC;`,
 SELECT escalation_level, employee_name, role, direct_supervisor
 FROM IncidentEscalationChain
 ORDER BY escalation_level ASC;`,
-      executeSql: 'SELECT * FROM IncidentEscalationChain;',
+      executeSql: `WITH RECURSIVE IncidentEscalationChain AS (
+    SELECT 
+        u.user_id, u.full_name AS employee_name, u.role, u.dept_id,
+        d.manager_name AS direct_supervisor, 1 AS escalation_level
+    FROM users u
+    JOIN departments d ON u.dept_id = d.dept_id
+    WHERE u.role = 'Agent' AND u.user_id = 3
+    UNION ALL
+    SELECT 
+        mgr.user_id, mgr.full_name, mgr.role, mgr.dept_id,
+        CASE 
+            WHEN chain.escalation_level = 1 THEN 'Executive Governance Board'
+            ELSE 'Chancellor / Vice Chancellor'
+        END AS direct_supervisor,
+        chain.escalation_level + 1
+    FROM users mgr
+    JOIN IncidentEscalationChain chain ON mgr.full_name = chain.direct_supervisor
+    WHERE chain.escalation_level < 3
+)
+SELECT escalation_level, employee_name, role, direct_supervisor
+FROM IncidentEscalationChain
+ORDER BY escalation_level ASC;`,
       explanation: 'Meets DBMS Rubric #7: Demonstrates recursive CTE query solving multi-level hierarchy escalation chains.'
     },
     cypher_blast_radius: {
@@ -287,7 +311,7 @@ GRANT SELECT, INSERT ON smart_service_desk.tickets TO 'sd_employee_role';
 
 -- 3. Bind Roles to DB Users
 GRANT 'sd_admin_role' TO 'admin_vinay'@'localhost';
-GRANT 'sd_agent_role' TO 'agent_karthik'@'localhost';
+GRANT 'sd_agent_role' TO 'agent_prateek'@'localhost';
 GRANT 'sd_employee_role' TO 'emp_aditya'@'localhost';`,
       executeSql: 'SHOW GRANTS FOR sd_admin_role;',
       explanation: 'Meets DBMS Rubric #12: Role-based access control inside the database engine.'
